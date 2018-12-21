@@ -1,0 +1,17 @@
+{
+  "name": "11-Wipo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/wipcamp/11-Wipo.git",
+  "author": "pea <pepea.23@live.com>",
+  "license": "MIT",
+  "dependencies": {
+    "antd": "^3.11.2",
+    "bootstrap": "^4.2.1",
+    "eslint": "^5.10.0",
+    "next": "^7.0.2",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "styled-components": "^4.1.3"
+  }
+}
