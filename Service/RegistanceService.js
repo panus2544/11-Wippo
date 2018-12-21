@@ -1,7 +1,7 @@
 import apiRegService from "../utils/apiRegService";
 
 const Question = {
-    getRegistance = async()=>{
+    getAllRegistance : async ()=>{
         return await apiRegService.get('/registance')
     } 
 }

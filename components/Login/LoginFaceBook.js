@@ -18,7 +18,7 @@ const responseFacebook = async (response) => {
 
 const changetoRegisterPage = () => {
   if (Cookies.gettokenJWTCookie()) {
-   
+   console.log('havecookie')
   }
 }
 
