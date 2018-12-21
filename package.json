@@ -1,8 +1,8 @@
 {
-  "name": "11-Wipo",
+  "name": "11-Wippo",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/wipcamp/11-Wipo.git",
+  "repository": "https://github.com/wipcamp/11-Wippo.git",
   "author": "pea <pepea.23@live.com>",
   "license": "MIT",
   "dependencies": {
@@ -12,7 +12,14 @@
     "next": "^7.0.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "styled-components": "^4.1.3"
+    "styled-components": "^4.1.3",
+    "dotenv": "^6.2.0",
+    "dotenv-webpack": "^1.5.7",
+    "axios": "^0.18.0",
+    "js-cookie": "^2.2.0",
+    "@zeit/next-css": "^1.0.1"
+
+
   },
     "scripts": {
       "dev": "next",
