@@ -24,7 +24,6 @@ class MenuBar extends React.Component {
         >
           <Menu.Item key="1">Dash Board</Menu.Item>
           <Menu.Item key="2">Registants</Menu.Item>
-          <Menu.Item key="3">Answer</Menu.Item>
         </Menu>
       </div>
     )
