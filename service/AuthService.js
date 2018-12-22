@@ -3,7 +3,6 @@ import Cookies from './CookieService'
 
 const AuthService = {
   login: async (request) => {
-    console.log(request)
     try {
       await api.post('/auth/login', {
         'provider_name': 'facebook',
