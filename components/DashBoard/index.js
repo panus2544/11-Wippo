@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Card } from 'antd'
 
-export default class DashBoard extends Component {
+export default class DashBoard extends React.Component {
   render() {
     return (
       <div className="container mt-5">
