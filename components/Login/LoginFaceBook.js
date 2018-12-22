@@ -21,9 +21,10 @@ class LoginFaceBook extends React.Component {
     }
   }
 
-  changetoRegisterPage = () => {
+  changetoRegisterPage = async() => {
     if (Cookies.gettokenJWTCookie()) {
      console.log('havecookie')
+    this.props.userAuth()
      this.props.setPage('1')
     }
   }

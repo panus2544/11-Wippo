@@ -129,10 +129,14 @@ const data = [
 ]
 
 export default class Registants extends React.Component {
+  state = {
+   userAuth : this.props.allUser
+  }
   render() {
     return (
       <div className="container mt-5">
-        <Table columns={columns} dataSource={data} />
+      {console.log(this.props.allUser)}
+        <Table columns={columns} dataSource={this.state.userAuth} />
       </div>
     )
   }

@@ -13,17 +13,18 @@ export default class App extends React.Component {
     dashboardVisible: 'none',
     registantVisible: 'none',
     loginVisible: 'block',
-    menu: 'none'
+    menu: 'none',
   }
   componentDidMount = () => {
-    this.getAlluserDB()
     this.handlePage()
+    this.getAlluserDB()
   }
   getAlluserDB = async () => {
     const profiles = await RegistanceService.getAllRegistrant()
     this.setState({
       allUser: profiles
     })
+    console.log(this.state.allUser)
   }
 
   setPage = props => {
@@ -64,13 +65,13 @@ export default class App extends React.Component {
       <div className="container-fluid">
         <Menu visible={this.state.menu} setPage={this.setPage} current={this.state.current} />
         <Body showComponents={this.state.loginVisible}>
-          <Login setPage={this.setPage}/>
+          <Login setPage={this.setPage} userAuth={this.getAlluserDB}/>
         </Body>
         <Body showComponents={this.state.dashboardVisible}>
           <DashBoard allUser={this.state.allUser} />
         </Body>
         <Body showComponents={this.state.registantVisible}>
-          <Registant />
+          <Registant allUser={this.state.allUser} />
         </Body>
       </div>
     )

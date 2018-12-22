@@ -7,7 +7,7 @@ class Login extends React.Component {
       <div className="container-fluid mt-5">
         <div className="row mt-5 justify-content-center">
           <div className="col-8 col-md-4 mt-5">
-            <LoginFaceBook setPage={this.props.setPage}/>
+            <LoginFaceBook setPage={this.props.setPage} userAuth={this.props.userAuth}/>
           </div>
         </div>
       </div>
