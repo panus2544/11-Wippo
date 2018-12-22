@@ -1,17 +1,23 @@
 import React from 'react'
 import DashBoard from '../DashBoard'
-import QuestionService from '../../service/QuestionService';
+import RegistanceService from '../../service/RegistanceService';
 
 export default class App extends React.Component {
   state = {
     allUser:[]
   }
   componentDidMount =()=>{
+    this.getAlluserDB()
     
   }
   getAlluserDB=async()=>{
-    this.state.allUser=await QuestionService.getAllRegistance()
+   const profiles=await RegistanceService.getAllRegistrant() 
+     this.setState({
+      allUser: profiles
+    })   
+  
   }
+  
   render() {
     return (
       <div className="container-fluid">

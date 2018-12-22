@@ -1,4 +1,3 @@
-import Button from 'antd'
 import React from 'react'
 import Router from 'next/router'
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
@@ -35,7 +34,7 @@ class LoginFaceBook extends React.Component {
         appId="293604811359850"
         callback={responseFacebook}
         render={renderProps => (
-          <Button size="large " block type="primary" onClick={renderProps.onClick}>Login!</Button>
+          <button size="large " block type="primary" onClick={renderProps.onClick}>Login!</button>
         )}
       />
     )

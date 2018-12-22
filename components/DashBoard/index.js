@@ -8,17 +8,17 @@ export default class DashBoard extends Component {
         <div className="row">
           <div className="col-4">
             <Card title="จำนวนคนที่สมัคร">
-              <h1>{this.props.allUser}</h1>
+              <h1>{this.props.allUser.length}</h1>
             </Card>
           </div>
           <div className="col-4">
             <Card title="จำนวนคนที่ตอบคำถามเสร็จแล้ว">
-            <h1>{this.props.allUser}</h1>
+            <h1>{this.props.allUser.length}</h1>
             </Card>
           </div>
           <div className="col-4">
             <Card title="จำนวนคนที่ยังตอบคำถามไม่เสร็จ">
-            <h1>{this.props.allUser}</h1>
+            <h1>{this.props.allUser.length}</h1>
             </Card>
           </div>
         </div>
