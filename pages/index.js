@@ -1,5 +1,5 @@
 import React from 'react'
-import App from '../components/Core/App'
+import App from '../components/Core/Chart'
 
 class index extends React.Component {
   render() {
