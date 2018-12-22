@@ -4,13 +4,16 @@ import Menu from './Menu'
 import Body from './Body'
 import Registant from '../Registants'
 import RegistanceService from '../../service/RegistanceService'
+import Login from '../Login'
 
 export default class App extends React.Component {
   state = {
     allUser: [],
-    current: '1',
+    current: '0',
     dashboardVisible: 'none',
-    registantVisible: 'none'
+    registantVisible: 'none',
+    loginVisible: 'block',
+    menu: 'none'
   }
   componentDidMount = () => {
     this.getAlluserDB()
@@ -23,7 +26,7 @@ export default class App extends React.Component {
     })
   }
 
-  setPage = (props) => {
+  setPage = props => {
     this.setState({
       current: props
     })
@@ -35,12 +38,23 @@ export default class App extends React.Component {
     if (current === '1') {
       this.setState({
         dashboardVisible: 'block',
-        registantVisible: 'none'
+        registantVisible: 'none',
+        loginVisible: 'none',
+        menu: 'block'
       })
     } else if (current === '2') {
       this.setState({
         dashboardVisible: 'none',
-        registantVisible: 'block'
+        registantVisible: 'block',
+        loginVisible: 'none',
+        menu: 'block'
+      })
+    } else {
+      this.setState({
+        dashboardVisible: 'none',
+        registantVisible: 'none',
+        loginVisible: 'block',
+        menu: 'none'
       })
     }
   }
@@ -48,7 +62,10 @@ export default class App extends React.Component {
   render() {
     return (
       <div className="container-fluid">
-        <Menu setPage={this.setPage} current={this.state.current} />
+        <Menu visible={this.state.menu} setPage={this.setPage} current={this.state.current} />
+        <Body showComponents={this.state.loginVisible}>
+          <Login />
+        </Body>
         <Body showComponents={this.state.dashboardVisible}>
           <DashBoard allUser={this.state.allUser} />
         </Body>

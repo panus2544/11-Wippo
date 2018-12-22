@@ -1,5 +1,11 @@
 import React from 'react'
-import { Menu } from 'antd'
+import { Menu as DefaultMenu} from 'antd'
+import styled from 'styled-components'
+
+const Menu = styled(DefaultMenu)`
+  display: ${props => props.visible};
+`
+
 
 class MenuBar extends React.Component {
   state = {
@@ -18,6 +24,7 @@ class MenuBar extends React.Component {
     return (
       <div>
         <Menu
+          visible={this.props.visible}
           onClick={this.handleClick}
           selectedKeys={[this.props.current]}
           mode="horizontal"
