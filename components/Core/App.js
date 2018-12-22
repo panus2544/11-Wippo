@@ -64,7 +64,7 @@ export default class App extends React.Component {
       <div className="container-fluid">
         <Menu visible={this.state.menu} setPage={this.setPage} current={this.state.current} />
         <Body showComponents={this.state.loginVisible}>
-          <Login />
+          <Login setPage={this.setPage}/>
         </Body>
         <Body showComponents={this.state.dashboardVisible}>
           <DashBoard allUser={this.state.allUser} />
