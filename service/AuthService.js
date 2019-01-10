@@ -7,7 +7,9 @@ const AuthService = {
       await api.post('/auth/login', {
         'provider_name': 'facebook',
         'provider_id': request.userID,
-        'accessToken': request.accessToken })
+        'accessToken': request.accessToken ,
+        'role':'wiper'
+      })
         .then(respons => {
           console.log(respons)
           if (respons) {
