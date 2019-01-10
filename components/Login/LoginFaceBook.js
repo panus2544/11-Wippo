@@ -5,28 +5,19 @@ import Cookies from '../../service/CookieService'
 
 import AuthService from '../../service/AuthService'
 
-
-
+const responseFacebook = async (response) => {
+  await AuthService.login(response)
+}
+const changetoRegisterPage = async () => {
+  if (Cookies.gettokenJWTCookie()) {
+    Router.push({
+      pathname: '/dashboard'
+    })
+  } 
+}
 class LoginFaceBook extends React.Component {
   componentDidMount () {
-    this.changetoRegisterPage()
-  }
-  responseFacebook = async (response) => {
-    await AuthService.login(response)
-    let token = Cookies.gettokenJWTCookie()
-    console.log(token)
-    if (token) {
-      this.changetoRegisterPage()
-    } else {
-    }
-  }
-
-  changetoRegisterPage = async() => {
-    if (Cookies.gettokenJWTCookie()) {
-     console.log('havecookie')
-    this.props.userAuth()
-     this.props.setPage('1')
-    }
+    changetoRegisterPage()
   }
   render () {
     return (
@@ -35,9 +26,9 @@ class LoginFaceBook extends React.Component {
         autoLoad={false}
         fields="name,email,picture,id"
         appId="293604811359850"
-        callback={this.responseFacebook}
+        callback={responseFacebook}
         render={renderProps => (
-          <button size="large " block type="primary" onClick={renderProps.onClick}>Login!</button>
+          <button size="large" block type="primary" onClick={renderProps.onClick}>Login!</button>
         )}
       />
     )

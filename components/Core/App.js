@@ -9,7 +9,7 @@ import Login from '../Login'
 export default class App extends React.Component {
   state = {
     allUser: [],
-    current: '0',
+    current: '1',
     dashboardVisible: 'none',
     registantVisible: 'none',
     loginVisible: 'block',
@@ -64,14 +64,8 @@ export default class App extends React.Component {
     return (
       <div className="container-fluid">
         <Menu visible={this.state.menu} setPage={this.setPage} current={this.state.current} />
-        <Body showComponents={this.state.loginVisible}>
-          <Login setPage={this.setPage} userAuth={this.getAlluserDB}/>
-        </Body>
         <Body showComponents={this.state.dashboardVisible}>
           <DashBoard allUser={this.state.allUser} />
-        </Body>
-        <Body showComponents={this.state.registantVisible}>
-          <Registant allUser={this.state.allUser} />
         </Body>
       </div>
     )

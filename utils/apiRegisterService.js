@@ -1,22 +1,25 @@
 import axios from 'axios'
 import Cookies from '../service/CookieService'
-const urlReg = process.env.PATH_REGISTANCE
-const headers = {
-  'Authorization': `Bearer ${Cookies.gettokenJWTCookie()}`,
-  'Content-Type': 'application/json'
-}
+import ENV from '../config/envConfig'
+
 const createInstance = () => {
   return axios.create({
-    baseURL: urlReg,
-    headers
+    baseURL: ENV.PATH_REGISTANCE,
+    headers: {
+      'Authorization': `Bearer ${Cookies.gettokenJWTCookie()}`,
+      'Content-Type': 'application/json'
+    }
   })
 }
 
 const handleResponse = res => !res.data.error ? Promise.resolve(res) : Promise.reject(new Error(res.data.error))
 
-const catchError = err => Promise.reject(err.message)
+const catchError = err => {
+  return Promise.reject(err)
+}
 
 export default {
+
   get: (path, headers = {}) => (
     createInstance(headers)
       .get(path)
