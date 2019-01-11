@@ -9,6 +9,7 @@ const AuthService = {
         'provider_name': 'facebook',
         'provider_id': request.userID,
         'accessToken': request.accessToken,
+        'role' : 'wippper'
       })
         .then(respons => {
           console.log('callback')
@@ -21,7 +22,6 @@ const AuthService = {
         })
     } catch (error) {
       console.log(error)
-
     }
   }
 
