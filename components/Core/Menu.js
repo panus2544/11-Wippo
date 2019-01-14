@@ -1,40 +1,61 @@
 import React from 'react'
-import { Menu as DefaultMenu} from 'antd'
+import { Menu } from 'antd'
 import styled from 'styled-components'
+import AuthService from '../../service/CheckPermissionService'
+import { async } from 'rxjs/internal/scheduler/async';
 
-const Menu = styled(DefaultMenu)`
-  display: ${props => props.visible};
-`
-
-
-class MenuBar extends React.Component {
+const checkPermission =async (response)  => {
+  const permission = AuthService.getPermission();
+  console.log('test',permission)
+  // if(AuthService.getPermission() === true){
+  //   this.setState({
+  //     showComponent : 'test'
+  //   })
+  // }else{
+  //   this.setState({
+  //     showComponent : 'It not true !!'
+  //   })
+  // }
+  console.log(AuthService.getPermission())
+}
+class Menubar extends React.Component {
   state = {
-    current: '1',
+    permission : [],
+    showComponent : false
   }
 
-  handleClick = async (e) => {
-    this.setState({
-      current: e.key
-    })
-    let changePage = await this.state.current
-    this.props.setPage(changePage)
+  componentDidMount = async () =>{
+    this.checkPermission()
   }
 
-    render() {
+  checkPermission = async () => {
+    let data = await AuthService.getPermission()
+    if(data.permission[0].permission_id == 1){
+      this.setState({
+        showComponent : true
+      })
+    }
+  }
+
+  handleClick = (e) => {
+    console.log('click ', e);
+  }
+  render() {
     return (
       <div>
         <Menu
-          visible={this.props.visible}
           onClick={this.handleClick}
-          selectedKeys={[this.props.current]}
-          mode="horizontal"
+          mode="inline"
         >
-          <Menu.Item key="1">Dash Board</Menu.Item>
-          <Menu.Item key="2">Registants</Menu.Item>
+            {this.state.showComponent ? 
+            <Menu.Item key="9"><a href='/viewregistrants'>ดูรายชื่อผู้สมัคร</a></Menu.Item>:''} 
+            <Menu.Item key="10">Option 10</Menu.Item>
+            <Menu.Item key="11">Option 11</Menu.Item>
+            <Menu.Item key="12">Option 12</Menu.Item>
         </Menu>
       </div>
     )
   }
 }
 
-export default MenuBar
+export default Menubar
