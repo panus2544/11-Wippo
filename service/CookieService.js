@@ -10,6 +10,9 @@ const CookiesService = {
   gettokenJWTCookie () {
     return Cookies.get('tokenJWT')
   },
+  getRole () {
+    return Cookies.get('role')
+  },
   getEmailCookie () {
     return Cookies.get('email')
   },

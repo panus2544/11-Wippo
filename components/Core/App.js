@@ -1,10 +1,9 @@
 import React from 'react'
 import DashBoard from '../DashBoard'
-import Menu from './Menu'
+import Nav from './Navbar'
 import Body from './Body'
-import Registant from '../Registants'
 import RegistanceService from '../../service/RegistanceService'
-import Login from '../Login'
+import Menu from './Menu'
 
 export default class App extends React.Component {
   state = {
@@ -63,10 +62,21 @@ export default class App extends React.Component {
   render() {
     return (
       <div className="container-fluid">
-        <Menu visible={this.state.menu} setPage={this.setPage} current={this.state.current} />
-        <Body showComponents={this.state.dashboardVisible}>
-          <DashBoard allUser={this.state.allUser} />
-        </Body>
+        <div className="row">
+          <div className="col-12">
+            <Nav visible={this.state.menu} setPage={this.setPage} current={this.state.current} />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-3 col-3">
+            <Menu />
+          </div>
+          <div className="col-md-9 col-9">
+            <Body showComponents={this.state.dashboardVisible}>
+              <DashBoard allUser={this.state.allUser} />
+            </Body>
+          </div>
+        </div>
       </div>
     )
   }
