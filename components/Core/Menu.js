@@ -1,16 +1,20 @@
 import React from 'react'
-import { Menu as DefaultMenu } from 'antd'
+import { Menu as DefaultMenu, Icon, Layout, Menu } from 'antd'
 import styled from 'styled-components'
 import AuthService from '../../service/PermissionService'
-import { async } from 'rxjs/internal/scheduler/async';
 
-const Menu = styled(DefaultMenu)`
+const {
+  Header, Content, Footer, Sider,
+} = Layout;
+const SubMenu = Menu.SubMenu;
+
+const StyleMenu = styled(DefaultMenu)`
   height: 100vh;
 `
 class Menubar extends React.Component {
   state = {
-    permission: [],
-    showComponent: false
+    showComponent: false,
+    collapsed: false,
   }
 
   componentDidMount = async () => {
@@ -27,25 +31,43 @@ class Menubar extends React.Component {
     }
   }
 
-  handleClick = (e) => {
-    console.log('click ', e);
+  onCollapse = (collapsed) => {
+    console.log(collapsed);
+    this.setState({ collapsed });
   }
+
+
   render() {
     return (
-      <div>
-        <Menu
-          onClick={this.handleClick}
-          mode="inline"
-        >
+      <Sider
+        collapsible
+        collapsed={this.state.collapsed}
+        onCollapse={this.onCollapse}
+        theme="light"
+      >
+        <div className="logo" />
+        <StyleMenu theme="" defaultSelectedKeys={['1']} mode="inline">
           {this.state.showComponent ?
-            <Menu.Item key="9">
-              <a href='/viewregistrants'>ดูรายชื่อผู้สมัคร</a>
+            <Menu.Item key="1">
+              <a href='/viewregistrants'>
+                <Icon type="eye" />
+                <span>ดูรายชื่อผู้สมัคร</span>
+              </a>
             </Menu.Item> : ''}
-          <Menu.Item key="10">Option 10</Menu.Item>
-          <Menu.Item key="11">Option 11</Menu.Item>
-          <Menu.Item key="12">Option 12</Menu.Item>
-        </Menu>
-      </div>
+          <Menu.Item key="2">
+            <Icon type="eye" />
+            <span>Option 1</span>
+          </Menu.Item>
+          <Menu.Item key="3">
+            <Icon type="eye" />
+            <span>Option 2</span>
+          </Menu.Item>
+          <Menu.Item key="4">
+            <Icon type="eye" />
+            <span>File</span>
+          </Menu.Item>
+        </StyleMenu>
+      </Sider>
     )
   }
 }

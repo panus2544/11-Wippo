@@ -1,5 +1,5 @@
 import React from 'react'
-import { Menu as DefaultMenu} from 'antd'
+import { Menu as DefaultMenu } from 'antd'
 import styled from 'styled-components'
 
 const Menu = styled(DefaultMenu)`
@@ -20,18 +20,19 @@ class MenuBar extends React.Component {
     this.props.setPage(changePage)
   }
 
-    render() {
+  render() {
     return (
-      <div>
         <Menu
           visible={this.props.visible}
           onClick={this.handleClick}
           selectedKeys={[this.props.current]}
           mode="horizontal"
+          theme='dark'
         >
-          <Menu.Item key="1">Dash Board</Menu.Item>
+          <a href='/dashboard'>
+            <Menu.Item key="1">Dash Board</Menu.Item>
+          </a>
         </Menu>
-      </div>
     )
   }
 }

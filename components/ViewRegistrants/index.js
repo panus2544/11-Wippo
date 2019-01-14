@@ -2,29 +2,30 @@ import React from 'react'
 import { Table } from 'antd'
 import Nav from '../Core/Navbar'
 import Menu from '../Core/Menu'
+import styled from 'styled-components'
 
-
+const ZIndex = styled.div`
+  z-index: 10;
+`
 export default class Registants extends React.Component {
   state = {
    userAuth : this.props.allUser
   }
   render() {
     return (
-      <div className="container-fluid">
-      <div className="row">
-        <div className="col-12">
-          <Nav visible={this.state.menu} setPage={this.setPage} current={this.state.current} />
+      <div className="container-fulid overflow-hidden">
+        <div className="row">
+          <div className="col-12 col-md-12 ">
+            <Nav visible={this.state.menu} setPage={this.setPage} current={this.state.current} />
+          </div>
+          <ZIndex className="col-4 col-md-3">
+            <Menu/>
+          </ZIndex>
+          <div className="col-8 col-md-9" >
+            this is registrants!!
+          </div>
         </div>
-      </div>
-      <div className="row">
-        <div className="col-md-3 col-3">
-          <Menu />
-        </div>
-        <div className="col-md-9 col-9">
-         
-        </div>
-      </div>
-    </div>
+      </div >
     )
   }
 }
