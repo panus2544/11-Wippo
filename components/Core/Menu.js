@@ -16,7 +16,7 @@ const checkPermission =async (response)  => {
   //     showComponent : 'It not true !!'
   //   })
   // }
-  console.log(AuthService.getPermission())
+  // console.log(AuthService.getPermission())
 }
 class Menubar extends React.Component {
   state = {
@@ -29,12 +29,15 @@ class Menubar extends React.Component {
   }
 
   checkPermission = async () => {
-    let data = await AuthService.getPermission()
-    if(data.permission[0].permission_id == 1){
-      this.setState({
-        showComponent : true
-      })
-    }
+    // let data = await AuthService.getPermission()
+    // console.log(data)
+    // if(data.permission[0].permission_id == 1){
+    //   this.setState({
+    //     showComponent : true
+    //   })
+    // }else{
+      
+    // }
   }
 
   handleClick = (e) => {

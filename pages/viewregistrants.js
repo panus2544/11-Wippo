@@ -14,10 +14,10 @@ class index extends React.Component {
   }
 
   checkPermission = async () => {
-    let data = await AuthService.getPermission()
-    if(data.permission[0].permission_id == 1){
-      console.log('registrants')
-    }
+    // let data = await AuthService.getPermission()
+    // if(data.permission[0].permission_id == 1){
+    //   console.log('registrants')
+    // }
   }
 
 
