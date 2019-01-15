@@ -24,9 +24,8 @@ class Menubar extends React.Component {
   
   checkPermission = async (permissionIds) => {
     let data = await AuthService.getPermission()
-    let permission = await permissionIds
-    if(data.permission[0].permission_id == permission){
-      console.log(permission)
+    if(data.permission[0].permission_id == permissionIds){
+      console.log(permissionIds)
     }    
   }
 
