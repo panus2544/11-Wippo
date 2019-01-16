@@ -4,7 +4,11 @@ import Nav from './Navbar'
 import Body from './Body'
 import RegistanceService from '../../service/RegistanceService'
 import Menu from './Menu'
+import styled from 'styled-components';
 
+const ZIndex = styled.div`
+  z-index: 10;
+`
 export default class App extends React.Component {
   state = {
     allUser: [],
@@ -61,23 +65,21 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <div className="container-fluid">
+      <div className="container-fulid overflow-hidden">
         <div className="row">
-          <div className="col-12">
+          <div className="col-12 col-md-12 ">
             <Nav visible={this.state.menu} setPage={this.setPage} current={this.state.current} />
           </div>
-        </div>
-        <div className="row">
-          <div className="col-md-3 col-3">
+          <ZIndex className="col-3 col-md-3">
             <Menu />
-          </div>
-          <div className="col-md-9 col-9">
+          </ZIndex>
+          <div className="col-9 col-md-9" >
             <Body showComponents={this.state.dashboardVisible}>
               <DashBoard allUser={this.state.allUser} />
             </Body>
           </div>
         </div>
-      </div>
+      </div >
     )
   }
 }
