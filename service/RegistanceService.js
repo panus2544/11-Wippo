@@ -1,4 +1,5 @@
 import apiRegService from "../utils/apiRegisterService";
+import { async } from "rxjs/internal/scheduler/async";
 
 const Question = {
     getAllRegistrant : async ()=>{
@@ -7,6 +8,9 @@ const Question = {
     } ,
     getRegistrantNotRespons : async ()=>{
         return await apiRegService.get('/notregistrant')
+    } , 
+    getAllQuestions : async ()=>{
+        return await apiRegService.get('/questions')
     } 
 }
 export default Question;
