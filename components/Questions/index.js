@@ -9,6 +9,7 @@ export default class Questions extends React.Component {
       {
         id: '',
         content: ''
+
       }
     ]
   };
@@ -32,7 +33,9 @@ export default class Questions extends React.Component {
               this.state.questions.map(function (question) {
                 return (
                   <div className="col-4">
+                  <a href={"/CheckAnswer?questionsid =" + question.id}>
                     <QuestionBox questionId={question.id} content={question.content}/>
+                  </a>
                   </div>
                 )
                 
