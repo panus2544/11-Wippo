@@ -15,6 +15,8 @@ class index extends React.Component {
     let data = await AuthService.getPermission()
     if(data.permission[0].permission_id == 1 || data.permission[0].permission_id == 4){
       console.log('registrants')
+    }else{
+      
     }
   }
 

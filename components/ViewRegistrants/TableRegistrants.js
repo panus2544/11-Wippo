@@ -1,5 +1,8 @@
 import React from 'react';
 import { Table, Button } from 'antd';
+import { async } from 'rxjs/internal/scheduler/async';
+import Registrants from '../../service/RegistanceService'
+
 
 const columns = [{
   title: 'Name',
@@ -8,25 +11,48 @@ const columns = [{
   title: 'Tel.',
   dataIndex: 'tel',
 }, {
-  title: 'Address',
-  dataIndex: 'address',
+  title: 'หมายเหตุ',
+  dataIndex: 'message',
 }];
 
 const data = [];
-for (let i = 0; i < 46; i++) {
-  data.push({
-    key: i,
-    name: `Edward King ${i}`,
-    tel: `09${i}0978${i + 1}0${i}`,
-    address: `London, Park Lane no. ${i}`,
-  });
-}
+// for (let i = 0; i < 46; i++) {
+//   data.push({
+//     key: i,
+//     name: `Edward King ${i}`,
+//     tel: `09${i}0978${i + 1}0${i}`,
+//     address: `London, Park Lane no. ${i}`,
+//   });
+// }
 
 class App extends React.Component {
   state = {
     selectedRowKeys: [], // Check here to configure the default column
     loading: false,
+    registrants : []
   };
+  componentDidMount = async() => {
+    let registrants = await Registrants.getAllRegistrant()
+    console.log(registrants,'tesy')
+    await this.getRegistrant(registrants)
+  }
+
+  getRegistrant = async registrants => {
+    for (let index = 0; index < registrants.length; index++) {
+      data.push({
+        key : index,
+        name:registrants[index].firstname_th,
+        tel : registrants[index].telno,
+        message : null
+      })
+      console.log(registrants[index].firstName_th)
+    }
+    
+    this.setState({
+      registrants : data
+    })
+  }
+
   start = () => {
     this.setState({ loading: true });
     // ajax request after empty completing
@@ -48,6 +74,7 @@ class App extends React.Component {
       onChange: this.onSelectChange,
     };
     const hasSelected = selectedRowKeys.length > 0;
+    console.log(columns,'col')
     return (
       <div>
         {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
