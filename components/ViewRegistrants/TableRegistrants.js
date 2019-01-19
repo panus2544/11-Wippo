@@ -16,36 +16,28 @@ const columns = [{
 }];
 
 const data = [];
-// for (let i = 0; i < 46; i++) {
-//   data.push({
-//     key: i,
-//     name: `Edward King ${i}`,
-//     tel: `09${i}0978${i + 1}0${i}`,
-//     address: `London, Park Lane no. ${i}`,
-//   });
-// }
 
 class App extends React.Component {
   state = {
-    selectedRowKeys: [], // Check here to configure the default column
+    selectedRowKeys: [], 
     loading: false,
     registrants : []
   };
   componentDidMount = async() => {
     let registrants = await Registrants.getAllRegistrant()
     console.log(registrants,'tesy')
-    await this.getRegistrant(registrants)
+    await this.getRegistrant(registrants.registrants)
   }
 
   getRegistrant = async registrants => {
     for (let index = 0; index < registrants.length; index++) {
       data.push({
         key : index,
-        name:registrants[index].firstname_th,
+        name: registrants[index].firstname_th,
         tel : registrants[index].telno,
         message : null
       })
-      console.log(registrants[index].firstName_th)
+      console.log('Test',registrants[index].firstName_th)
     }
     
     this.setState({
@@ -55,7 +47,6 @@ class App extends React.Component {
 
   start = () => {
     this.setState({ loading: true });
-    // ajax request after empty completing
     setTimeout(() => {
       this.setState({
         selectedRowKeys: [],
