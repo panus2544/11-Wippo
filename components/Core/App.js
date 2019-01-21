@@ -25,7 +25,7 @@ export default class App extends React.Component {
   getAlluserDB = async () => {
     const profiles = await RegistanceService.getAllRegistrant()
     this.setState({
-      allUser: profiles
+      allUser: profiles.registrants
     })
     console.log(this.state.allUser)
   }

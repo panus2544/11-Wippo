@@ -3,7 +3,7 @@ import { async } from "rxjs/internal/scheduler/async";
 
 const Question = {
     getAllRegistrant : async ()=>{
-      const respons = await apiRegService.get('/registrant')
+      const respons = await apiRegService.get('/registrants')
         return respons.data
     } ,
     getRegistrantNotRespons : async ()=>{
