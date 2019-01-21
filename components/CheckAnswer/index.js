@@ -1,7 +1,8 @@
 import React from "react";
 import RegistanceService from "../../service/RegistanceService";
 import { async } from "rxjs/internal/scheduler/async";
-import { InputNumber } from 'antd';
+import { InputNumber } from "antd";
+import { Button, Icon } from "antd";
 
 export default class CheckAnswer extends React.Component {
   state = {
@@ -29,7 +30,7 @@ export default class CheckAnswer extends React.Component {
     // this.getValue(reqanswers)
   }
   onChange(value) {
-    console.log('changed', value);
+    console.log("changed", value);
   }
 
   //   getValue = async (reqanswers) =>{
@@ -45,19 +46,22 @@ export default class CheckAnswer extends React.Component {
     return (
       <div className="container mt-5">
         <h1>Hello Answer by question_id</h1>
-        <hr></hr>
+        <hr />
         <div className="row">
           <div className="col-8">ข้อที่ : {this.state.question_id}</div>
           <div className="col-4">wip_id : {this.state.answers[0].wip_id}</div>
           <div className="mt-5 col-12">
-            {this.state.answers.map(function (answers){
-              return <div>{answers.ans_content}</div>
+            {this.state.answers.map(function(answer) {
+              return <div>{answer.ans_content}</div>;
             })}
           </div>
           <div className="col-12 mt-5">
             <InputNumber className="mr-2" min={1} max={10} defaultValue={3} />
             <InputNumber className="mr-2" min={1} max={10} defaultValue={3} />
             <InputNumber className="mr-2" min={1} max={10} defaultValue={3} />
+            <Button type="primary">
+              Go forward <Icon type="right" />
+            </Button>
           </div>
         </div>
       </div>
