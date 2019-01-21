@@ -11,6 +11,10 @@ const Question = {
     } , 
     getAllQuestions : async ()=>{
         return await apiRegService.get('/questions')
-    } 
+    } ,
+    getAnswersByQuestionId : async (question_id)=>{
+        return await apiRegService.get(`/answers/${question_id}`)
+    }
+     
 }
 export default Question;
