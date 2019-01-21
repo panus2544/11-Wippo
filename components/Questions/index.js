@@ -2,25 +2,21 @@ import React from "react";
 import QuestionBox from "./QuestionBox";
 import RegistanceService from "../../service/RegistanceService";
 
-
 export default class Questions extends React.Component {
   state = {
     questions: [
       {
         id: '',
         content: ''
-
       }
     ]
   };
-
   async componentDidMount() {
     const reqquestions = await RegistanceService.getAllQuestions();
     this.setState({
       questions: reqquestions.data
     });
     // console.log(this.state.questions[0].content);
-    
   }
   render() {
     // console.log(this.state.questions)
@@ -33,13 +29,11 @@ export default class Questions extends React.Component {
               this.state.questions.map(function (question) {
                 return (
                   <div className="col-4">
-                  <a href={"/CheckAnswer?questionsid =" + question.id}>
+                  <a href={`/checkanswer?questionid=${question.id}`}>
                     <QuestionBox questionId={question.id} content={question.content}/>
                   </a>
                   </div>
                 )
-                
-                
               })
             }
           </div>
