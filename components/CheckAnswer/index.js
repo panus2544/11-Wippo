@@ -6,8 +6,9 @@ import { Button, Icon } from "antd";
 
 export default class CheckAnswer extends React.Component {
   state = {
+        startIndex:0,
     answers: [
-      {
+      {  
         question_id: "",
         ans_id: "",
         ans_content: "",
@@ -18,7 +19,8 @@ export default class CheckAnswer extends React.Component {
   async componentDidMount() {
     const url = new URLSearchParams(window.location.search);
     this.setState({
-      question_id: `${url.get("questionid")}`
+      question_id: `${url.get("questionid")}`,
+      index: `${url.get("index")}`
     });
     const reqanswers = await RegistanceService.getAnswersByQuestionId(
       `${url.get("questionid")}`
@@ -29,20 +31,21 @@ export default class CheckAnswer extends React.Component {
     // console.log(this.state.answers,'state')
     // this.getValue(reqanswers)
   }
-  onChange(value) {
-    console.log("changed", value);
+  // changeQuestionStartIndex = number => {
+  //   this.setState({ questionStartIndex: number })
+  // }
+  handleNext = async () => {
+    await this.setState({
+      startIndex:this.state.startIndex+=1
+    })
+    if(this.state.startIndex == this.state.answers.length){
+      
+    }
   }
-
-  //   getValue = async (reqanswers) =>{
-  //     this.setState({
-  //         answers: reqanswers.data
-  //       });
-  //       console.log(this.state.answers,'state')
-  //   }
-
   render() {
     // console.log(this.state.question_id)
-    console.log(this.state.answers[0]);
+    // console.log(this.state.answers[this.state.index].ans_content);
+    // console.log(this.state.index);
     return (
       <div className="container mt-5">
         <h1>Hello Answer by question_id</h1>
@@ -51,15 +54,20 @@ export default class CheckAnswer extends React.Component {
           <div className="col-8">ข้อที่ : {this.state.question_id}</div>
           <div className="col-4">wip_id : {this.state.answers[0].wip_id}</div>
           <div className="mt-5 col-12">
-            {this.state.answers.map(function(answer) {
-              return <div>{answer.ans_content}</div>;
-            })}
+            {this.state.answers.map( (answer,key) => {
+              if (
+                key >= this.state.startIndex && key <= this.state.startIndex
+              )
+              return (
+                <div>{answer.ans_content}</div>
+              )
+            })}   
           </div>
           <div className="col-12 mt-5">
             <InputNumber className="mr-2" min={1} max={10} defaultValue={3} />
             <InputNumber className="mr-2" min={1} max={10} defaultValue={3} />
             <InputNumber className="mr-2" min={1} max={10} defaultValue={3} />
-            <Button type="primary">
+            <Button type="primary" onClick={this.handleNext}>
               Go forward <Icon type="right" />
             </Button>
           </div>
