@@ -22,7 +22,7 @@ export default class Questions extends React.Component {
     // console.log(this.state.questions)
     return (
       <div className="container mt-5">
-        Hello Questions
+        <h1>ตรวจคำถาม</h1>
         <div className="mt-5">
           <div className="row">
             {
