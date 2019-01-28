@@ -6,16 +6,31 @@ import { Button, Icon } from "antd";
 
 export default class CheckAnswer extends React.Component {
   state = {
-        startIndex:0,
+    startIndex: 0,
+    number: 1,
+    button: "ถัดไป",
+    scorebox1: "",
+    scorebox2: "",
+    scorebox3: "",
     answers: [
-      {  
+      {
         question_id: "",
         ans_id: "",
         ans_content: "",
         wip_id: ""
       }
+    ],
+    answersEva: [
+      {
+        ans_id: "",
+        checker_wip_id: "",
+        question_id: "",
+        score_category: "",
+        score: ""
+      }
     ]
   };
+
   async componentDidMount() {
     const url = new URLSearchParams(window.location.search);
     this.setState({
@@ -28,48 +43,96 @@ export default class CheckAnswer extends React.Component {
     this.setState({
       answers: reqanswers.data
     });
-    // console.log(this.state.answers,'state')
-    // this.getValue(reqanswers)
-  }
-  // changeQuestionStartIndex = number => {
-  //   this.setState({ questionStartIndex: number })
-  // }
-  handleNext = async () => {
-    await this.setState({
-      startIndex:this.state.startIndex+=1
-    })
-    if(this.state.startIndex == this.state.answers.length){
-      
+    if (this.state.answers.length === this.state.number) {
+      this.setState({
+        button: "กลับ"
+      });
     }
   }
+
+  onChangebox1 = e => {
+    this.setState({
+      scorebox1: e
+    });
+  };
+  onChangebox2 = e => {
+    this.setState({
+      scorebox2: e
+    });
+  };
+  onChangebox3 = e => {
+    this.setState({
+      scorebox3: e
+    });
+  };
+
+  handleNext = async (e) => {
+    e.preventDefault()
+    if (this.state.button === "กลับ") {
+      window.location.href = "http://localhost:3000/questions";
+    }
+    if (this.state.answers.length - 1 === this.state.number) {
+      this.setState({
+        button: "กลับ"
+      });
+    }
+    await this.setState({
+      scorebox1:'',
+      scorebox2:'',
+      scorebox3:'',
+      startIndex: (this.state.startIndex += 1),
+      number: (this.state.number += 1)
+    });
+  };
   render() {
-    // console.log(this.state.question_id)
-    // console.log(this.state.answers[this.state.index].ans_content);
-    // console.log(this.state.index);
     return (
       <div className="container mt-5">
-        <h1>Hello Answer by question_id</h1>
+        <h1>ตรวจคำตอบ</h1>
         <hr />
         <div className="row">
           <div className="col-8">ข้อที่ : {this.state.question_id}</div>
-          <div className="col-4">wip_id : {this.state.answers[0].wip_id}</div>
+          <div className="col-2">
+            wip_id : {this.state.answers[this.state.startIndex].wip_id}
+          </div>
+          <div className="col-2">
+            คนที่ {this.state.number} / {this.state.answers.length}
+          </div>
           <div className="mt-5 col-12">
-            {this.state.answers.map( (answer,key) => {
-              if (
-                key >= this.state.startIndex && key <= this.state.startIndex
-              )
-              return (
-                <div>{answer.ans_content}</div>
-              )
-            })}   
+            {this.state.answers.map((answer, key) => {
+              if (key >= this.state.startIndex && key <= this.state.startIndex)
+                return <div>{answer.ans_content}</div>;
+            })}
           </div>
           <div className="col-12 mt-5">
-            <InputNumber className="mr-2" min={1} max={10} defaultValue={3} />
-            <InputNumber className="mr-2" min={1} max={10} defaultValue={3} />
-            <InputNumber className="mr-2" min={1} max={10} defaultValue={3} />
-            <Button type="primary" onClick={this.handleNext}>
-              Go forward <Icon type="right" />
-            </Button>
+            <p>ให้คะแนน</p>
+            <form onSubmit={this.handleNext}>
+              <label></label>
+              <InputNumber
+                value={this.state.scorebox1}
+                onChange={this.onChangebox1}
+                className="mr-2"
+                min={0}
+                max={10}
+                required
+              />
+              <InputNumber
+              value={this.state.scorebox2}
+                onChange={this.onChangebox2}
+                className="mr-2"
+                min={0}
+                max={10}
+                required
+              />
+              <InputNumber
+              value={this.state.scorebox3}
+                onChange={this.onChangebox3}
+                className="mr-2"
+                min={0}
+                max={10}
+                required
+              />
+              <input value={this.state.button} type="submit" />
+            </form>
           </div>
         </div>
       </div>
