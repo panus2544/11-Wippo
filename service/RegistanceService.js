@@ -14,6 +14,9 @@ const Question = {
     } ,
     getAnswersByQuestionId : async (question_id)=>{
         return await apiRegService.get(`/answers/${question_id}`)
+    },
+    postAnswerEvaluations : async () => {
+        return await apiRegService.post(`/answers/evaluations`)
     }
      
 }
