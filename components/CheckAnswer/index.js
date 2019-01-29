@@ -66,8 +66,8 @@ export default class CheckAnswer extends React.Component {
     });
   };
 
-  handleNext = async (e) => {
-    e.preventDefault()
+  handleNext = async e => {
+    e.preventDefault();
     if (this.state.button === "กลับ") {
       window.location.href = "http://localhost:3000/questions";
     }
@@ -77,9 +77,9 @@ export default class CheckAnswer extends React.Component {
       });
     }
     await this.setState({
-      scorebox1:'',
-      scorebox2:'',
-      scorebox3:'',
+      scorebox1: "",
+      scorebox2: "",
+      scorebox3: "",
       startIndex: (this.state.startIndex += 1),
       number: (this.state.number += 1)
     });
@@ -106,7 +106,7 @@ export default class CheckAnswer extends React.Component {
           <div className="col-12 mt-5">
             <p>ให้คะแนน</p>
             <form onSubmit={this.handleNext}>
-              <label></label>
+              <label className="mr-2">intelligent</label>
               <InputNumber
                 value={this.state.scorebox1}
                 onChange={this.onChangebox1}
@@ -115,16 +115,18 @@ export default class CheckAnswer extends React.Component {
                 max={10}
                 required
               />
+              <label className="mr-2">creative</label>
               <InputNumber
-              value={this.state.scorebox2}
+                value={this.state.scorebox2}
                 onChange={this.onChangebox2}
                 className="mr-2"
                 min={0}
                 max={10}
                 required
               />
+              <label className="mr-2">comunication</label>
               <InputNumber
-              value={this.state.scorebox3}
+                value={this.state.scorebox3}
                 onChange={this.onChangebox3}
                 className="mr-2"
                 min={0}
