@@ -9,12 +9,12 @@ export default class CheckAnswer extends React.Component {
     startIndex: 0,
     number: 1,
     button: "ถัดไป",
-    scorebox1: "",
-    scorebox2: "",
-    scorebox3: "",
+    intelligent_weight: "",
+    creative_weight: "",
+    communication_weight: "",
+    question_id: "",
     answers: [
       {
-        question_id: "",
         ans_id: "",
         ans_content: "",
         wip_id: ""
@@ -22,8 +22,22 @@ export default class CheckAnswer extends React.Component {
     ],
     answersEva: [
       {
-        ans_id: "",
-        checker_wip_id: "",
+        answer_id: "",
+        
+        question_id: "",
+        score_category: "",
+        score: ""
+      },
+      {
+        answer_id: "",
+        
+        question_id: "",
+        score_category: "",
+        score: ""
+      },
+      {
+        answer_id: "",
+        
         question_id: "",
         score_category: "",
         score: ""
@@ -33,41 +47,49 @@ export default class CheckAnswer extends React.Component {
 
   async componentDidMount() {
     const url = new URLSearchParams(window.location.search);
+    
     this.setState({
       question_id: `${url.get("questionid")}`,
       index: `${url.get("index")}`
     });
     const reqanswers = await RegistanceService.getAnswersByQuestionId(
       `${url.get("questionid")}`
-    );
-    this.setState({
-      answers: reqanswers.data
-    });
-    if (this.state.answers.length === this.state.number) {
+      );
       this.setState({
-        button: "กลับ"
+        answers: reqanswers.data,
+        question_id:`${url.get("questionid")}`
       });
+    
+      if (this.state.answers.length === this.state.number) {
+        this.setState({
+          button: "กลับ"
+        });
+      }
+
+  }
+
+ 
+  onChangebox = (name,value)=>{
+    this.state.answersEva[name]={
+      ...this.state.answersEva[name],
+      score_category:parseInt(name)+1,
+      score:value
     }
   }
 
-  onChangebox1 = e => {
-    this.setState({
-      scorebox1: e
-    });
-  };
-  onChangebox2 = e => {
-    this.setState({
-      scorebox2: e
-    });
-  };
-  onChangebox3 = e => {
-    this.setState({
-      scorebox3: e
-    });
-  };
-
   handleNext = async e => {
     e.preventDefault();
+    for (let index = 0; index < this.state.answersEva.length; index++) {
+      
+      this.state.answersEva[index]={
+        ...this.state.answersEva[index],
+        answer_id:this.state.answers[this.state.startIndex].ans_id,
+        question_id:this.state.question_id 
+      }
+    }
+    await RegistanceService.postAnswerEvaluations(
+      this.state.answersEva
+    );
     if (this.state.button === "กลับ") {
       window.location.href = "http://localhost:3000/questions";
     }
@@ -107,27 +129,32 @@ export default class CheckAnswer extends React.Component {
             <p>ให้คะแนน</p>
             <form onSubmit={this.handleNext}>
               <label className="mr-2">intelligent</label>
-              <InputNumber
-                value={this.state.scorebox1}
-                onChange={this.onChangebox1}
+              <input
+              type="number"
+                name={0}
+                onChange={({ target: { name, value } }) => this.onChangebox(name, value)}
                 className="mr-2"
                 min={0}
                 max={10}
                 required
               />
               <label className="mr-2">creative</label>
-              <InputNumber
-                value={this.state.scorebox2}
-                onChange={this.onChangebox2}
+              <input
+              type="number"
+
+                 name={1}
+                 onChange={({ target: { name, value } }) => this.onChangebox(name, value)}
                 className="mr-2"
                 min={0}
                 max={10}
                 required
               />
               <label className="mr-2">comunication</label>
-              <InputNumber
-                value={this.state.scorebox3}
-                onChange={this.onChangebox3}
+              <input
+              type="number"
+
+                name={2}
+                onChange={({ target: { name, value } }) => this.onChangebox(name, value)}
                 className="mr-2"
                 min={0}
                 max={10}
