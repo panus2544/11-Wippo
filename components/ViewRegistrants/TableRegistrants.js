@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input,Checkbox  } from 'antd';
+import { Input,Checkbox,Pagination  } from 'antd';
 import Registrants from '../../service/RegistanceService'
 
 
@@ -8,7 +8,8 @@ class App extends React.Component {
   state = {
     selectedRowKeys: [],
     loading: false,
-    registrants: []
+    registrants: [],
+    checked : false
   };
 
   componentDidMount = async () => {
@@ -23,12 +24,19 @@ class App extends React.Component {
     console.log(this.state.registrants)
   }
 
+  handleToggleStatus = (e) =>{
+    console.log(`checked = ${e.target.checked}`);
+   
+  }
 
+  getNote = () => {
+
+  }
   render() {
-
+    
     return (
       <div>
-        <table class="table ">
+        <table className="table ">
           <thead>
             <tr>
               <th scope="col">โทรแล้ว</th>
@@ -40,10 +48,10 @@ class App extends React.Component {
               this.state.registrants.map((data, i) => {
                 return (
                   <tr  key={i}>
-                    <td scope="col"><Checkbox /></td>
+                    <td scope="col"><Checkbox onChange={this.handleToggleStatus} defaultChecked={data.is_call === 0} /></td>
                     <td scope="col">{data.firstname_th}  {data.lastname_th}</td>
                     <td scope="col">{data.telno}</td>
-                    <td scope="col"><Input value={data.note}/></td>
+                    <td scope="col"><Input value={data.note} onChange={this.getNote} /></td>
                   </tr>
                 )
               })
