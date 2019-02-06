@@ -11,26 +11,41 @@ const SubMenu = Menu.SubMenu;
 const StyleMenu = styled(DefaultMenu)`
   height: 100vh;
 `
+
+const allPermission = [1,2,3,4,5,6,8,9]
+
+const path = ['dashboard','viewregistrants','questions','viewsponsor','editsponsor','viewapprove','postannounce','selectitimpassing','adminapprove']
 class Menubar extends React.Component {
   state = {
     showComponent: false,
     collapsed: false,
-    permission : 0
+    permission : {}
   }
 
-  componentDidMount = async () => {
-    this.checkPermission()
+  componentDidMount = async() => {
+    this.getPermission()
+  }
+
+  getPermission = async () => {
+    let data = await AuthService.getPermission()
+    let permission = []
+    permission = data.permission
+    this.setState({
+      permission : permission
+    })
+    console.log('state :  ',this.state.permission)
   }
   
-  checkPermission = async (permissionIds) => {
-    let data = await AuthService.getPermission()
-    if(data.permission[0].permission_id == permissionIds){
-      console.log(permissionIds)
-    }    
+  checkPermission = (permissionId) => {
+    for (let index = 0; index < this.state.permission.length; index++) {
+      if(this.state.permission[index].permission_id === permissionId){
+        console.log('this.state.permission[index].permission_id : ',this.state.permission[index].permission_id)
+        return permissionId
+      }
+    }
   }
 
   onCollapse = (collapsed) => {
-    console.log(collapsed);
     this.setState({ collapsed });
   }
 
@@ -45,27 +60,18 @@ class Menubar extends React.Component {
       >
         <div className="logo" />
         <StyleMenu theme="" defaultSelectedKeys={['1']} mode="inline">
-          {(this.checkPermission(4) && 
-              <Menu.Item key="1">
-              <a href='/viewregistrants'>
+        {
+          allPermission.map((data,i) => {
+            return (
+            this.checkPermission(data) === data && 
+              <Menu.Item key={`${i}`} >
+              <a href={`/${path[data-1]}`}>
                 <Icon type="eye" />
-                <span>ดูรายชื่อผู้สมัคร</span>
+                <span>{data}</span>
               </a>
           </Menu.Item> )
-          }
-
-          <Menu.Item key="2">
-            <Icon type="eye" />
-            <span>Option 1</span>
-          </Menu.Item>
-          <Menu.Item key="3">
-            <Icon type="eye" />
-            <span>Option 2</span>
-          </Menu.Item>
-          <Menu.Item key="4">
-            <Icon type="eye" />
-            <span>File</span>
-          </Menu.Item>
+          })
+        }
         </StyleMenu>
       </Sider>
     )
