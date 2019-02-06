@@ -1,15 +1,35 @@
 import React from 'react';
-import { Input,Checkbox,Pagination  } from 'antd';
+import { Table, Button, Input, Tag, Checkbox } from 'antd';
 import Registrants from '../../service/RegistanceService'
 
-
+const data = [];
 
 class App extends React.Component {
   state = {
     selectedRowKeys: [],
     loading: false,
     registrants: [],
-    checked : false
+    columns: [{
+      title: 'โทรแล้ว',
+      dataIndex: 'is_call',
+      key :'wip_id',
+      render: (boolean,profile) => {
+        return (
+          boolean === 0 ? <Checkbox defaultChecked={true} onChange={(e)=>this.handleCheckStatus(profile.wip_id,e)}/> : <Checkbox defaultChecked={false} />
+        )
+      }
+    }, {
+      title: 'ชื่อ-สกุล',
+      dataIndex: 'name',
+    }, {
+      title: 'เบอร์โทรศัพท์',
+      dataIndex: 'tel',
+    }, {
+      title: 'หมายเหตุ',
+      dataIndex: 'message',
+      render: (text) => 
+         <Input type="text" defaultValue={text}  />
+    }]
   };
 
   componentDidMount = async () => {
@@ -17,48 +37,35 @@ class App extends React.Component {
     this.getRegistrant(registrants.registrants)
   }
 
-  getRegistrant = registrants => {
+  getRegistrant = async registrants => {
+    for (let index = 0; index < registrants.length; index++) {
+      data.push({
+        key: index,
+        wip_id : registrants[index].wip_id,
+        is_call: registrants[index].is_call,
+        name: registrants[index].firstname_th,
+        tel: registrants[index].telno,
+        message: registrants[index].note,
+      })
+    }
     this.setState({
       registrants: registrants
     })
-    console.log(this.state.registrants)
   }
 
-  handleToggleStatus = (e) =>{
-    console.log(`checked = ${e.target.checked}`);
-   
+  onSelectChange = (selectedRowKeys) => {
+    this.setState({ selectedRowKeys });
   }
 
-  getNote = () => {
-
-  }
-  render() {
+  handleCheckStatus = (wip_id,e) =>{
+    console.log(`checked = ${e.target.checked} : ${wip_id}`);
     
+  }
+
+
+  render() {
     return (
-      <div>
-        <table className="table ">
-          <thead>
-            <tr>
-              <th scope="col">โทรแล้ว</th>
-              <th scope="col">ชื่อ-สกุล</th>
-              <th scope="col">เบอร์โทรศัพท์</th>
-              <th scope="col">หมายเหตุ</th>
-            </tr>
-            {
-              this.state.registrants.map((data, i) => {
-                return (
-                  <tr  key={i}>
-                    <td scope="col"><Checkbox onChange={this.handleToggleStatus} defaultChecked={data.is_call === 0} /></td>
-                    <td scope="col">{data.firstname_th}  {data.lastname_th}</td>
-                    <td scope="col">{data.telno}</td>
-                    <td scope="col"><Input value={data.note} onChange={this.getNote} /></td>
-                  </tr>
-                )
-              })
-            }
-          </thead>
-        </table>
-      </div>
+      <Table columns={this.state.columns} dataSource={data} />
     );
   }
 }
