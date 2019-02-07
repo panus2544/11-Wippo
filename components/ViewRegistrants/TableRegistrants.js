@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Button, Input, Tag, Checkbox } from 'antd';
+import { Table, Input, Checkbox } from 'antd';
 import Registrants from '../../service/RegistanceService'
 
 class App extends React.Component {
@@ -12,11 +12,10 @@ class App extends React.Component {
       dataIndex: 'is_call',
       key: 'wip_id',
       render: (boolean, profile) => {
-        console.log(boolean,profile)
         return (
           boolean === 1 ?
-            <Checkbox defaultChecked={true} onChange={(e) => this.handleCheckStatus(profile.wip_id, e)} /> :
-            <Checkbox defaultChecked={false} onChange={(e) => this.handleCheckStatus(profile.wip_id, e)} />
+            <Checkbox defaultChecked={true} onChange={(e) => this.handleCheckStatus(profile.wip_id, profile.note,e)} /> :
+            <Checkbox defaultChecked={false} onChange={(e) => this.handleCheckStatus(profile.wip_id, profile.note,e)} />
         )
       }
     }, {
@@ -29,7 +28,7 @@ class App extends React.Component {
       title: 'หมายเหตุ',
       dataIndex: 'message',
       render: (text) =>
-        <Input type="text" defaultValue={text} />
+        <Input type="text" defaultValue={text} onBlur={(e) => this.handleUnfocus(e)}/>
     }]
   };
 
@@ -45,12 +44,11 @@ class App extends React.Component {
         key: index,
         wip_id: registrants[index].wip_id,
         is_call: registrants[index].is_call,
-        name: registrants[index].firstname_th,
+        name: `${registrants[index].firstname_th} ${registrants[index].lastname_th}`,
         tel: registrants[index].telno,
         message: registrants[index].note,
       })
     }
-    console.log(this.state.columns)
     this.setState({
       registrants: data
     })
@@ -60,11 +58,14 @@ class App extends React.Component {
     this.setState({ selectedRowKeys });
   }
 
-  handleCheckStatus = (wip_id, e) => {
+  handleCheckStatus = (wip_id,note,e) => {
     console.log(`checked = ${e.target.checked} : ${wip_id}`);
-    Registrants.getDataForChangeStatus({ wipId: wip_id, is_call: e.target.checked , note : null})
+    Registrants.getDataForChangeStatus({ wipId: wip_id, is_call: e.target.checked , note : note})
   }
 
+  handleUnfocus = (e) => {
+    console.log(`checked = ${e.target.defaultValue} `);
+  }
 
   render() {
     return (
