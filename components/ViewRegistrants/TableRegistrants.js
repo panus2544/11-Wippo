@@ -2,8 +2,6 @@ import React from 'react';
 import { Table, Button, Input, Tag, Checkbox } from 'antd';
 import Registrants from '../../service/RegistanceService'
 
-const data = [];
-
 class App extends React.Component {
   state = {
     selectedRowKeys: [],
@@ -14,6 +12,7 @@ class App extends React.Component {
       dataIndex: 'is_call',
       key: 'wip_id',
       render: (boolean, profile) => {
+        console.log(boolean,profile)
         return (
           boolean === 1 ?
             <Checkbox defaultChecked={true} onChange={(e) => this.handleCheckStatus(profile.wip_id, e)} /> :
@@ -40,6 +39,7 @@ class App extends React.Component {
   }
 
   getRegistrant = async registrants => {
+    let data = [];
     for (let index = 0; index < registrants.length; index++) {
       data.push({
         key: index,
@@ -50,8 +50,9 @@ class App extends React.Component {
         message: registrants[index].note,
       })
     }
+    console.log(this.state.columns)
     this.setState({
-      registrants: registrants
+      registrants: data
     })
   }
 
@@ -67,7 +68,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <Table columns={this.state.columns} dataSource={data} />
+      <Table columns={this.state.columns} dataSource={this.state.registrants} />
     );
   }
 }
