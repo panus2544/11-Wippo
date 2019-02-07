@@ -12,10 +12,12 @@ class App extends React.Component {
     columns: [{
       title: 'โทรแล้ว',
       dataIndex: 'is_call',
-      key :'wip_id',
-      render: (boolean,profile) => {
+      key: 'wip_id',
+      render: (boolean, profile) => {
         return (
-          boolean === 0 ? <Checkbox defaultChecked={true} onChange={(e)=>this.handleCheckStatus(profile.wip_id,e)}/> : <Checkbox defaultChecked={false} />
+          boolean === 1 ?
+            <Checkbox defaultChecked={true} onChange={(e) => this.handleCheckStatus(profile.wip_id, e)} /> :
+            <Checkbox defaultChecked={false} onChange={(e) => this.handleCheckStatus(profile.wip_id, e)} />
         )
       }
     }, {
@@ -27,8 +29,8 @@ class App extends React.Component {
     }, {
       title: 'หมายเหตุ',
       dataIndex: 'message',
-      render: (text) => 
-         <Input type="text" defaultValue={text}  />
+      render: (text) =>
+        <Input type="text" defaultValue={text} />
     }]
   };
 
@@ -41,7 +43,7 @@ class App extends React.Component {
     for (let index = 0; index < registrants.length; index++) {
       data.push({
         key: index,
-        wip_id : registrants[index].wip_id,
+        wip_id: registrants[index].wip_id,
         is_call: registrants[index].is_call,
         name: registrants[index].firstname_th,
         tel: registrants[index].telno,
@@ -57,9 +59,9 @@ class App extends React.Component {
     this.setState({ selectedRowKeys });
   }
 
-  handleCheckStatus = (wip_id,e) =>{
+  handleCheckStatus = (wip_id, e) => {
     console.log(`checked = ${e.target.checked} : ${wip_id}`);
-    
+    Registrants.getDataForChangeStatus({ wipId: wip_id, is_call: e.target.checked , note : null})
   }
 
 
