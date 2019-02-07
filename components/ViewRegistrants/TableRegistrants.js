@@ -7,6 +7,7 @@ class App extends React.Component {
     selectedRowKeys: [],
     loading: false,
     registrants: [],
+    note: '',
     columns: [{
       title: 'โทรแล้ว',
       dataIndex: 'is_call',
@@ -14,8 +15,8 @@ class App extends React.Component {
       render: (boolean, profile) => {
         return (
           boolean === 1 ?
-            <Checkbox defaultChecked={true} onChange={(e) => this.handleCheckStatus(profile.wip_id, profile.note,e)} /> :
-            <Checkbox defaultChecked={false} onChange={(e) => this.handleCheckStatus(profile.wip_id, profile.note,e)} />
+            <Checkbox defaultChecked={true} onChange={(e) => this.handleCheckStatus(profile.wip_id,e)} /> :
+            <Checkbox defaultChecked={false} onChange={(e) => this.handleCheckStatus(profile.wip_id,e)} />
         )
       }
     }, {
@@ -27,8 +28,11 @@ class App extends React.Component {
     }, {
       title: 'หมายเหตุ',
       dataIndex: 'message',
-      render: (text) =>
-        <Input type="text" defaultValue={text} onBlur={(e) => this.handleUnfocus(e)}/>
+      render: (text, profile) => {
+        return (
+          <Input type="text" defaultValue={text} onBlur={(e) => this.handleUnfocus(profile.wip_id,e)} />
+        )
+      }
     }]
   };
 
@@ -58,13 +62,12 @@ class App extends React.Component {
     this.setState({ selectedRowKeys });
   }
 
-  handleCheckStatus = (wip_id,note,e) => {
-    console.log(`checked = ${e.target.checked} : ${wip_id}`);
-    Registrants.getDataForChangeStatus({ wipId: wip_id, is_call: e.target.checked , note : note})
+  handleCheckStatus = (wip_id,e) => {
+    Registrants.getDataForChangeStatus({ wipId: wip_id, is_call: e.target.checked})
   }
 
-  handleUnfocus = (e) => {
-    console.log(`checked = ${e.target.defaultValue} `);
+  handleUnfocus = (wip_id,e) => {
+    Registrants.getDataForUpdateNote({ wipId: wip_id, note: e.target.value })
   }
 
   render() {
