@@ -2,7 +2,7 @@ import React from 'react'
 import Router from 'next/router'
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 import Cookies from '../../service/CookieService'
-
+import Button from '../Core/Button' 
 import AuthService from '../../service/AuthService'
 
 const responseFacebook = async (response) => {
@@ -28,7 +28,7 @@ class LoginFaceBook extends React.Component {
         appId="293604811359850"
         callback={responseFacebook}
         render={renderProps => (
-          <button size="large" block type="primary" onClick={renderProps.onClick}>Login!</button>
+          <Button size="large" block type="primary"  onClick={renderProps.onClick}>Login with Facebook</Button>
         )}
       />
     )
