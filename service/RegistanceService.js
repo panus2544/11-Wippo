@@ -17,7 +17,27 @@ const Question = {
     },
     postAnswerEvaluations : async (answerEva) => {
         return await apiRegService.post(`/answers/evaluations`,answerEva)
-    }
+    },
+    getDataForChangeStatus : async (data)=>{
+        try{
+            await apiRegService.put('/registrants/changstatus',{
+                'itim_wip_id':data.wipId,
+                'is_call' : data.is_call,
+            })
+        }catch (error){
+            console.log(error)
+        }
+      } ,
+      getDataForUpdateNote : async (data)=>{
+        try{
+            await apiRegService.put('/registrants/note',{
+                'itim_wip_id':data.wipId,
+                'note' : data.note,
+            })
+        }catch (error){
+            console.log(error)
+        }
+      } ,
      
 }
 export default Question;

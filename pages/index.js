@@ -4,9 +4,7 @@ import App from '../components/Login'
 class index extends React.Component {
   render() {
     return (
-      <div>
-        <App />
-      </div>
+      <App />
     )
   }
 }
