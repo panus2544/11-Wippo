@@ -30,7 +30,7 @@ class App extends React.Component {
       dataIndex: 'message',
       render: (text, profile) => {
         return (
-          <Input type="text" defaultValue={text} onBlur={(e) => this.handleUnfocus(profile.wip_id,e)} />
+          <Input type="text" defaultValue={text} onChangeCapture={(e) => this.handleUnfocus(profile.wip_id,e)} />
         )
       }
     }]
@@ -67,7 +67,6 @@ class App extends React.Component {
   }
 
   handleUnfocus = (wip_id,e) => {
-    console.log(wip_id,e.target.value)
     Registrants.getDataForUpdateNote({ wipId: wip_id, note: e.target.value })
   }
 
