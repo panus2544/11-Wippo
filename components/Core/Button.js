@@ -11,4 +11,9 @@ export const FacebookButton = styled(DefaultButton)`
   color: white;
 `
 
+export const ButtonTranparent = styled(DefaultButton)`
+  background-color: transparent;
+  border:0px;
+`
+
 export default ButtonPrimary
