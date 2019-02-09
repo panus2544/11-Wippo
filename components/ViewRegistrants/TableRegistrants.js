@@ -30,7 +30,7 @@ class App extends React.Component {
       dataIndex: 'message',
       render: (text, profile) => {
         return (
-          <Input type="text" defaultValue={text} on={(e) => this.handleUnfocus(profile.wip_id,e)} />
+          <Input type="text" defaultValue={text} onBlur={(e) => this.handleUnfocus(profile.wip_id,e)} />
         )
       }
     }]
