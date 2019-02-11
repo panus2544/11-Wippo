@@ -35,13 +35,12 @@ class Menubar extends React.Component {
     this.setState({
       permission : permission
     })
-    console.log('state :  ',this.state.permission)
   }
   
   checkPermission = (permissionId) => {
     for (let index = 0; index < this.state.permission.length; index++) {
       if(this.state.permission[index].permission_id === permissionId){
-        console.log('this.state.permission[index].permission_id : ',this.state.permission[index].permission_id)
+        // console.log('this.state.permission[index].permission_id : ',this.state.permission[index].permission_id)
         return permissionId
       }
     }

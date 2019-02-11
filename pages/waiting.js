@@ -1,11 +1,12 @@
 import React from 'react'
-import Approved from '../components/Approved'
+import Wait from '../components/Wait'
 
 export default class waiting extends React.Component {
+
   render() {
     return (
       <div>
-        <Approved />
+        <Wait />
       </div>
     )
   }

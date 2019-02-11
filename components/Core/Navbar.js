@@ -1,9 +1,11 @@
 import React from 'react'
 import { Menu as DefaultMenu } from 'antd'
 import styled from 'styled-components'
+import colors from '../../config/colors'
 
 const Menu = styled(DefaultMenu)`
   display: ${props => props.visible};
+  background-color : ${colors.navbar};
 `
 
 
