@@ -30,7 +30,7 @@ class LoginFaceBook extends React.Component {
         scope="email"
         autoLoad={false}
         fields="name,email,picture,id"
-        appId="293604811359850"
+        appId="2259610627641637"
         callback={responseFacebook}
         render={renderProps => (
           <ButtonTranparent onClick={renderProps.onClick}>
