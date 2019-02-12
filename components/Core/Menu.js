@@ -14,7 +14,7 @@ const StyleMenu = styled(DefaultMenu)`
 
 const allPermission = [1,2,3,4,5,6,8,9]
 
-const path = ['dashboard','viewregistrants','questions','viewsponsor','editsponsor','viewapprove','postannounce','selectitimpassing','adminapprove']
+const path = ['dashboard','viewregistrants','questions','viewsponsor','editsponsor','viewapprove','postannounce','selectitimpassing','approved']
 
 const permission = ['ดูหน้าแดชบอร์ด','ดูรายชื่อผู้สมัคร','ตรวจคำตอบ','ดูสปอนเซอร์','แก้ไขสปอนเซอร์','ดูผู้ขอสิทธิ์','ประกาศรายชื่อผู้จิดค่าย','เลือกผู้สมัคร','adminapprove']
 class Menubar extends React.Component {
@@ -64,7 +64,7 @@ class Menubar extends React.Component {
         {
           allPermission.map((data,i) => {
             return (
-            this.checkPermission(data) === data && 
+            this.checkPermission(data) === data &&
               <Menu.Item key={`${i}`} >
               <a href={`/${path[data-1]}`}>
                 <Icon type="eye" />
