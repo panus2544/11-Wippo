@@ -1,9 +1,11 @@
 import React from 'react';
 import { Table, Input, Checkbox } from 'antd';
 import Registrants from '../../service/RegistanceService'
+import AuthService from '../../service/PermissionService'
 
 class App extends React.Component {
   state = {
+    permission: [],
     selectedRowKeys: [],
     loading: false,
     registrants: [],
@@ -15,8 +17,8 @@ class App extends React.Component {
       render: (boolean, profile) => {
         return (
           boolean === 1 ?
-            <Checkbox defaultChecked={true} onChange={(e) => this.handleCheckStatus(profile.wip_id,e)} /> :
-            <Checkbox defaultChecked={false} onChange={(e) => this.handleCheckStatus(profile.wip_id,e)} />
+            <Checkbox defaultChecked={true} onChange={(e) => this.handleCheckStatus(profile.wip_id, e)} /> :
+            <Checkbox defaultChecked={false} onChange={(e) => this.handleCheckStatus(profile.wip_id, e)} />
         )
       }
     }, {
@@ -30,7 +32,7 @@ class App extends React.Component {
       dataIndex: 'message',
       render: (text, profile) => {
         return (
-          <Input type="text" defaultValue={text} onChangeCapture={(e) => this.handleUnfocus(profile.wip_id,e)} />
+          <Input type="text" defaultValue={text} onChangeCapture={(e) => this.handleUnfocus(profile.wip_id, e)} />
         )
       }
     }]
@@ -39,6 +41,26 @@ class App extends React.Component {
   componentDidMount = async () => {
     let registrants = await Registrants.getAllRegistrant()
     this.getRegistrant(registrants.registrants)
+    this.getPermission()
+  }
+
+  getPermission = async () => {
+    let data = await AuthService.getPermission()
+    let permission = []
+    permission = data.permission
+    this.setState({
+      permission: permission
+    })
+
+    console.log(this.state.permission)
+  }
+
+  checkPermission = (permissionId) => {
+    for (let index = 0; index < this.state.permission.length; index++) {
+      if (this.state.permission[index].permission_id === permissionId) {
+        return permissionId
+      }
+    }
   }
 
   getRegistrant = async registrants => {
@@ -62,17 +84,23 @@ class App extends React.Component {
     this.setState({ selectedRowKeys });
   }
 
-  handleCheckStatus = (wip_id,e) => {
-    Registrants.getDataForChangeStatus({ wipId: wip_id, is_call: e.target.checked})
+  handleCheckStatus = (wip_id, e) => {
+    Registrants.getDataForChangeStatus({ wipId: wip_id, is_call: e.target.checked })
   }
 
-  handleUnfocus = (wip_id,e) => {
+  handleUnfocus = (wip_id, e) => {
     Registrants.getDataForUpdateNote({ wipId: wip_id, note: e.target.value })
   }
 
   render() {
     return (
-      <Table columns={this.state.columns} dataSource={this.state.registrants} />
+      <React.Fragment>
+        {
+          this.checkPermission(2) === 2 ? 
+            <Table columns={this.state.columns} dataSource={this.state.registrants} /> :
+            <Table /> 
+        }
+      </React.Fragment>
     );
   }
 }
