@@ -2,6 +2,7 @@ import React from 'react';
 import { Table, Input, Checkbox } from 'antd';
 import Registrants from '../../service/RegistanceService'
 import AuthService from '../../service/PermissionService'
+import { async } from 'rxjs/internal/scheduler/async';
 
 class App extends React.Component {
   state = {
@@ -39,11 +40,9 @@ class App extends React.Component {
   };
 
   componentDidMount = async () => {
-    let registrants = await Registrants.getAllRegistrant()
-    this.getRegistrant(registrants.registrants)
     this.getPermission()
   }
-
+  
   getPermission = async () => {
     let data = await AuthService.getPermission()
     let permission = []
@@ -51,16 +50,15 @@ class App extends React.Component {
     this.setState({
       permission: permission
     })
-
-    console.log(this.state.permission)
+    await this.checkPermission(permission)
   }
-
-  checkPermission = (permissionId) => {
-    for (let index = 0; index < this.state.permission.length; index++) {
-      if (this.state.permission[index].permission_id === permissionId) {
-        return permissionId
+  
+  checkPermission = async () => {
+      if (this.state.permission.find(permissionId => permissionId.permission_id === 2)) {
+        let registrants = await Registrants.getAllRegistrant()
+        this.getRegistrant(registrants.registrants)
+        return true
       }
-    }
   }
 
   getRegistrant = async registrants => {
@@ -96,9 +94,8 @@ class App extends React.Component {
     return (
       <React.Fragment>
         {
-          this.checkPermission(2) === 2 ? 
-            <Table columns={this.state.columns} dataSource={this.state.registrants} /> :
-            <Table /> 
+          this.checkPermission() &&
+            <Table columns={this.state.columns} dataSource={this.state.registrants} /> 
         }
       </React.Fragment>
     );
