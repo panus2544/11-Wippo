@@ -9,8 +9,8 @@ export default class CheckAnswer extends React.Component {
     question_id: "",
     questions: [
       {
-        id: '',
-        content: ''
+        id: "",
+        content: ""
       }
     ],
     answers: [
@@ -43,7 +43,6 @@ export default class CheckAnswer extends React.Component {
   };
 
   async componentDidMount() {
-    
     const url = new URLSearchParams(window.location.search);
     this.setState({
       question_id: `${url.get("questionid")}`,
@@ -52,21 +51,21 @@ export default class CheckAnswer extends React.Component {
     const reqanswers = await RegistanceService.getAnswersByQuestionId(
       `${url.get("questionid")}`
     );
+      this.setState({
+        answers: reqanswers.data,
+        question_id: `${url.get("questionid")}`
+      });
     const reqquestion = await RegistanceService.getQuestionById(
       `${url.get("questionid")}`
     );
     this.setState({
-      questions:reqquestion.data
-    })
-    this.setState({
-      answers: reqanswers.data,
-      question_id: `${url.get("questionid")}`
+      questions: reqquestion.data
     });
 
     for (let index = 0; index < this.state.answersEva.length; index++) {
       this.state.answersEva[index] = {
         ...this.state.answersEva[index],
-        score:""
+        score: ""
       };
     }
     if (this.state.answers.length === this.state.number) {
@@ -104,10 +103,11 @@ export default class CheckAnswer extends React.Component {
     }
     await this.setState({
       startIndex: (this.state.startIndex += 1),
-      number: (this.state.number += 1),
+      number: (this.state.number += 1)
     });
   };
   render() {
+    // console.log(this.state.answers.length);
     return (
       <div className="container mt-5">
         <h1>ตรวจคำตอบ</h1>
@@ -120,9 +120,7 @@ export default class CheckAnswer extends React.Component {
           <div className="col-2">
             คนที่ {this.state.number} / {this.state.answers.length}
           </div>
-          <div className="mt-5 col-12"> 
-            {this.state.questions.content}
-          </div>
+          <div className="mt-5 col-12">{this.state.questions.content}</div>
           <div className="mt-5 col-12">
             {this.state.answers.map((answer, key) => {
               if (key >= this.state.startIndex && key <= this.state.startIndex)
@@ -170,8 +168,7 @@ export default class CheckAnswer extends React.Component {
               />
               <input value={this.state.button} type="submit" />
             </form>
-            <div>
-            </div>
+            <div />
           </div>
         </div>
       </div>
