@@ -27,7 +27,6 @@ export default class App extends React.Component {
     this.setState({
       allUser: profiles.registrants
     })
-    console.log(this.state.allUser)
   }
 
   setPage = props => {
