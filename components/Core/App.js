@@ -70,7 +70,7 @@ export default class App extends React.Component {
             <Nav visible={this.state.menu} setPage={this.setPage} current={this.state.current} />
           </div>
           <ZIndex className="col-3 col-md-3">
-            {/* <Menu /> */}
+            <Menu />
           </ZIndex>
           <div className="col-9 col-md-9" >
             <Body showComponents={this.state.dashboardVisible}>
