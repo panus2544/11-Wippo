@@ -2,7 +2,6 @@ import React from 'react';
 import { Table, Input, Checkbox } from 'antd';
 import Registrants from '../../service/RegistanceService'
 import AuthService from '../../service/PermissionService'
-import { async } from 'rxjs/internal/scheduler/async';
 
 class App extends React.Component {
   state = {
