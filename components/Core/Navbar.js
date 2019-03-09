@@ -1,14 +1,14 @@
 import React from 'react'
-import { Menu as DefaultMenu } from 'antd'
+import { Menu } from 'antd'
 import styled from 'styled-components'
 import colors from '../../config/colors'
 
-const Menu = styled(DefaultMenu)`
+const StyleMenu = styled(Menu)`
   display: ${props => props.visible};
   background-color : ${colors.navbar};
 `
 
-
+const MenuItem = Menu.Item;
 class MenuBar extends React.Component {
   state = {
     current: '1',
@@ -24,17 +24,20 @@ class MenuBar extends React.Component {
 
   render() {
     return (
-        <Menu
-          visible={this.props.visible}
-          onClick={this.handleClick}
-          selectedKeys={[this.props.current]}
-          mode="horizontal"
-          theme='dark'
-        >
+      <StyleMenu
+        visible={this.props.visible}
+        onClick={this.handleClick}
+        selectedKeys={[this.props.current]}
+        mode="horizontal"
+        theme='dark'
+      >
+
+        <MenuItem key="1">
           <a href='/dashboard'>
-            <Menu.Item key="1">Dash Board</Menu.Item>
+            Dash Board
           </a>
-        </Menu>
+        </MenuItem>
+      </StyleMenu>
     )
   }
 }

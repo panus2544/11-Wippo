@@ -1,30 +1,30 @@
 import React from 'react'
-import { Menu as DefaultMenu, Icon, Layout, Menu } from 'antd'
+import { Menu, Icon, Layout } from 'antd'
 import styled from 'styled-components'
 import AuthService from '../../service/PermissionService'
 
 const {
-  Header, Content, Footer, Sider,
+  Sider,
 } = Layout;
-const SubMenu = Menu.SubMenu;
+const SubItem = Menu.Item;
 
-const StyleMenu = styled(DefaultMenu)`
+const StyleMenu = styled(Menu)`
   height: 100vh;
 `
 
-const allPermission = [1,2,3,4,5,6,8,9]
+const allPermission = [1, 2, 3, 4, 5, 6, 8, 9]
 
-const path = ['dashboard','viewregistrants','questions','viewsponsor','editsponsor','approve','postannounce','selectitimpassing','approved']
+const path = ['dashboard', 'viewregistrants', 'questions', 'viewsponsor', 'editsponsor', 'approve', 'postannounce', 'selectitimpassing', 'approved']
 
-const permission = ['ดูหน้าแดชบอร์ด','ดูรายชื่อผู้สมัคร','ตรวจคำตอบ','ดูสปอนเซอร์','แก้ไขสปอนเซอร์','ดูผู้ขอสิทธิ์','ประกาศรายชื่อผู้จิดค่าย','เลือกผู้สมัคร','adminapprove']
+const permission = ['ดูหน้าแดชบอร์ด', 'ดูรายชื่อผู้สมัคร', 'ตรวจคำตอบ', 'ดูสปอนเซอร์', 'แก้ไขสปอนเซอร์', 'ดูผู้ขอสิทธิ์', 'ประกาศรายชื่อผู้จิดค่าย', 'เลือกผู้สมัคร', 'adminapprove']
 class Menubar extends React.Component {
   state = {
     showComponent: false,
     collapsed: false,
-    permission : {}
+    permission: {}
   }
 
-  componentDidMount = async() => {
+  componentDidMount = async () => {
     this.getPermission()
   }
 
@@ -33,13 +33,13 @@ class Menubar extends React.Component {
     let permission = []
     permission = data.permission
     this.setState({
-      permission : permission
+      permission: permission
     })
   }
-  
+
   checkPermission = (permissionId) => {
     for (let index = 0; index < this.state.permission.length; index++) {
-      if(this.state.permission[index].permission_id == permissionId){
+      if (this.state.permission[index].permission_id == permissionId) {
         return permissionId
       }
     }
@@ -53,25 +53,26 @@ class Menubar extends React.Component {
   render() {
     return (
       <Sider
-      collapsible
-      collapsed={this.state.collapsed}
-      onCollapse={this.onCollapse}
-      theme="light"
+        collapsible
+        collapsed={this.state.collapsed}
+        onCollapse={this.onCollapse}
+        theme="light"
       >
         <div className="logo" />
         <StyleMenu theme="" defaultSelectedKeys={['1']} mode="inline">
-        {
-          allPermission.map((data,i) => {
-            return (
-            this.checkPermission(data) == data &&
-              <Menu.Item key={`${i}`} >
-              <a href={`/${path[data-1]}`}>
-                <Icon type="eye" />
-                <span>{permission[data-1]}</span>
-              </a>
-          </Menu.Item> )
-          })
-        }
+          {
+            allPermission.map((data,i) => {
+              return (
+                this.checkPermission(data) == data &&
+                <SubItem  key={`${i}`}>
+                  <a href={`/${path[data - 1]}`}>
+                    <Icon type="eye" />
+                    <span>{permission[data - 1]}</span>
+                  </a>
+                </SubItem>
+              )
+            })
+          }
         </StyleMenu>
       </Sider>
     )
