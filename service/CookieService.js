@@ -13,6 +13,12 @@ const CookiesService = {
   getRole () {
     return Cookies.get('role')
   },
+  getWipId () {
+    return Cookies.get('wip_Id')
+  },
+  getName () {
+    return Cookies.get('name')
+  },
   getEmailCookie () {
     return Cookies.get('email')
   },
