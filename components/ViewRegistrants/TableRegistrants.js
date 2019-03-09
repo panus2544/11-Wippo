@@ -16,7 +16,7 @@ class App extends React.Component {
       key: 'wip_id',
       render: (boolean, profile) => {
         return (
-          boolean === 1 ?
+          boolean == 1 ?
             <Checkbox defaultChecked={true} onChange={(e) => this.handleCheckStatus(profile.wip_id, e)} /> :
             <Checkbox defaultChecked={false} onChange={(e) => this.handleCheckStatus(profile.wip_id, e)} />
         )
@@ -53,7 +53,7 @@ class App extends React.Component {
   }
   
   checkPermission = async () => {
-      if (this.state.permission.find(permissionId => permissionId.permission_id === 2)) {
+      if (this.state.permission.find(permissionId => permissionId.permission_id == 2)) {
         let registrants = await Registrants.getAllRegistrant()
         this.getRegistrant(registrants.registrants)
         return true
