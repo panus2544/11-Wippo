@@ -53,7 +53,7 @@ class App extends React.Component {
   }
   
   checkPermission = async () => {
-      if (this.state.permission.find(permissionId => permissionId.permission_id == 2)) {
+      if (this.state.permission.find(permissionId => permissionId.permission_id == 2) || this.state.permission.find(permissionId => permissionId.permission_id == 9)) {
         let registrants = await Registrants.getAllRegistrant()
         this.getRegistrant(registrants.registrants)
         return true
