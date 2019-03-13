@@ -18,10 +18,10 @@ export default class Registants extends React.Component {
           <div className="col-12 col-md-12 ">
             <Nav visible={this.state.menu} setPage={this.setPage} current={this.state.current} />
           </div>
-          <ZIndex className="col-4 col-md-2">
+          <ZIndex className="col-3 col-md-2">
             <Menu/>
           </ZIndex>
-          <div className="col-8 col-md-10 p-5" >
+          <div className="col-9 col-md-10 p-5" >
             <Table/>
           </div>
         </div>
