@@ -8,7 +8,7 @@ class index extends React.Component {
   }
 
   handleLogin = () =>{
-    if(Cookie.gettokenJWTCookie()){
+    if(!Cookie.gettokenJWTCookie()){
       Route.push({
         pathname : '/index'
       })
