@@ -1,6 +1,6 @@
 import React from "react";
 import RegistanceService from "../../service/RegistanceService";
-
+import env from '../../config/envConfig'
 export default class CheckAnswer extends React.Component {
   state = {
     startIndex: 0,
@@ -94,7 +94,7 @@ export default class CheckAnswer extends React.Component {
     }
     await RegistanceService.postAnswerEvaluations(this.state.answersEva);
     if (this.state.button === "กลับ") {
-      window.location.href = "http://localhost:3000/questions";
+      window.location.href = `${env.PATH_QUESTIONS}/questions`;
     }
     if (this.state.answers.length - 1 === this.state.number) {
       this.setState({

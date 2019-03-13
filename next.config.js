@@ -7,7 +7,8 @@ const evnconfig = {
   useFileSystemPublicRoutes: true,
   publicRuntimeConfig: {
     PATH_AUTH: process.env.PATH_AUTH,
-    PATH_REGISTANCE: process.env.PATH_REGISTANCE
+    PATH_REGISTANCE: process.env.PATH_REGISTANCE,
+    PATH_QUESTIONS : process.env.PATH_QUESTIONS
   },
   serverRuntimeConfig: {
     JWT_SECRET: process.env.JWT_SECRET,

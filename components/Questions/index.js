@@ -1,6 +1,7 @@
 import React from "react";
 import Questions from "./QuestionBox";
 import RegistanceService from "../../service/RegistanceService";
+import env from '../../config/envConfig'
 
 export default class Quesions extends React.Component {
   state = {
@@ -12,7 +13,7 @@ export default class Quesions extends React.Component {
   }
 
   handleClick  = (e) => {
-    window.location.href = `http://localhost:3000/checkanswer?questionid=${e.target.id}`
+    window.location.href = `${env.PATH_QUESTIONS}/checkanswer?questionid=${e.target.id}`
   }
 
   async componentDidMount() {
