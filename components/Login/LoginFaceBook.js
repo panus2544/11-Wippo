@@ -3,7 +3,7 @@ import Router from 'next/router'
 import styled from 'styled-components'
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 import Cookies from '../../service/CookieService'
-import { FacebookButton,ButtonTranparent } from '../Core/Button'
+import { FacebookButton, ButtonTranparent } from '../Core/Button'
 import AuthService from '../../service/AuthService'
 
 const responseFacebook = async (response) => {
@@ -19,6 +19,7 @@ const changetoRegisterPage = async () => {
 
 const Img = styled.img`
   width: 50%;
+  cursor : pointer;
 `
 class LoginFaceBook extends React.Component {
   componentDidMount() {
@@ -33,9 +34,11 @@ class LoginFaceBook extends React.Component {
         appId="2259610627641637"
         callback={responseFacebook}
         render={renderProps => (
-          <ButtonTranparent onClick={renderProps.onClick}>
-            <Img src="/static/img/BtnFacebook.png"/>
-          </ButtonTranparent>
+          <React.Fragment>
+            {/* <ButtonTranparent onClick={renderProps.onClick}> */}
+            <Img src="/static/img/BtnFacebook.png" onClick={renderProps.onClick} />
+            {/* </ButtonTranparent> */}
+          </React.Fragment>
         )}
       />
     )
