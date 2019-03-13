@@ -12,11 +12,11 @@ const StyleMenu = styled(Menu)`
   height: 100vh;
 `
 
-const allPermission = [1, 2, 3, 4, 5, 6, 8, 9]
+const allPermission = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 const path = ['dashboard', 'viewregistrants', 'questions', 'viewsponsor', 'editsponsor', 'approve', 'postannounce', 'selectitimpassing', 'approved']
 
-const permission = ['ดูหน้าแดชบอร์ด', 'ดูรายชื่อผู้สมัคร', 'ตรวจคำตอบ', 'ดูสปอนเซอร์', 'แก้ไขสปอนเซอร์', 'ดูผู้ขอสิทธิ์', 'ประกาศรายชื่อผู้จิดค่าย', 'เลือกผู้สมัคร', 'adminapprove']
+const permission = ['ดูหน้าแดชบอร์ด', 'ดูรายชื่อผู้สมัคร', 'ตรวจคำตอบ', 'ดูสปอนเซอร์', 'แก้ไขสปอนเซอร์', 'ดูผู้ขอสิทธิ์', 'ประกาศรายชื่อผู้ติดค่าย', 'เลือกผู้สมัคร', 'adminapprove']
 class Menubar extends React.Component {
   state = {
     showComponent: false,
@@ -61,10 +61,10 @@ class Menubar extends React.Component {
         <div className="logo" />
         <StyleMenu theme="" defaultSelectedKeys={['1']} mode="inline">
           {
-            allPermission.map((data,i) => {
+            allPermission.map((data, i) => {
               return (
                 this.checkPermission(data) == data &&
-                <SubItem  key={`${i}`}>
+                <SubItem key={`${i}`}>
                   <a href={`/${path[data - 1]}`}>
                     <Icon type="eye" />
                     <span>{permission[data - 1]}</span>
