@@ -2,10 +2,8 @@ import React from 'react'
 import DashBoard from '../DashBoard'
 import Nav from './Navbar'
 import Body from './Body'
-import RegistanceService from '../../service/RegistanceService'
 import Menu from './Menu'
-import styled from 'styled-components';
-
+import styled from 'styled-components'
 const ZIndex = styled.div`
   z-index: 10;
 `
@@ -20,13 +18,6 @@ export default class App extends React.Component {
   }
   componentDidMount = () => {
     this.handlePage()
-    this.getAlluserDB()
-  }
-  getAlluserDB = async () => {
-    const profiles = await RegistanceService.getAllRegistrant()
-    this.setState({
-      allUser: profiles.registrants
-    })
   }
 
   setPage = props => {
@@ -74,7 +65,7 @@ export default class App extends React.Component {
           </ZIndex>
           <div className="col-9 col-md-9" >
             <Body showComponents={this.state.dashboardVisible}>
-              <DashBoard allUser={this.state.allUser} />
+              <DashBoard />
             </Body>
           </div>
         </div>
