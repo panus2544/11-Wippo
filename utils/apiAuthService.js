@@ -9,7 +9,8 @@ const createInstance = () => {
     headers: {
       'Authorization': `Bearer ${Cookies.gettokenJWTCookie()}`,
       'Content-Type': 'application/json'
-    }
+    },
+    withCredentials: true
   })
 }
 
