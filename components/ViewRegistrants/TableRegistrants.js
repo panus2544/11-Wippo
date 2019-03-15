@@ -2,7 +2,6 @@ import React from 'react';
 import { Table, Input, Checkbox } from 'antd';
 import Registrants from '../../service/RegistanceService'
 import AuthService from '../../service/PermissionService'
-
 class App extends React.Component {
   state = {
     permission: [],
@@ -10,7 +9,7 @@ class App extends React.Component {
     loading: false,
     registrants: [],
     note: '',
-    columns: [{
+    columns : [{
       title: 'โทรแล้ว',
       dataIndex: 'is_call',
       key: 'wip_id',
@@ -36,12 +35,12 @@ class App extends React.Component {
         )
       }
     }]
-  };
+  }
 
   componentDidMount = async () => {
     this.getPermission()
   }
-  
+
   getPermission = async () => {
     let data = await AuthService.getPermission()
     let permission = []
@@ -49,15 +48,15 @@ class App extends React.Component {
     this.setState({
       permission: permission
     })
-    await this.checkPermission(permission)
+    this.checkPermission(permission)
   }
-  
+
   checkPermission = async () => {
-      if (this.state.permission.find(permissionId => permissionId.permission_id == 2) || this.state.permission.find(permissionId => permissionId.permission_id == 9)) {
-        let registrants = await Registrants.getAllRegistrant()
-        this.getRegistrant(registrants.registrants)
-        return true
-      }
+    if (this.state.permission.find(permissionId => permissionId.permission_id == 2) || this.state.permission.find(permissionId => permissionId.permission_id == 9)) {
+      let registrants = await Registrants.getAllRegistrant()
+      this.getRegistrant(registrants.registrants)
+      return true
+    }
   }
 
   getRegistrant = async registrants => {
@@ -72,13 +71,11 @@ class App extends React.Component {
         message: registrants[index].note,
       })
     }
+
+
     this.setState({
       registrants: data
     })
-  }
-
-  onSelectChange = (selectedRowKeys) => {
-    this.setState({ selectedRowKeys });
   }
 
   handleCheckStatus = (wip_id, e) => {
@@ -92,10 +89,7 @@ class App extends React.Component {
   render() {
     return (
       <React.Fragment>
-        {
-          this.checkPermission() &&
-            <Table columns={this.state.columns} dataSource={this.state.registrants} /> 
-        }
+          <Table columns={this.state.columns} dataSource={this.state.registrants} />
       </React.Fragment>
     );
   }
