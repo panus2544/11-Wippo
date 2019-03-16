@@ -16,7 +16,7 @@ const allPermission = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 const path = ['dashboard', 'viewregistrants', 'questions', 'viewsponsor', 'editsponsor', 'approve', 'postannounce', 'selectitimpassing', 'approved']
 
-const permission = ['ดูหน้าแดชบอร์ด', 'ดูรายชื่อผู้สมัคร', 'ตรวจคำตอบ', 'ดูสปอนเซอร์', 'แก้ไขสปอนเซอร์', 'ดูผู้ขอสิทธิ์', 'ประกาศรายชื่อผู้ติดค่าย', 'เลือกผู้สมัคร', 'adminapprove']
+const permission = ['ข้อมูลสรุป', 'จัดการรยชื่อสมาชิก', 'ตรวจคำตอบ', 'จัดการสปอนเซอร์', 'แก้ไขสปอนเซอร์', 'จัดการผู้ขอสิทธิ์', 'ประกาศรายชื่อผู้ติดค่าย', 'จัดการผู้มีสิทธิ์เข้าค่าย', 'adminapprove']
 class Menubar extends React.Component {
   state = {
     showComponent: false,
