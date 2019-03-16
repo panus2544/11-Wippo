@@ -1,14 +1,14 @@
 import apiAuthService from "../utils/apiAuthService";
-import Cookies from './CookieService'
+import checkAuth from './CheckAuth'
 
 const PermissionService = {
   getPermission : async (request) => {
-    try{
-      let data =  await apiAuthService.get('/permissions')
+      let data =  await apiAuthService.get('/permissions').catch(error =>{
+        if(error.response.status === 401){
+          checkAuth.clearJwt(error.response.status)
+        }
+      })
       return data.data
-    }catch (error){
-      console.log(error)
-    }
   },
 }
 export default PermissionService
