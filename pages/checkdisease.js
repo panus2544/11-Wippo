@@ -1,5 +1,6 @@
 import React from 'react'
-import Wait from '../components/Wait'
+import APP from '../components/CheckDisease'
+import CookiesService from './../service/CookieService'
 import Router from 'next/router'
 
 export default class waiting extends React.Component {
@@ -16,7 +17,7 @@ export default class waiting extends React.Component {
   render() {
     return (
       <div>
-        <Wait />
+        <APP />
       </div>
     )
   }
