@@ -1,6 +1,50 @@
 import React from 'react'
-import { Table, Input, Checkbox } from 'antd'
+import { Table, Input, Checkbox,Icon, Divider,Dropdown,Menu} from 'antd'
 import Registrants from '../../service/RegistanceService'
+import PermissionService from '../../service/PermissionService'
+import { async } from 'rxjs/internal/scheduler/async';
+
+let role=[
+  {
+    role_id: 4,
+    role_name: 'wipper'
+  },
+  {
+    role_id: 6,
+    role_name: 'pr'
+  },
+  {
+    role_id: 7,
+    role_name: 'secretary'
+  },
+  {
+    role_id: 8,
+    role_name: 'vice-president'
+  },
+  {
+    role_id: 9,
+    role_name: 'president'
+  },
+  {
+    role_id: 10,
+    role_name: 'admin'
+  },
+]
+
+let menu = (
+  <Menu >
+      {role.map((data,index)=>{
+        return (<Menu.Item key={index} onClick={() => handleChangeRole(data.role_id)}>
+          {data.role_name}
+        </Menu.Item>)
+      })}
+  </Menu>
+)
+
+const handleChangeRole = (e) => {
+  console.log(e)
+}
+
 
 class ApproveTable extends React.Component {
   state = {
@@ -8,50 +52,45 @@ class ApproveTable extends React.Component {
     loading: false,
     registrants: [],
     note: '',
+    role: [],
     columns: [
       {
-        title: 'วันที่',
-        dataIndex: 'date'
-      },
-      {
-        title: 'เวลา',
-        dataIndex: 'time'
-      },
-      {
         title: 'รายชื่อ',
-        dataIndex: 'name',
+        dataIndex: 'wip_id',
         key: 'wip_id'
       },
       {
         title: 'ตำแหน่ง',
         dataIndex: 'role',
-        key: 'role_id'
+        render:  () => (
+         <Dropdown overlay={menu}>
+           <a className="ant-dropdown-link" href="#">
+              more role <Icon type="down" />
+            </a>
+          </Dropdown>
+        )
       },
       {
-        title: 'การอนุมัติ',
-        dataIndex: 'approve',
-        render: tags => (
+        title: 'Approve',
+        key: 'approve',
+        render: (text, record) => (
           <span>
-            {tags.map(tag => {
-              let color = tag.length > 5 ? 'geekblue' : 'green'
-              if (tag === 'loser') {
-                color = 'volcano'
-              }
-              return (
-                <Tag color={color} key={tag}>
-                  {tag.toUpperCase()}
-                </Tag>
-              )
-            })}
+            {/* {console.log(record)} */}
+            
+            <a href="javascript:;">Approve {record.name}</a>
+            <Divider type="vertical" />
+            <a href="javascript:;">Reject</a>
           </span>
-        )
+        ),
       }
     ]
   }
 
+  
+
   componentDidMount = async () => {
-    let registrants = await Registrants.getAllRegistrant()
-    this.getRegistrant(registrants.registrants)
+    let registrants = await PermissionService.getPending()
+    this.getRegistrant(registrants.data)   
   }
 
   getRegistrant = async registrants => {
@@ -60,18 +99,13 @@ class ApproveTable extends React.Component {
       data.push({
         key: index,
         wip_id: registrants[index].wip_id,
-        is_call: registrants[index].is_call,
-        name: `${registrants[index].firstname_th} ${
-          registrants[index].lastname_th
-        }`,
-        tel: registrants[index].telno,
-        message: registrants[index].note
       })
     }
     this.setState({
       registrants: data
     })
   }
+
 
   onSelectChange = selectedRowKeys => {
     this.setState({ selectedRowKeys })
