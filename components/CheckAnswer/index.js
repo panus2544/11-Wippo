@@ -108,6 +108,7 @@ export default class CheckAnswer extends React.Component {
   };
   render() {
     // console.log(this.state.answers.length);
+    
     return (
       <div className="container mt-5">
         <h1>ตรวจคำตอบ</h1>
@@ -129,44 +130,58 @@ export default class CheckAnswer extends React.Component {
           </div>
           <div className="col-12 mt-5">
             <p>ให้คะแนน</p>
-            <form onSubmit={this.handleNext}>
-              <label className="mr-2">intelligent</label>
-              <input
-                type="number"
-                name={0}
-                onChange={({ target: { name, value } }) =>
-                  this.onChangebox(name, value)
-                }
-                className="mr-2"
-                min={0}
-                max={10}
-                required
-              />
-              <label className="mr-2">creative</label>
-              <input
-                type="number"
-                name={1}
-                onChange={({ target: { name, value } }) =>
-                  this.onChangebox(name, value)
-                }
-                className="mr-2"
-                min={0}
-                max={10}
-                required
-              />
-              <label className="mr-2">comunication</label>
-              <input
-                type="number"
-                name={2}
-                onChange={({ target: { name, value } }) =>
-                  this.onChangebox(name, value)
-                }
-                className="mr-2"
-                min={0}
-                max={10}
-                required
-              />
-              <input value={this.state.button} type="submit" />
+            <form className="mt-4" onSubmit={this.handleNext}>
+              <div className="form-row">
+                <div className="form-group col-2 mt-3">
+                  <br/><h5 className="font-weight-bold">ให้คะแนน</h5>
+                </div>
+                <div className="form-group col-2">
+                  <label for="inputEmail4" className="mr-2">intelligent</label>
+                  <input
+                    type="number"
+                    id="inputEmail4"
+                    name={0}
+                    onChange={({ target: { name, value } }) =>
+                      this.onChangebox(name, value)
+                    }
+                    className="mr-2 form-control"
+                    min={0}
+                    max={10}
+                    required
+                  />
+                </div>
+                <div className="form-group col-2">
+                  <label className="mr-2">creative</label>
+                  <input
+                    type="number"
+                    name={1}
+                    onChange={({ target: { name, value } }) =>
+                      this.onChangebox(name, value)
+                    }
+                    className="mr-2 form-control"
+                    min={0}
+                    max={10}
+                    required
+                  />
+                </div>
+                <div className="form-group col-2 mr-auto">
+                  <label className="mr-2">comunication</label>
+                  <input
+                    type="number"
+                    name={2}
+                    onChange={({ target: { name, value } }) =>
+                      this.onChangebox(name, value)
+                    }
+                    className="mr-2 form-control"
+                    min={0}
+                    max={10}
+                    required
+                  />
+                </div>
+                <div className="form-group col-2 mt-3">
+                  <br/><input className="btn btn-primary" value={this.state.button} type="submit" />
+                </div>
+              </div>
             </form>
             <div />
           </div>

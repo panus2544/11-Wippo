@@ -2,6 +2,13 @@ import React from "react";
 import Questions from "./QuestionBox";
 import RegistanceService from "../../service/RegistanceService";
 import env from '../../config/envConfig'
+import Nav from '../Core/Navbar'
+import Menu from '../Core/Menu'
+import styled from 'styled-components'
+
+const ZIndex = styled.div`
+  z-index: 10;
+`
 
 export default class Quesions extends React.Component {
   state = {
@@ -25,12 +32,26 @@ export default class Quesions extends React.Component {
 
   render() {
     return (
-      <div className="container mt-5">
-        <h1>ตรวจคำถาม</h1>
-        <div className="row mt-5">
-          <Questions questions={this.state.questions} handleClick={this.handleClick} />
+      <div className="container-fulid overflow-hidden">
+        <div className="row">
+          <div className="col-12 col-md-12 ">
+            <Nav visible={this.state.menu} setPage={this.setPage} current={this.state.current} />
+          </div>
+          <ZIndex className="col-3 col-md-2">
+            <Menu/>
+          </ZIndex>
+          <div className="col-9 col-md-10 p-5" >
+            <div className="container mt-5">
+              <h1>ตรวจคำถาม</h1>
+              <div className="row mt-5">
+                <Questions questions={this.state.questions} handleClick={this.handleClick} />
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </div >
+
+      
     );
   }
 }
