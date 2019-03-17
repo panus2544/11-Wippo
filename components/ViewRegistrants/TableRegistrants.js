@@ -12,7 +12,6 @@ class App extends React.Component {
     columns : [{
       title: 'โทรแล้ว',
       dataIndex: 'is_call',
-      key: 'wip_id',
       render: (boolean, profile) => {
         return (
           boolean == 1 ?
@@ -23,6 +22,7 @@ class App extends React.Component {
     },{
       title: 'WIP ID',
       dataIndex: 'wip_id',
+      key : 'wip_id'
     }, {
       title: 'ชื่อ-สกุล',
       dataIndex: 'name',
