@@ -28,8 +28,8 @@ class DiseaseTable extends React.Component {
   }
 
   componentDidMount = async () => {
-    let registrants = Registrants.getAllDisease()
-    console.log(registrants)
+    let registrants = await Registrants.getAllDisease()
+    console.log(registrants.data.total_applicant)
    
    
    
