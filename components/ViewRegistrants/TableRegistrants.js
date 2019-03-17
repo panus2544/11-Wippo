@@ -20,9 +20,15 @@ class App extends React.Component {
             <Checkbox defaultChecked={false} onChange={(e) => this.handleCheckStatus(profile.wip_id, e)} />
         )
       }
+    },{
+      title: 'WIP ID',
+      dataIndex: 'wip_id',
     }, {
       title: 'ชื่อ-สกุล',
       dataIndex: 'name',
+    },{
+      title: 'ชื่อเล่น',
+      dataIndex: 'nickname',
     }, {
       title: 'เบอร์โทรศัพท์',
       dataIndex: 'tel',
@@ -67,6 +73,7 @@ class App extends React.Component {
         wip_id: registrants[index].wip_id,
         is_call: registrants[index].is_call,
         name: `${registrants[index].firstname_th} ${registrants[index].lastname_th}`,
+        nickname :  registrants[index].nickname,
         tel: registrants[index].telno,
         message: registrants[index].note,
       })
