@@ -10,5 +10,13 @@ const PermissionService = {
       })
       return data.data
   },
+  getPending : async ()=>{
+     return await apiAuthService.get('/rolepending')
+    
+  },
+  getAllRoles : async ()=>{
+    return await apiAuthService.get('/allroles')
+   
+ }
 }
 export default PermissionService
