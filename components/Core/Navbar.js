@@ -3,6 +3,7 @@ import { Menu, Tooltip, Row, Col } from 'antd'
 import styled from 'styled-components'
 import colors from '../../config/colors'
 import Cookie from '../../service/CookieService'
+import { ButtonTranparent } from '../Core/Button'
 
 const StyleMenu = styled.div`
   display: ${props => props.visible};
@@ -23,6 +24,10 @@ const Li = styled.li`
     color: #fff;
     direction : none;
   }
+`
+const Logout = styled.span`
+  color : #fff;
+  cursor : pointer;
 `
 
 const MenuItem = Menu.Item;
@@ -66,6 +71,12 @@ class MenuBar extends React.Component {
     });
   }
 
+  logout = () => {
+    console.log('hi')
+    Cookie.removeJWTAndEmailCookie()
+    location.reload()
+  }
+
   render() {
     return (
       <Row >
@@ -78,7 +89,7 @@ class MenuBar extends React.Component {
                 </a>
               </Li>
               <Li className="float-right">
-                สวัสดี {this.state.nameFb} ( WIP ID : {this.state.wipId} )
+                สวัสดี {this.state.nameFb} ( WIP ID : {this.state.wipId} ) | <Logout onClick={() => this.logout()}>Logout</Logout>
               </Li>
             </Nav>
           </StyleMenu>
