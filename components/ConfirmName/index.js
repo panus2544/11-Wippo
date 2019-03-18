@@ -8,16 +8,6 @@ const ZIndex = styled.div`
 `
 
 class index extends Component {
-  constructor(props) {
-    super(props);
-
-  }
-
-  componentDidMount() {
-
-  }
-
-
   render() {
     return (
       <div className="container-fulid overflow-hidden">
