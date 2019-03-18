@@ -1,17 +1,10 @@
 import React, { Component } from 'react';
-
-function mapStateToProps(state) {
-  return {
-
-  };
-}
+import App from '../components/ConfirmName'
 
 class confirm extends Component {
   render() {
     return (
-      <div>
-        hi
-      </div>
+      <App/>
     );
   }
 }
