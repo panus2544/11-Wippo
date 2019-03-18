@@ -2,7 +2,7 @@ import Document, { Head, Main, NextScript } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
 
 export default class MyDocument extends Document {
-  static async getInitialProps (ctx) {
+  static async getInitialProps(ctx) {
     const sheet = new ServerStyleSheet()
 
     const originalRenderPage = ctx.renderPage
@@ -18,7 +18,7 @@ export default class MyDocument extends Document {
     }
   }
 
-  render () {
+  render() {
     return (
       <html>
         <Head>
@@ -31,6 +31,7 @@ export default class MyDocument extends Document {
             name="viewport"
             content="width=device-width, initial-scale=1.0"
           />
+          <link rel="shortcut icon" type="image/png" href="static/img/favicon-32x32.png" />
         </Head>
         <body className="custom_class">
           <Main />
