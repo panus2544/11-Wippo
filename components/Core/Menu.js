@@ -14,7 +14,7 @@ const StyleMenu = styled(Menu)`
 
 const allPermission = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-const path = ['dashboard', 'viewregistrants', 'questions', 'viewsponsor', 'editsponsor', 'approve', 'postannounce', 'selectitimpassing', 'approved']
+const path = ['dashboard', 'viewregistrants', 'questions', 'viewsponsor', 'editsponsor', 'approved', 'confirmnamelist', 'confirm', 'approved']
 
 const permission = ['ข้อมูลสรุป', 'จัดการรายชื่อสมาชิก', 'ตรวจคำตอบ', 'จัดการสปอนเซอร์', 'แก้ไขสปอนเซอร์', 'จัดการผู้ขอสิทธิ์', 'ประกาศรายชื่อผู้ติดค่าย', 'จัดการผู้มีสิทธิ์เข้าค่าย', 'adminapprove']
 class Menubar extends React.Component {
