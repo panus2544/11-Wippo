@@ -52,7 +52,7 @@ class ApproveTable extends React.Component {
     loading: false,
     registrants: [],
     note: '',
-    role: [],
+    role: '',
     columns: [
       {
         title: 'รายชื่อ',
@@ -63,9 +63,9 @@ class ApproveTable extends React.Component {
         title: 'ตำแหน่ง',
         dataIndex: 'role',
         render:  () => (
-         <Dropdown overlay={menu}>
+         <Dropdown overlay={menu} trigger={['click']}>
            <a className="ant-dropdown-link" href="#">
-              more role <Icon type="down" />
+             Pending <Icon type="down" />
             </a>
           </Dropdown>
         )
@@ -75,8 +75,6 @@ class ApproveTable extends React.Component {
         key: 'approve',
         render: (text, record) => (
           <span>
-            {/* {console.log(record)} */}
-            
             <a href="javascript:;">Approve {record.name}</a>
             <Divider type="vertical" />
             <a href="javascript:;">Reject</a>
@@ -86,11 +84,10 @@ class ApproveTable extends React.Component {
     ]
   }
 
-  
 
   componentDidMount = async () => {
     let registrants = await PermissionService.getPending()
-    this.getRegistrant(registrants.data)   
+    this.getRegistrant(registrants.data)
   }
 
   getRegistrant = async registrants => {
