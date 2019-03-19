@@ -2,7 +2,6 @@ import React from 'react'
 import { Table, Input, Checkbox,Icon, Divider,Dropdown,Menu} from 'antd'
 import Registrants from '../../service/RegistanceService'
 import PermissionService from '../../service/PermissionService'
-import { async } from 'rxjs/internal/scheduler/async';
 
 let role=[
   {
@@ -69,17 +68,6 @@ class ApproveTable extends React.Component {
             </a>
           </Dropdown>
         )
-      },
-      {
-        title: 'Approve',
-        key: 'approve',
-        render: (text, record) => (
-          <span>
-            <a href="javascript:;">Approve {record.name}</a>
-            <Divider type="vertical" />
-            <a href="javascript:;">Reject</a>
-          </span>
-        ),
       }
     ]
   }
