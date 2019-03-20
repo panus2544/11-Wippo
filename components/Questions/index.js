@@ -5,6 +5,7 @@ import env from '../../config/envConfig'
 import Nav from '../Core/Navbar'
 import Menu from '../Core/Menu'
 import styled from 'styled-components'
+import CheckPeimission from '../Core/CheckPermission'
 
 const ZIndex = styled.div`
   z-index: 10;
@@ -24,11 +25,14 @@ export default class Quesions extends React.Component {
   }
 
   async componentDidMount() {
-    const reqQuestions = await RegistanceService.getAllQuestions();
-    this.setState({
-      questions: reqQuestions.data
-    })
+    if(await CheckPeimission.getPermission()){
+      const reqQuestions = await RegistanceService.getAllQuestions();
+      this.setState({
+        questions: reqQuestions.data
+      })
+    }
   }
+  
 
   render() {
     return (
@@ -41,7 +45,7 @@ export default class Quesions extends React.Component {
             <Menu/>
           </ZIndex>
           <div className="col-9 col-md-10 p-5" >
-            <div className="container mt-5">
+            <div className="container">
               <h1>ตรวจคำถาม</h1>
               <div className="row mt-5">
                 <Questions questions={this.state.questions} handleClick={this.handleClick} />
