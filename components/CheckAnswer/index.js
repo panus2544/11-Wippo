@@ -131,29 +131,27 @@ export default class CheckAnswer extends React.Component {
           <ZIndex className="col-3 col-md-2">
             <Menu/>
           </ZIndex>
-          <div className="col-9 col-md-10 p-5" >
+          <div className="col-9 col-md-10 px-5 pt-3" >
             <div className="container">
+            <p><a>ย้อนกลับ</a> / ข้อที่ : {this.state.question_id}</p>
             <h1>ตรวจคำตอบ</h1>
               <div className="row">
-                <div className="container">
-                  <hr />
-                  <div className="row">
-                    <div className="col-8">ข้อที่ : {this.state.question_id}</div>
-                    <div className="col-2">
-                      wip_id : {this.state.answers[this.state.startIndex].wip_id}
-                    </div>
-                    <div className="col-2">
+                <div className="container card px-5">
+                  <div className="row card-body">
+                  {/* <div className="col-10"></div> */}
+                    <div className="offset-10 col-2 text-right">
                       คนที่ {this.state.number} / {this.state.answers.length}
                     </div>
-                    <div className="mt-5 col-12">{this.state.questions.content}</div>
-                    <div className="mt-5 col-12">
-                      {this.state.answers.map((answer, key) => {
-                        if (key >= this.state.startIndex && key <= this.state.startIndex)
-                          return <div>{answer.ans_content}</div>;
-                      })}
+                    <div className="mt-3 col-12">คำถามที่ {this.state.question_id} : {this.state.questions.content}</div>
+                    <div className="mt-3 col-12 card">
+                      <div className="card-body px-3">
+                        {this.state.answers.map((answer, key) => {
+                          if (key >= this.state.startIndex && key <= this.state.startIndex)
+                            return <div>{answer.ans_content}</div>;
+                        })}
+                      </div>
                     </div>
                     <div className="col-12 mt-5">
-                      <p>ให้คะแนน</p>
                       <form className="mt-4" id="inputAns" onSubmit={this.handleNext}>
                         <div className="form-row">
                           <div className="form-group col-2 mt-3">
@@ -204,7 +202,7 @@ export default class CheckAnswer extends React.Component {
                               required
                             />
                           </div>
-                          <div className="form-group col-2 mt-3">
+                          <div className="form-group col-2 mt-2 text-right">
                             <br/><input className="btn btn-primary" value={this.state.button} type="submit" />
                           </div>
                         </div>
