@@ -17,6 +17,13 @@ const PermissionService = {
   getAllRoles : async ()=>{
     return await apiAuthService.get('/allroles')
    
- }
+ },
+ putDataForChangeStatus: async (data) => {
+  try {
+    await apiAuthService.put('/changstatus', data)
+  } catch (error) {
+    console.log(error)
+  }
+},
 }
 export default PermissionService

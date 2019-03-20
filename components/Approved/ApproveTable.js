@@ -3,46 +3,6 @@ import { Table, Input, Checkbox,Icon, Divider,Dropdown,Menu} from 'antd'
 import Registrants from '../../service/RegistanceService'
 import PermissionService from '../../service/PermissionService'
 
-let role=[
-  {
-    role_id: 4,
-    role_name: 'wipper'
-  },
-  {
-    role_id: 6,
-    role_name: 'pr'
-  },
-  {
-    role_id: 7,
-    role_name: 'secretary'
-  },
-  {
-    role_id: 8,
-    role_name: 'vice-president'
-  },
-  {
-    role_id: 9,
-    role_name: 'president'
-  },
-  {
-    role_id: 10,
-    role_name: 'admin'
-  },
-]
-
-let menu = (
-  <Menu >
-      {role.map((data,index)=>{
-        return (<Menu.Item key={index} onClick={() => handleChangeRole(data.role_id)}>
-          {data.role_name}
-        </Menu.Item>)
-      })}
-  </Menu>
-)
-
-const handleChangeRole = (e) => {
-  console.log(e)
-}
 
 
 class ApproveTable extends React.Component {
@@ -51,7 +11,33 @@ class ApproveTable extends React.Component {
     loading: false,
     registrants: [],
     note: '',
-    role: '',
+    role :[
+      {
+        role_id: 4,
+        role_name: 'wipper'
+      },
+      {
+        role_id: 6,
+        role_name: 'pr'
+      },
+      {
+        role_id: 7,
+        role_name: 'secretary'
+      },
+      {
+        role_id: 8,
+        role_name: 'vice-president'
+      },
+      {
+        role_id: 9,
+        role_name: 'president'
+      },
+      {
+        role_id: 10,
+        role_name: 'admin'
+      },
+    ]
+    ,
     columns: [
       {
         title: 'รายชื่อ',
@@ -61,10 +47,19 @@ class ApproveTable extends React.Component {
       {
         title: 'ตำแหน่ง',
         dataIndex: 'role',
-        render:  () => (
-         <Dropdown overlay={menu} trigger={['click']}>
+        render:  (index, profile) => (
+         <Dropdown overlay={
+          <Menu >
+          {this.state.role.map((data,index)=>{
+            return (<Menu.Item key={index} value={profile.wip_id} onClick={ ((e) => this.handleChangeRole(data.role_id,e))}>
+              {data.role_name}
+            </Menu.Item>)
+          })}
+         </Menu>
+         } trigger={['click']}>
            <a className="ant-dropdown-link" href="#">
              Pending <Icon type="down" />
+            
             </a>
           </Dropdown>
         )
@@ -90,14 +85,19 @@ class ApproveTable extends React.Component {
       registrants: data
     })
   }
-
-
+   handleChangeRole = (role_id,e) => {
+    const roleChange = {
+      wip_req : e.item.props.value,
+      role_id : role_id
+    }
+    PermissionService.putDataForChangeStatus(roleChange)
+  }
   onSelectChange = selectedRowKeys => {
     this.setState({ selectedRowKeys })
   }
 
   handleCheckStatus = (wip_id, e) => {
-    Registrants.getDataForChangeStatus({
+    PermissionService.putDataForChangeStatus({
       wipId: wip_id,
       is_call: e.target.checked
     })
