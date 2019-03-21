@@ -27,18 +27,18 @@ class DiseaseTable extends React.Component {
       },
       {
         title: 'โรคประจำตัว',
-        dataIndex: 'cangenital_disease',
-        key: 'cangenital_disease'
+        dataIndex: 'cangenitalDisease',
+        key: 'cangenitalDisease'
       },
       {
         title: 'ยาที่แพ้',
-        dataIndex: '',
-        key: ''
+        dataIndex: 'allergicDrug',
+        key: 'allergicDrug'
       },
       {
         title: 'อาหารที่แพ้',
-        dataIndex: '',
-        key: ''
+        dataIndex: 'allergicFood',
+        key: 'allergicFood'
       }
     ]
   }
@@ -65,8 +65,9 @@ class DiseaseTable extends React.Component {
         name: `${registrants[index].firstname_th} ${
           registrants[index].lastname_th
         }`,
-        tel: registrants[index].telno,
-        message: registrants[index].note
+        allergicDrug: registrants[index].allergic_drug,
+        allergicFood: registrants[index].allergic_food,
+        cangenitalDisease: registrants[index].cangenital_disease
       })
     }
     this.setState({
