@@ -12,7 +12,7 @@ class DiseaseTable extends React.Component {
       {
         title: 'ตรวจแล้ว',
         dataIndex: 'medical_approved',
-        render: (boolean, profile) => {
+        render: (boolean, registrants) => {
           return (
             boolean == 1 ?
               <Checkbox defaultChecked={true} onChange={(e) => this.handleCheckStatus(registrants.wip_id, e)} /> :
