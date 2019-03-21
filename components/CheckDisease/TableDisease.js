@@ -23,12 +23,12 @@ class DiseaseTable extends React.Component {
       {
         title: 'รายชื่อ',
         dataIndex: 'name',
-        key: 'wip_id'
+        key: 'name'
       },
       {
         title: 'โรคประจำตัว',
-        dataIndex: '',
-        key: ''
+        dataIndex: 'cangenital_disease',
+        key: 'cangenital_disease'
       },
       {
         title: 'ยาที่แพ้',
