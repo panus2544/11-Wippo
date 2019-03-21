@@ -10,6 +10,17 @@ class DiseaseTable extends React.Component {
     note: '',
     columns: [
       {
+        title: 'ตรวจแล้ว',
+        dataIndex: 'medical_approved',
+        render: (boolean, profile) => {
+          return (
+            boolean == 1 ?
+              <Checkbox defaultChecked={true} onChange={(e) => this.handleCheckStatus(registrants.wip_id, e)} /> :
+              <Checkbox defaultChecked={false} onChange={(e) => this.handleCheckStatus(registrants.wip_id, e)} />
+          )
+        }
+      },
+      {
         title: 'รายชื่อ',
         dataIndex: 'name',
         key: 'wip_id'
@@ -23,6 +34,11 @@ class DiseaseTable extends React.Component {
         title: 'ยาที่แพ้',
         dataIndex: '',
         key: ''
+      },
+      {
+        title: 'อาหารที่แพ้',
+        dataIndex: '',
+        key: ''
       }
     ]
   }
@@ -30,12 +46,13 @@ class DiseaseTable extends React.Component {
   componentDidMount = async () => {
     let registrants = await Registrants.getAllDisease()
     console.log(registrants.data.total_applicant)
-   
-   
-   
     // this.getRegistrant(registrants.registrants)
   }
 
+
+  handleCheckStatus = (wip_id, e) => {
+    Registrants.getDataForChangeStatus({ wipId: wip_id, is_call: e.target.checked })
+  }
   getRegistrant = async registrants => {
     let data = []
     for (let index = 0; index < registrants.length; index++) {
