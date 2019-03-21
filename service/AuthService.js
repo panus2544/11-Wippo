@@ -9,7 +9,7 @@ const AuthService = {
         'provider_name': 'facebook',
         'provider_id': request.userID,
         'accessToken': request.accessToken,
-        'role' : 4
+        'role' : 3
       })
         .then(respons => {
           console.log('callback')

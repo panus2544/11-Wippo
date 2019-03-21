@@ -10,27 +10,31 @@ class DiseaseTable extends React.Component {
     note: '',
     columns: [
       {
-        title: 'รายชื่อ',
-        dataIndex: 'name',
+        title: 'WIP ID',
+        dataIndex: 'wip_id',
         key: 'wip_id'
       },
       {
+        title: 'รายชื่อ',
+        dataIndex: 'name',
+        key: 'name'
+      },
+      {
         title: 'โรคประจำตัว',
-        dataIndex: '',
-        key: ''
+        dataIndex: 'cangenital_disease',
+        key: 'cangenital_disease'
       },
       {
         title: 'ยาที่แพ้',
-        dataIndex: '',
-        key: ''
+        dataIndex: 'allergic_drug',
+        key: 'allergic_drug'
       }
     ]
   }
 
   componentDidMount = async () => {
     let registrants = await Registrants.getAllDisease()
-    console.log(registrants.data.total_applicant)
-   
+    console.log(registrants.data)
    
    
     // this.getRegistrant(registrants.registrants)
