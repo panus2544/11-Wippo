@@ -77,10 +77,7 @@ class DiseaseTable extends React.Component {
   }
 
   handleCheckStatus = (wip_id, e) => {
-    Registrants.getDataForChangeStatus({
-      wipId: wip_id,
-      is_call: e.target.checked
-    })
+    console.log(wip_id,e)
   }
 
   handleUnfocus = (wip_id, e) => {
