@@ -49,7 +49,7 @@ class DiseaseTable extends React.Component {
   }
   getStatus= async ()=>{
     let registrantsDisease = await Registrants.getAllDisease()
-    console.log(registrantsDisease.data)
+    this.getRegistrant(registrantsDisease.data)
   }
 
   handleCheckStatus = (wip_id, e) => {
