@@ -17,6 +17,9 @@ const Question = {
   getAllFood: async () => {
     return  await apiRegService.get('stats/registrants/food')
   },
+  putMedicApprove: async (wip_id) => {
+    return  await apiRegService.put('/registrants/changmedicapprove',{'wip_checker':wip_id})
+  },
   getRegistrantNotRespons: async () => {
     return await apiRegService.get('/notregistrant').catch(error => {
       if (error.response.status === 401) {

@@ -14,7 +14,7 @@ class DiseaseTable extends React.Component {
         dataIndex: 'medical_approved',
         render: (boolean, registrants) => {
           return (
-            boolean == 1 ?
+            boolean === 1 ?
               <Checkbox defaultChecked={true} onChange={(e) => this.handleCheckStatus(registrants.wip_id, e)} /> :
               <Checkbox defaultChecked={false} onChange={(e) => this.handleCheckStatus(registrants.wip_id, e)} />
           )
@@ -67,6 +67,7 @@ class DiseaseTable extends React.Component {
         }`,
         allergicDrug: registrants[index].allergic_drug,
         allergicFood: registrants[index].allergic_food,
+        medical_approved: registrants[index].medical_approved,
         cangenitalDisease: registrants[index].cangenital_disease
       })
     }
@@ -80,7 +81,7 @@ class DiseaseTable extends React.Component {
   }
 
   handleCheckStatus = (wip_id, e) => {
-    console.log(wip_id,e)
+    Registrants.putMedicApprove(wip_id)
   }
 
   handleUnfocus = (wip_id, e) => {
