@@ -44,11 +44,15 @@ class DiseaseTable extends React.Component {
   }
 
   componentDidMount = async () => {
-    let registrants = await Registrants.getAllDisease()
-    console.log(registrants.data.total_applicant)
+   this.getStatus()
     // this.getRegistrant(registrants.registrants)
   }
-
+  getStatus= async ()=>{
+    let registrantsDisease = await Registrants.getAllDisease()
+    let registrantsFood = await Registrants.getAllFood()
+    console.log(registrantsDisease.data)
+    console.log(registrantsFood.data)
+  }
 
   handleCheckStatus = (wip_id, e) => {
     Registrants.getDataForChangeStatus({ wipId: wip_id, is_call: e.target.checked })

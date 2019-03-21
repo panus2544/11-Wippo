@@ -11,8 +11,11 @@ const Question = {
     return respons.data
   },
   getAllDisease: async () => {
-    const res = await apiRegService.get('stats/registrants/medic')
-    return res;
+    return await apiRegService.get('stats/registrants/medic')
+   
+  },
+  getAllFood: async () => {
+    return  await apiRegService.get('stats/registrants/food')
   },
   getRegistrantNotRespons: async () => {
     return await apiRegService.get('/notregistrant').catch(error => {
