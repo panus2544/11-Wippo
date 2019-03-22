@@ -10,7 +10,7 @@
     "antd": "^3.11.2",
     "axios": "^0.18.0",
     "bootstrap": "^4.2.1",
-    "chart.js": "^2.7.3",
+    "chart.js": "^2.8.0",
     "dotenv": "^6.2.0",
     "dotenv-webpack": "^1.5.7",
     "eslint": "^5.10.0",
