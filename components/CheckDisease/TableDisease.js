@@ -10,32 +10,51 @@ class DiseaseTable extends React.Component {
     note: '',
     columns: [
       {
+        title: 'ตรวจแล้ว',
+        dataIndex: 'medical_approved',
+        render: (boolean, registrants) => {
+          return (
+            boolean === 1 ?
+              <Checkbox defaultChecked={true} onChange={(e) => this.handleCheckStatus(registrants.wip_id, e)} /> :
+              <Checkbox defaultChecked={false} onChange={(e) => this.handleCheckStatus(registrants.wip_id, e)} />
+          )
+        }
+      },
+      {
         title: 'รายชื่อ',
         dataIndex: 'name',
-        key: 'wip_id'
+        key: 'name'
       },
       {
         title: 'โรคประจำตัว',
-        dataIndex: '',
-        key: ''
+        dataIndex: 'cangenitalDisease',
+        key: 'cangenitalDisease'
       },
       {
         title: 'ยาที่แพ้',
-        dataIndex: '',
-        key: ''
+        dataIndex: 'allergicDrug',
+        key: 'allergicDrug'
+      },
+      {
+        title: 'อาหารที่แพ้',
+        dataIndex: 'allergicFood',
+        key: 'allergicFood'
       }
     ]
   }
 
   componentDidMount = async () => {
-    let registrants = await Registrants.getAllDisease()
-    console.log(registrants.data.total_applicant)
-   
-   
-   
+   this.getStatus()
     // this.getRegistrant(registrants.registrants)
   }
+  getStatus= async ()=>{
+    let registrantsDisease = await Registrants.getAllDisease()
+    this.getRegistrant(registrantsDisease.data)
+  }
 
+  handleCheckStatus = (wip_id, e) => {
+    Registrants.getDataForChangeStatus({ wipId: wip_id, is_call: e.target.checked })
+  }
   getRegistrant = async registrants => {
     let data = []
     for (let index = 0; index < registrants.length; index++) {
@@ -46,8 +65,10 @@ class DiseaseTable extends React.Component {
         name: `${registrants[index].firstname_th} ${
           registrants[index].lastname_th
         }`,
-        tel: registrants[index].telno,
-        message: registrants[index].note
+        allergicDrug: registrants[index].allergic_drug,
+        allergicFood: registrants[index].allergic_food,
+        medical_approved: registrants[index].medical_approved,
+        cangenitalDisease: registrants[index].cangenital_disease
       })
     }
     this.setState({
@@ -60,10 +81,7 @@ class DiseaseTable extends React.Component {
   }
 
   handleCheckStatus = (wip_id, e) => {
-    Registrants.getDataForChangeStatus({
-      wipId: wip_id,
-      is_call: e.target.checked
-    })
+    Registrants.putMedicApprove(wip_id)
   }
 
   handleUnfocus = (wip_id, e) => {

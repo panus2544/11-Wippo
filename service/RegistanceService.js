@@ -11,8 +11,14 @@ const Question = {
     return respons.data
   },
   getAllDisease: async () => {
-    const res = await apiRegService.get('stats/registrants/medic')
-    return res;
+    return await apiRegService.get('stats/registrants/medic')
+   
+  },
+  getAllFood: async () => {
+    return  await apiRegService.get('stats/registrants/food')
+  },
+  putMedicApprove: async (wip_id) => {
+    return  await apiRegService.put('/registrants/changmedicapprove',{'wip_checker':wip_id})
   },
   getRegistrantNotRespons: async () => {
     return await apiRegService.get('/notregistrant').catch(error => {

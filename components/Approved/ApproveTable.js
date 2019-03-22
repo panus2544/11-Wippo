@@ -59,7 +59,6 @@ class ApproveTable extends React.Component {
          } trigger={['click']}>
            <a className="ant-dropdown-link" href="#">
              Pending <Icon type="down" />
-            
             </a>
           </Dropdown>
         )
