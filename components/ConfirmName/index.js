@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Nav from '../Core/Navbar'
 import Menu from '../Core/Menu'
 import styled from 'styled-components'
+import Page from './Page'
 
 const ZIndex = styled.div`
   z-index: 10;
@@ -19,7 +20,8 @@ class index extends Component {
             <Menu/>
           </ZIndex>
           <div className="col-9 col-md-10 p-5" >
-            {/* <Table/> */}
+            จัดการผู้มีสิทธิ์เข้าค่าย
+            <Page/>
           </div>
         </div>
       </div >
