@@ -124,6 +124,9 @@ export default class CheckAnswer extends React.Component {
       isLoading:false
     });
   };
+  handlePrevious (){
+    window.location.href = `${env.PATH_QUESTIONS}/questions`;
+  };
   render() {
     // console.log(this.state.answers.length);
 
@@ -143,7 +146,7 @@ export default class CheckAnswer extends React.Component {
           <div className="col-9 col-md-10 px-5 pt-3">
             <div className="container">
               <p>
-                <a>ย้อนกลับ</a> / ข้อที่ : {this.state.question_id}
+                <a onClick={this.handlePrevious}>ย้อนกลับ</a> / ข้อที่ : {this.state.question_id}
               </p>
               <h1>ตรวจคำตอบ</h1>
               <div className="row">
