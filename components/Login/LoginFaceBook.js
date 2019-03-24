@@ -12,7 +12,7 @@ const responseFacebook = async (response) => {
 const changetoRegisterPage = async () => {
   if (Cookies.gettokenJWTCookie()) {
     Router.push({
-      pathname: '/dashboard'
+      pathname: '/waiting'
     })
   }
 }
