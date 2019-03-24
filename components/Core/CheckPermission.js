@@ -6,7 +6,7 @@ const CheckPermissions = {
     let data = await AuthService.getPermission()
     let permission = []
     permission = data.permission
-    if (permission.find(permissionId => permissionId.permission_id == 4) || permission.find(permissionId => permissionId.permission_id == 10)) {
+    if (permission.find(permissionId => permissionId.permission_id == 3) || permission.find(permissionId => permissionId.permission_id == 9)) {
       return true
     }
     return false
