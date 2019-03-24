@@ -24,7 +24,7 @@ export default class waiting extends React.Component {
     let permission = []
     permission = data.permission
     console.log(permission.find(permissionId => permissionId.permission_id))
-    if (await permission.find(permissionId => permissionId.permission_id !== 3)) {
+    if (await permission.find(permissionId => permissionId.permission_id)) {
       console.log('in case')
       Router.push({
         pathname: '/dashboard'
