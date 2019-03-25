@@ -30,14 +30,7 @@ export default class approved extends React.Component {
        pathname: '/waiting'
      })
    }
-   if (await permission.find(permissionId => permissionId.permission_id === 9)) {
-    
-  }else{
-    console.log('in case2')
-    Router.push({
-      pathname: '/dashboard'
-    })
-  }
+  
  }
   render() {
     return (
