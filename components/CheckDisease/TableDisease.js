@@ -26,6 +26,11 @@ class DiseaseTable extends React.Component {
         key: 'name'
       },
       {
+        title: 'wip_id',
+        dataIndex: 'wip_id',
+        key: 'wip_id'
+      },
+      {
         title: 'โรคประจำตัว',
         dataIndex: 'cangenitalDisease',
         key: 'cangenitalDisease'
@@ -68,7 +73,9 @@ class DiseaseTable extends React.Component {
         allergicDrug: registrants[index].allergic_drug,
         allergicFood: registrants[index].allergic_food,
         medical_approved: registrants[index].medical_approved,
-        cangenitalDisease: registrants[index].cangenital_disease
+        cangenitalDisease: registrants[index].cangenital_disease,
+        wip_id: registrants[index].wip_id
+
       })
     }
     this.setState({
