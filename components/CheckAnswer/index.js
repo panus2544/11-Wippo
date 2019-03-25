@@ -21,13 +21,13 @@ export default class CheckAnswer extends React.Component {
     questions: [
       {
         id: "",
-        content: "กำลังขอ permistion"
+        content: "กำลังขอ permission"
       }
     ],
     answers: [
       {
         ans_id: "",
-        ans_content: "กำลังขอ permistion",
+        ans_content: "กำลังขอ permission",
         wip_id: ""
       }
     ],
