@@ -56,7 +56,16 @@ const Question = {
       }
     })
   },
-
+  getDataForChangeStatus: async (data) => {
+    try {
+      await apiRegService.put('/registrants/changstatus', {
+        'itim_wip_id': data.wipId,
+        'is_call': data.is_call,
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  },
   getDataForUpdateNote: async (data) => {
 
     await apiRegService.put('/registrants/note', {
