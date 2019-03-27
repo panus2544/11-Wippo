@@ -14,18 +14,37 @@ const StyleMenu = styled(Menu)`
 
 const allPermission = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-const path = ['dashboard', 'viewregistrants', 'questions','checkdisease', 'editsponsor', 'approved', 'confirmnamelist', 'confirm']
+const path = ['dashboard', 'viewregistrants', 'questions', 'checkdisease', 'editsponsor', 'approved', 'confirmnamelist', 'confirm']
 
-const permission = ['ข้อมูลสรุป', 'จัดการรายชื่อสมาชิก', 'ตรวจคำตอบ','ตรวจโรค', 'แก้ไขสปอนเซอร์', 'จัดการผู้ขอสิทธิ์', 'ประกาศรายชื่อผู้ติดค่าย', 'จัดการผู้มีสิทธิ์เข้าค่าย']
+const permission = ['ข้อมูลสรุป', 'จัดการรายชื่อสมาชิก', 'ตรวจคำตอบ', 'ตรวจโรค', 'แก้ไขสปอนเซอร์', 'จัดการผู้ขอสิทธิ์', 'ประกาศรายชื่อผู้ติดค่าย', 'จัดการผู้มีสิทธิ์เข้าค่าย']
 class Menubar extends React.Component {
   state = {
     showComponent: false,
     collapsed: false,
-    permission: {}
-  }
+    permission: {},
+    pathname: 0,
+  };
 
   componentDidMount = async () => {
     this.getPermission()
+  }
+
+  UNSAFE_componentWillMount() {
+    this.checkLocations()
+  }
+
+  async checkLocations() {
+    let checkLocation = window.location.pathname;
+    switch (checkLocation) {
+      case '/dashboard': await this.setState({ pathname: 0 })
+      case '/viewregistrants': await this.setState({ pathname: 1 })
+      case '/questions': await this.setState({ pathname: 2 })
+      case '/checkdisease': await this.setState({ pathname: 3 })
+      case '/editsponsor': await this.setState({ pathname: 4 })
+      case '/approved': await this.setState({ pathname: 5 })
+      case '/confirmnamelist': await this.setState({ pathname: 6 })
+      case '/confirm': await this.setState({ pathname: 7 })
+    }
   }
 
   getPermission = async () => {
@@ -59,12 +78,13 @@ class Menubar extends React.Component {
         theme="light"
       >
         <div className="logo" />
-        <StyleMenu theme="" defaultSelectedKeys={['1']} mode="inline">
+        <StyleMenu defaultSelectedKeys={[`${this.state.pathname}`]} mode="inline">
           {
             allPermission.map((data, i) => {
+              console.log
               return (
                 this.checkPermission(data) == data &&
-                <SubItem key={`${i}`}>
+                <SubItem key={i}>
                   <a href={`/${path[data - 1]}`}>
                     <Icon type="eye" />
                     <span>{permission[data - 1]}</span>
