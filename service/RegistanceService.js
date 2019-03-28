@@ -67,7 +67,6 @@ const Question = {
     }
   },
   getDataForUpdateNote: async (data) => {
-
     await apiRegService.put('/registrants/note', {
       'itim_wip_id': data.wipId,
       'note': data.note,
@@ -78,6 +77,13 @@ const Question = {
     })
 
   },
+  getRegistrantsForPassing : async () => {
+    return await apiRegService.get('/scores/categoryscores').catch(error => {
+      if (error.response.status === 401) {
+        checkAuth.clearJwt(error.response.status)
+      }
+    });
+  }
 
 }
 
@@ -103,8 +109,7 @@ export const Stats = {
         checkAuth.clearJwt(error.response.status)
       }
     });
-  }
-
+  },
 }
 
 export default Question;
