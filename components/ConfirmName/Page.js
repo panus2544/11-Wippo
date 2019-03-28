@@ -50,7 +50,7 @@ class Page extends Component {
 
 
   handleChange = value => {
-    // console.log(value)
+    console.log(value)
     if (value <= 1) {
       this.setState({
         minValue: 0,
@@ -58,7 +58,7 @@ class Page extends Component {
       });
     } else {
       this.setState({
-        minValue: this.state.maxValue,
+        minValue: (value * 6)-6,
         maxValue: value * 6
       });
     }
@@ -68,6 +68,7 @@ class Page extends Component {
 
   getRegistrants = async () => {
     let nameList = await Registrants.getRegistrantsForPassing()
+    console.log(nameList)
     this.setData(nameList.data[0])
   }
 
