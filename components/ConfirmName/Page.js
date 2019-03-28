@@ -50,7 +50,7 @@ class Page extends Component {
 
 
   handleChange = value => {
-    console.log(value)
+    // console.log(value)
     if (value <= 1) {
       this.setState({
         minValue: 0,
@@ -62,8 +62,8 @@ class Page extends Component {
         maxValue: value * 6
       });
     }
-    console.log('min : ', this.state.minValue)
-    console.log('max : ', this.state.maxValue)
+    // console.log('min : ', this.state.minValue)
+    // console.log('max : ', this.state.maxValue)
   };
 
   getRegistrants = async () => {
@@ -104,8 +104,8 @@ class Page extends Component {
     this.setState({
       registrants: registrants
     })
-    console.log('Registrnats ; ', registrants)
-    console.log(dataChart)
+    // console.log('Registrnats ; ', registrants)
+    // console.log(dataChart)
   }
 
   checkbox = (e, wip_id) => {
@@ -123,7 +123,7 @@ class Page extends Component {
                   <Card key={i} card=''>
                     <div className="row" >
                       <div className="col d-flex justify-content-end">
-                        <Checkbox onChange={(e) => this.checkbox(e, data.wip_id)} />
+                        <Checkbox onChange={(e) => this.checkbox(e, data.wipId)} />
                       </div>
                     </div>
                     <div className="row">
