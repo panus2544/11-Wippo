@@ -6,17 +6,7 @@ import Registrants from '../../service/RegistanceService'
 
 let registrants = [];
 
-const dataChart = {
-  labels: ['intel.', 'commu.', 'creative'],
-  datasets: [
-    {
-      backgroundColor: 'rgba(255,99,132,0.2)',
-      borderColor: 'rgba(255,99,132,1)',
-      data: [7, 8, 9],
-      display: false
-    }
-  ]
-};
+let dataChart = [];
 
 const options = {
   legend: {
@@ -41,21 +31,24 @@ const Card = styled(DefaultCard)`
   }
 `
 class Page extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-     change: false,
-     bgCard: '',
-     registrants: [],
-     minValue: 0,
-     maxValue: 6
-   }
+  state = {
+    change: false,
+    bgCard: '',
+    registrants: [],
+    minValue: 0,
+    maxValue: 6,
+    oldValue: 0
   }
 
   componentDidMount = async () => {
     this.getRegistrants()
+    this.setState({
+      minValue: 0,
+      maxValue: 6
+    });
   }
-  
+
+
   handleChange = value => {
     console.log(value)
     if (value <= 1) {
@@ -69,6 +62,8 @@ class Page extends Component {
         maxValue: value * 6
       });
     }
+    console.log('min : ', this.state.minValue)
+    console.log('max : ', this.state.maxValue)
   };
 
   getRegistrants = async () => {
@@ -77,23 +72,44 @@ class Page extends Component {
   }
 
   setData = async (data) => {
-    // let dataRegis = [];
+    let dataRegis = [];
     for (let index = 0; index < data.length; index++) {
       registrants.push({
         wipId: data[index].wip_id,
         firstname: data[index].firstname_th,
-        lastname: data[index].lastname_th
+        lastname: data[index].lastname_th,
+        gender: data[index].gender,
+        disease : data[index].cangenital_disease,
+        medic : data[index].allergic_drug,
+        food : data[index].allergic_food
       })
+      dataChart.push(
+        {
+          labels: ['com.', 'crt.', 'int.'],
+          datasets: [
+            {
+              backgroundColor: 'rgba(255,99,132,0.2)',
+              borderColor: 'rgba(255,99,132,1)',
+              data: [
+                data[index].mean_cat_com,
+                data[index].mean_cat_crt,
+                data[index].mean_cat_int
+              ],
+              display: false
+            }
+          ]
+        }
+      )
     }
     this.setState({
-      registrants: registrants.length
+      registrants: registrants
     })
     console.log('Registrnats ; ', registrants)
+    console.log(dataChart)
   }
 
   checkbox = (e, wip_id) => {
     console.log(`checked = ${e.target.checked} + ${wip_id}`);
-    this.changeCard(e.target.checked)
   }
 
   render() {
@@ -101,7 +117,7 @@ class Page extends Component {
       <div className="container">
         <div className="row">
           {registrants && registrants.length > 0 &&
-            registrants.slice(this.state.maxValue, this.state.minValue).map((data, i) => {
+            registrants.slice(this.state.minValue, this.state.maxValue).map((data, i) => {
               return (
                 <div className="col-6">
                   <Card key={i} card=''>
@@ -112,25 +128,28 @@ class Page extends Component {
                     </div>
                     <div className="row">
                       <div className="col-6 d-flex align-items-center">
+                        Wip ID : {data.wipId}<br />
                         ชื่อ-สกุล : {data.firstname} {data.lastname}<br />
-                        {/* โรคประจำตัว :{data.disease}<br />
-                      ยาที่แพ้ : {data.medic}<br /> */}
+                        เพศ : {data.gender}<br />
+                        โรคประจำตัว :{data.disease}<br />
+                        ยาที่แพ้ : {data.medic}<br />
+                        อาหารที่แพ้ : {data.food}<br />
                       </div>
                       <div className="col-6">
-                        <Radar type='radar' width='100vh' height='100%' data={dataChart} options={options} />
+                        <Radar type='radar' width='100vh' height='100%' data={dataChart[i]} options={options} />
                       </div>
                     </div>
                   </Card>
                 </div>
               )
             })}
+        </div>
         <div className="row d-flex justify-content-end mt-5">
           <Pagination defaultCurrent={1}
-            defaultPageSize={10}
+            defaultPageSize={6}
             onChange={this.handleChange}
-            total={this.state.registrants} 
+            total={557}
           />
-        </div>
         </div>
       </div>
     );
