@@ -6,7 +6,7 @@ import Registrants from '../../service/RegistanceService'
 
 let registrants = [];
 
-let dataChart = [];
+// let dataChart = [];
 
 const options = {
   legend: {
@@ -68,7 +68,7 @@ class Page extends Component {
 
   getRegistrants = async () => {
     let nameList = await Registrants.getRegistrantsForPassing()
-    console.log(nameList)
+    // console.log(nameList)
     this.setData(nameList.data[0])
   }
 
@@ -82,25 +82,24 @@ class Page extends Component {
         gender: data[index].gender,
         disease : data[index].cangenital_disease,
         medic : data[index].allergic_drug,
-        food : data[index].allergic_food
+        food : data[index].allergic_food,
+        dataChart :
+          {
+            labels: ['com.', 'crt.', 'int.'],
+            datasets: [
+              {
+                backgroundColor: 'rgba(255,99,132,0.2)',
+                borderColor: 'rgba(255,99,132,1)',
+                data: [
+                  data[index].mean_cat_com,
+                  data[index].mean_cat_crt,
+                  data[index].mean_cat_int
+                ],
+                display: false
+              }
+            ]
+          }
       })
-      dataChart.push(
-        {
-          labels: ['com.', 'crt.', 'int.'],
-          datasets: [
-            {
-              backgroundColor: 'rgba(255,99,132,0.2)',
-              borderColor: 'rgba(255,99,132,1)',
-              data: [
-                data[index].mean_cat_com,
-                data[index].mean_cat_crt,
-                data[index].mean_cat_int
-              ],
-              display: false
-            }
-          ]
-        }
-      )
     }
     this.setState({
       registrants: registrants
@@ -137,7 +136,7 @@ class Page extends Component {
                         อาหารที่แพ้ : {data.food}<br />
                       </div>
                       <div className="col-6">
-                        <Radar type='radar' width='100vh' height='100%' data={dataChart[i]} options={options} />
+                        <Radar type='radar' width='100vh' height='100%' data={registrants[i].dataChart} options={options} />
                       </div>
                     </div>
                   </Card>
