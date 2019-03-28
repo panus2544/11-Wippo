@@ -49,17 +49,14 @@ class DiseaseTable extends React.Component {
   }
 
   componentDidMount = async () => {
-   this.getStatus()
+    this.getStatus()
     // this.getRegistrant(registrants.registrants)
   }
-  getStatus= async ()=>{
+  getStatus = async () => {
     let registrantsDisease = await Registrants.getAllDisease()
     this.getRegistrant(registrantsDisease.data)
   }
 
-  handleCheckStatus = (wip_id, e) => {
-    Registrants.getDataForChangeStatus({ wipId: wip_id, is_call: e.target.checked })
-  }
   getRegistrant = async registrants => {
     let data = []
     for (let index = 0; index < registrants.length; index++) {
@@ -69,7 +66,7 @@ class DiseaseTable extends React.Component {
         is_call: registrants[index].is_call,
         name: `${registrants[index].firstname_th} ${
           registrants[index].lastname_th
-        }`,
+          }`,
         allergicDrug: registrants[index].allergic_drug,
         allergicFood: registrants[index].allergic_food,
         medical_approved: registrants[index].medical_approved,

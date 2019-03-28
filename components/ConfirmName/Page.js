@@ -1,16 +1,10 @@
 import React, { Component } from 'react';
-import { Card as DefaultCard, Checkbox } from 'antd';
+import { Card as DefaultCard, Checkbox, Pagination } from 'antd';
 import styled from 'styled-components'
 import { Radar } from 'react-chartjs-2';
+import Registrants from '../../service/RegistanceService'
 
-const mockUpData = [
-  { wip_id: 110001, firtname: "วิปโป้1 ใจดี", disease: "-", medic: "-", intelligent: 7, communication: 9, creative: 6 },
-  { wip_id: 110002, firtname: "วิปโป้2 ใจดี", disease: "-", medic: "-", intelligent: 5, communication: 8, creative: 7 },
-  { wip_id: 110003, firtname: "วิปโป้3 ใจดี", disease: "-", medic: "-", intelligent: 7, communication: 9, creative: 8 },
-  { wip_id: 110001, firtname: "วิปโป้1 ใจดี", disease: "-", medic: "-", intelligent: 7, communication: 9, creative: 6 },
-  { wip_id: 110002, firtname: "วิปโป้2 ใจดี", disease: "-", medic: "-", intelligent: 5, communication: 8, creative: 7 },
-  { wip_id: 110003, firtname: "วิปโป้3 ใจดี", disease: "-", medic: "-", intelligent: 7, communication: 9, creative: 8 }
-]
+let registrants = [];
 
 const dataChart = {
   labels: ['intel.', 'commu.', 'creative'],
@@ -47,12 +41,54 @@ const Card = styled(DefaultCard)`
   }
 `
 class Page extends Component {
-  state = {
-    change: false,
-    bgCard: ''
+  constructor (props) {
+    super(props)
+    this.state = {
+     change: false,
+     bgCard: '',
+     registrants: [],
+     minValue: 0,
+     maxValue: 6
+   }
   }
-  componentDidMount() {
 
+  componentDidMount = async () => {
+    this.getRegistrants()
+  }
+  
+  handleChange = value => {
+    console.log(value)
+    if (value <= 1) {
+      this.setState({
+        minValue: 0,
+        maxValue: 6
+      });
+    } else {
+      this.setState({
+        minValue: this.state.maxValue,
+        maxValue: value * 6
+      });
+    }
+  };
+
+  getRegistrants = async () => {
+    let nameList = await Registrants.getRegistrantsForPassing()
+    this.setData(nameList.data[0])
+  }
+
+  setData = async (data) => {
+    // let dataRegis = [];
+    for (let index = 0; index < data.length; index++) {
+      registrants.push({
+        wipId: data[index].wip_id,
+        firstname: data[index].firstname_th,
+        lastname: data[index].lastname_th
+      })
+    }
+    this.setState({
+      registrants: registrants.length
+    })
+    console.log('Registrnats ; ', registrants)
   }
 
   checkbox = (e, wip_id) => {
@@ -60,40 +96,41 @@ class Page extends Component {
     this.changeCard(e.target.checked)
   }
 
-  changeCard = (bool) => {
-    return bool
-  }
-
   render() {
     return (
       <div className="container">
         <div className="row">
-          {mockUpData.map((data, i) => {
-            return (
-              <div className="col-6">
-                <Card key={i} card=''>
-                  <div className="row" >
-                    <div className="col d-flex justify-content-end">
-                      <Checkbox onChange={(e) => this.checkbox(e, data.wip_id)} />
+          {registrants && registrants.length > 0 &&
+            registrants.slice(this.state.maxValue, this.state.minValue).map((data, i) => {
+              return (
+                <div className="col-6">
+                  <Card key={i} card=''>
+                    <div className="row" >
+                      <div className="col d-flex justify-content-end">
+                        <Checkbox onChange={(e) => this.checkbox(e, data.wip_id)} />
+                      </div>
                     </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-6 d-flex align-items-center">
-                      ชื่อ-สกุล : {data.firtname}<br />
-                      โรคประจำตัว :{data.disease}<br />
-                      ยาที่แพ้ : {data.medic}<br />
+                    <div className="row">
+                      <div className="col-6 d-flex align-items-center">
+                        ชื่อ-สกุล : {data.firstname} {data.lastname}<br />
+                        {/* โรคประจำตัว :{data.disease}<br />
+                      ยาที่แพ้ : {data.medic}<br /> */}
+                      </div>
+                      <div className="col-6">
+                        <Radar type='radar' width='100vh' height='100%' data={dataChart} options={options} />
+                      </div>
                     </div>
-                    <div className="col-6">
-                      <Radar type='radar' width='100vh' height='100%' data={dataChart} options={options} />
-                    </div>
-                  </div>
-                </Card>
-              </div>
-            )
-          })}
-        </div>
+                  </Card>
+                </div>
+              )
+            })}
         <div className="row d-flex justify-content-end mt-5">
-          <button>บันทึก</button>
+          <Pagination defaultCurrent={1}
+            defaultPageSize={10}
+            onChange={this.handleChange}
+            total={this.state.registrants} 
+          />
+        </div>
         </div>
       </div>
     );

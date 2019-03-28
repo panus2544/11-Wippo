@@ -20,7 +20,7 @@ class index extends Component {
             <Menu/>
           </ZIndex>
           <div className="col-9 col-md-10 p-5" >
-            จัดการผู้มีสิทธิ์เข้าค่าย
+            <h1>จัดการผู้มีสิทธิ์เข้าค่าย</h1>
             <Page/>
           </div>
         </div>
