@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { Radar } from 'react-chartjs-2';
 import Registrants from '../../service/RegistanceService'
 import AuthService from '../../service/AuthService'
+import Permission from '../../service/PermissionService'
 
 let registrants = [];
 
@@ -36,17 +37,35 @@ class Page extends Component {
     registrants: [],
     minValue: 0,
     maxValue: 6,
-    oldValue: 0
+    oldValue: 0,
+    permission : []
   }
 
   componentDidMount = async () => {
-    this.getRegistrants()
+    this.getPermission()
     this.setState({
       minValue: 0,
       maxValue: 6
     });
   }
-
+  
+  getPermission = async () => {
+    let data = await Permission.getPermission()
+    let permission = []
+    permission = data.permission
+    this.setState({
+      permission: permission
+    })
+    this.checkPermission()
+  }
+  
+  checkPermission = async () => {
+    if (this.state.permission.find(permissionId => permissionId.permission_id == 7) || this.state.permission.find(permissionId => permissionId.permission_id == 8)) {
+      this.getRegistrants()
+    }else {
+      alert('คุณไม่สิทธิ์ในการเข้าถึง กรุณาติดต่อ admin')
+    }
+  }
 
   handleChange = value => {
     if (value <= 1) {
@@ -68,7 +87,6 @@ class Page extends Component {
   }
 
   setData = async (data) => {
-    let dataRegis = [];
     for (let index = 0; index < data.length; index++) {
       registrants.push({
         wipId: data[index].wip_id,
@@ -84,6 +102,7 @@ class Page extends Component {
           labels: ['com.', 'crt.', 'int.'],
           datasets: [
             {
+              label: 'Score',
               backgroundColor: 'rgba(255,99,132,0.2)',
               borderColor: 'rgba(255,99,132,1)',
               data: [

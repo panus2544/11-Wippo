@@ -78,8 +78,6 @@ class App extends React.Component {
         message: registrants[index].note,
       })
     }
-
-
     this.setState({
       registrants: data
     })
