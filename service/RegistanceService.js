@@ -83,7 +83,7 @@ const Question = {
         checkAuth.clearJwt(error.response.status)
       }
     });
-  }
+  },
 
 }
 

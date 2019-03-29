@@ -1,5 +1,6 @@
 import api from '../utils/apiAuthService'
 import Cookies from './CookieService'
+import apiAuthService from '../utils/apiAuthService';
 
 const AuthService = {
   login: async (request) => {
@@ -23,8 +24,17 @@ const AuthService = {
     } catch (error) {
       console.log(error)
     }
-  }
-
+  },
+  changeRole: async (data) => {
+    try {
+      await apiAuthService.put('/changerole', {
+        'wip_id_itim': data.wipId,
+        'role_id': data.roleId,
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  },
   
 
 }

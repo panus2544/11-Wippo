@@ -3,10 +3,9 @@ import { Card as DefaultCard, Checkbox, Pagination } from 'antd';
 import styled from 'styled-components'
 import { Radar } from 'react-chartjs-2';
 import Registrants from '../../service/RegistanceService'
+import AuthService from '../../service/AuthService'
 
 let registrants = [];
-
-// let dataChart = [];
 
 const options = {
   legend: {
@@ -50,7 +49,6 @@ class Page extends Component {
 
 
   handleChange = value => {
-    console.log(value)
     if (value <= 1) {
       this.setState({
         minValue: 0,
@@ -58,17 +56,14 @@ class Page extends Component {
       });
     } else {
       this.setState({
-        minValue: (value * 6)-6,
+        minValue: (value * 6) - 6,
         maxValue: value * 6
       });
     }
-    // console.log('min : ', this.state.minValue)
-    // console.log('max : ', this.state.maxValue)
   };
 
   getRegistrants = async () => {
     let nameList = await Registrants.getRegistrantsForPassing()
-    // console.log(nameList)
     this.setData(nameList.data[0])
   }
 
@@ -80,36 +75,35 @@ class Page extends Component {
         firstname: data[index].firstname_th,
         lastname: data[index].lastname_th,
         gender: data[index].gender,
-        disease : data[index].cangenital_disease,
-        medic : data[index].allergic_drug,
-        food : data[index].allergic_food,
-        dataChart :
-          {
-            labels: ['com.', 'crt.', 'int.'],
-            datasets: [
-              {
-                backgroundColor: 'rgba(255,99,132,0.2)',
-                borderColor: 'rgba(255,99,132,1)',
-                data: [
-                  data[index].mean_cat_com,
-                  data[index].mean_cat_crt,
-                  data[index].mean_cat_int
-                ],
-                display: false
-              }
-            ]
-          }
+        disease: data[index].cangenital_disease,
+        medic: data[index].allergic_drug,
+        food: data[index].allergic_food,
+        dataChart:
+        {
+          labels: ['com.', 'crt.', 'int.'],
+          datasets: [
+            {
+              backgroundColor: 'rgba(255,99,132,0.2)',
+              borderColor: 'rgba(255,99,132,1)',
+              data: [
+                data[index].mean_cat_com,
+                data[index].mean_cat_crt,
+                data[index].mean_cat_int
+              ],
+              display: false
+            }
+          ]
+        }
       })
     }
     this.setState({
       registrants: registrants
     })
-    // console.log('Registrnats ; ', registrants)
-    // console.log(dataChart)
   }
 
-  checkbox = (e, wip_id) => {
-    console.log(`checked = ${e.target.checked} + ${wip_id}`);
+  checkbox = (e, wip_id, role) => {
+    console.log(`checked = ${e.target.checked} + ${wip_id} + ${role}`);
+    AuthService.changeRole({ wipId: wip_id, roleId: role })
   }
 
   render() {
@@ -122,8 +116,9 @@ class Page extends Component {
                 <div className="col-6">
                   <Card key={i} card=''>
                     <div className="row" >
-                      <div className="col d-flex justify-content-end">
-                        <Checkbox onChange={(e) => this.checkbox(e, data.wipId)} />
+                      <div className="col d-flex justify-content-end mb-2">
+                        ตัวจริง : <Checkbox onChange={(e) => this.checkbox(e, data.wipId, 2)} />&nbsp;
+                        ตัวสำรอง :<Checkbox onChange={(e) => this.checkbox(e, data.wipId, 12)} />
                       </div>
                     </div>
                     <div className="row">
