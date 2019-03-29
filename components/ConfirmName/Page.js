@@ -78,6 +78,7 @@ class Page extends Component {
         disease: data[index].cangenital_disease,
         medic: data[index].allergic_drug,
         food: data[index].allergic_food,
+        role : data[index].role,
         dataChart:
         {
           labels: ['com.', 'crt.', 'int.'],
@@ -101,9 +102,22 @@ class Page extends Component {
     })
   }
 
-  checkbox = (e, wip_id, role) => {
-    console.log(`checked = ${e.target.checked} + ${wip_id} + ${role}`);
-    AuthService.changeRole({ wipId: wip_id, roleId: role })
+  sendItimReal = (e, wip_id) => {
+    console.log(`checked = ${e.target.checked} + ${wip_id}`);
+    if (e.target.checked) {
+      AuthService.changeRole({ wipId: wip_id, roleId: 2 })
+    } else {
+      AuthService.changeRole({ wipId: wip_id, roleId: 1 })
+    }
+  }
+
+  sendItimUnderstudy =  (e, wip_id) => {
+    console.log(`checked = ${e.target.checked} + ${wip_id}`);
+    if (e.target.checked) {
+      AuthService.changeRole({ wipId: wip_id, roleId: 12 })
+    } else {
+      AuthService.changeRole({ wipId: wip_id, roleId: 1 })
+    }
   }
 
   render() {
@@ -117,8 +131,8 @@ class Page extends Component {
                   <Card key={i} card=''>
                     <div className="row" >
                       <div className="col d-flex justify-content-end mb-2">
-                        ตัวจริง : <Checkbox onChange={(e) => this.checkbox(e, data.wipId, 2)} />&nbsp;
-                        ตัวสำรอง :<Checkbox onChange={(e) => this.checkbox(e, data.wipId, 12)} />
+                        ตัวจริง : <Checkbox defaultChecked={data.role == 2 ? true : false} onChange={(e) => this.sendItimReal(e, data.wipId)} />&nbsp;
+                        ตัวสำรอง :<Checkbox defaultChecked={data.role == 12 ? true : false} onChange={(e) => this.sendItimUnderstudy(e, data.wipId)} />
                       </div>
                     </div>
                     <div className="row">
