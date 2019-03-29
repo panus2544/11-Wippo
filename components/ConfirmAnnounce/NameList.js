@@ -1,0 +1,77 @@
+import React, { Component } from 'react';
+import { Table, Input, Checkbox } from 'antd';
+import Registrants from '../../service/RegistanceService'
+import Permission from '../../service/PermissionService'
+
+let registrants = [];
+
+class NameList extends Component {
+  state = {
+    registrants : [],
+    columns : [{
+      title: 'WIP ID',
+      dataIndex: 'wipId',
+      key: 'wip_id',
+      align : 'center'
+    },
+    { 
+      title: 'ชื่อ-นามสกุล',
+      dataIndex: 'firstname',
+      key: 'name',
+      align : 'center'
+    }],
+  }
+  
+  componentDidMount () {
+    this.getPermission()
+  }
+  
+  getPermission = async () => {
+    let data = await Permission.getPermission()
+    let permission = []
+    permission = data.permission
+    this.setState({
+      permission: permission
+    })
+    this.checkPermission()
+  }
+  
+  checkPermission = async () => {
+    if (this.state.permission.find(permissionId => permissionId.permission_id == 7) || this.state.permission.find(permissionId => permissionId.permission_id == 8)) {
+      this.getRegistrants()
+    } else {
+      alert('คุณไม่สิทธิ์ในการเข้าถึง กรุณาติดต่อ admin')
+    }
+  }
+  
+  getRegistrants = async () => {
+    let nameList = await Registrants.getRegistrantsForPassing()
+    this.setData(nameList.data[0])
+  }
+  
+  setData = async (data) => {
+    for (let index = 0; index < data.length; index++) {
+      if(data[index].role.role == 2){
+        registrants.push({
+          wipId: data[index].wip_id,
+          firstname: `${data[index].firstname_th} ${data[index].lastname_th}`,
+          role: data[index].role.role, 
+        })
+      }
+    }
+    this.setState({
+      registrants: registrants
+    })
+
+  }
+
+  render() {
+    return (
+      <React.Fragment>
+          <Table  columns={this.state.columns} dataSource={this.state.registrants} />
+      </React.Fragment>
+    );
+  }
+}
+
+export default NameList;

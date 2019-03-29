@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import Nav from '../Core/Navbar'
 import Menu from '../Core/Menu'
 import styled from 'styled-components'
-import Page from './Page'
+import NameList from './NameList'
+import { Card } from 'antd';
 
 const ZIndex = styled.div`
   z-index: 10;
@@ -14,18 +15,22 @@ class index extends Component {
       <div className="container-fulid overflow-hidden">
         <div className="row">
           <div className="col-12 col-md-12 ">
-            <Nav  />
+            <Nav />
           </div>
           <ZIndex className="col-3 col-md-2">
-            <Menu/>
+            <Menu />
           </ZIndex>
           <div className="col-9 col-md-10 p-5" >
-            <h2>จัดการผู้มีสิทธิ์เข้าค่าย</h2>
-            <Page/>
+            <h2>ประกาศรายชื่อผู้มีสิทธิ์เข้าค่าย</h2>
+            <Card>
+              <p>รายชื่อผู้ที่มีสิทธิ์เข้าค่าย (ตัวจริง)</p>
+              <NameList />
+            </Card>
           </div>
         </div>
       </div >
     );
   }
 }
+
 export default index;
