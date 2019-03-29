@@ -38,7 +38,7 @@ class Page extends Component {
     minValue: 0,
     maxValue: 6,
     oldValue: 0,
-    permission : []
+    permission: [],
   }
 
   componentDidMount = async () => {
@@ -48,7 +48,7 @@ class Page extends Component {
       maxValue: 6
     });
   }
-  
+
   getPermission = async () => {
     let data = await Permission.getPermission()
     let permission = []
@@ -58,11 +58,11 @@ class Page extends Component {
     })
     this.checkPermission()
   }
-  
+
   checkPermission = async () => {
     if (this.state.permission.find(permissionId => permissionId.permission_id == 7) || this.state.permission.find(permissionId => permissionId.permission_id == 8)) {
       this.getRegistrants()
-    }else {
+    } else {
       alert('คุณไม่สิทธิ์ในการเข้าถึง กรุณาติดต่อ admin')
     }
   }
@@ -96,7 +96,7 @@ class Page extends Component {
         disease: data[index].cangenital_disease,
         medic: data[index].allergic_drug,
         food: data[index].allergic_food,
-        role : data[index].role,
+        role: data[index].role.role,
         dataChart:
         {
           labels: ['com.', 'crt.', 'int.'],
@@ -130,7 +130,7 @@ class Page extends Component {
     }
   }
 
-  sendItimUnderstudy =  (e, wip_id) => {
+  sendItimUnderstudy = (e, wip_id) => {
     console.log(`checked = ${e.target.checked} + ${wip_id}`);
     if (e.target.checked) {
       AuthService.changeRole({ wipId: wip_id, roleId: 12 })
