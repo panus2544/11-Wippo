@@ -143,8 +143,7 @@ class Page extends Component {
     return (
       <div className="container">
         <div className="row">
-          {registrants && registrants.length > 0 &&
-            registrants.slice(this.state.minValue, this.state.maxValue).map((data, i) => {
+          {registrants.map((data, i) => {
               return (
                 <div className="col-6">
                   <Card key={i} card=''>
@@ -172,13 +171,13 @@ class Page extends Component {
               )
             })}
         </div>
-        <div className="row d-flex justify-content-end mt-5">
+        {/* <div className="row d-flex justify-content-end mt-5">
           <Pagination defaultCurrent={1}
             defaultPageSize={6}
             onChange={this.handleChange}
             total={557}
           />
-        </div>
+        </div> */}
       </div>
     );
   }
