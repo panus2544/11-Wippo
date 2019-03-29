@@ -14,7 +14,7 @@ const StyleMenu = styled(Menu)`
 
 const allPermission = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-const path = ['dashboard', 'viewregistrants', 'questions', 'checkdisease', 'editsponsor', 'approved', 'confirm', 'confirmnamelist']
+const path = ['dashboard', 'viewregistrants', 'questions', 'checkdisease', 'editsponsor', 'approved', 'confirm', 'confirmannounce']
 
 const permission = ['ข้อมูลสรุป', 'จัดการรายชื่อสมาชิก', 'ตรวจคำตอบ', 'ตรวจโรค', 'แก้ไขสปอนเซอร์', 'จัดการผู้ขอสิทธิ์', 'จัดการผู้มีสิทธิ์เข้าค่าย','ประกาศรายชื่อผู้ติดค่าย']
 class Menubar extends React.Component {
@@ -43,7 +43,7 @@ class Menubar extends React.Component {
       case '/editsponsor': await this.setState({ pathname: 4 })
       case '/approved': await this.setState({ pathname: 5 })
       case '/confirm': await this.setState({ pathname: 6 })
-      case '/confirmnamelist': await this.setState({ pathname: 7 })
+      case '/confirmannounce': await this.setState({ pathname: 7 })
     }
   }
 
