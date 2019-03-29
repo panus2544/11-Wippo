@@ -23,7 +23,6 @@ class index extends Component {
           <div className="col-9 col-md-10 p-5" >
             <h2>ประกาศรายชื่อผู้มีสิทธิ์เข้าค่าย</h2>
             <Card>
-              <p>รายชื่อผู้ที่มีสิทธิ์เข้าค่าย (ตัวจริง)</p>
               <NameList />
             </Card>
           </div>
