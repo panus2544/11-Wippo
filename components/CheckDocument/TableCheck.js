@@ -74,7 +74,6 @@ class TableCheck extends Component {
     if (this.state.permission.find(permissionId => permissionId.permission_id == 10)) {
       let registrants = await CamperService.getCamper()
       this.getCamper(registrants.data)
-      console.log(registrants.data)
       return true
     }
   }
@@ -109,23 +108,16 @@ class TableCheck extends Component {
     let wipId = link.substring(5, 11)
     let typePath = link.substring(19)
     let res = await CamperService.getDocuments({ wipId: wipId, type_path: typePath })
-    console.log(res.data)
     this.setState({
       url: res.data
     })
     window.open(this.state.url,'_blank')
   }
 
-  chengeUrl = () => {
-    this.setState({
-      url: URL.createObjectURL('https://storage.freezer.in.th/profile/WIPID110014/110014_transcript?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=VizhBfmrCSvpJqGRKvEC%2F20190402%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20190402T191217Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Signature=d97220c0494433f4c463e6f7521f1c5346bbf3e97ee9172e216f63993cfe1af8')
-    })
-  }
 
   render() {
     return (
       <React.Fragment>
-        {/* <button onClick={() => this.chengeUrl()} >Test</button> */}
         <Table columns={this.state.columns} dataSource={this.state.registrants} />
       </React.Fragment>
     );
