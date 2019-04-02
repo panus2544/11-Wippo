@@ -4,14 +4,9 @@ import CamperService from '../../service/CamperService'
 import AuthService from '../../service/PermissionService'
 import styled from 'styled-components'
 
-const Link = styled.a`
-  a .TableCheck__Link-sc-1uoh4lk-0 .dbjGPO {
-    color: ${props => props.color};
-    text-decoration: none;
-}
-`
 const P = styled.p`
-  opacity: 0.7;
+  color: ${props => props.color};
+  opacity: ${props => props.opacity || 1};
 `
 class TableCheck extends Component {
   state = {
@@ -44,8 +39,10 @@ class TableCheck extends Component {
       render: (link) => {
         return (
           link != null ?
-          <Link color="#1aa1f4" onClick={() => this.getDocument(link)}>ตรวจเอกสาร</Link>:
-          <P>ยังไม่อัพโหลด</P>
+            <a onClick={() => this.getDocument(link)}>
+              <P color="#1aa1f4" >ตรวจเอกสาร</P>
+            </a> :
+            <P opacity="0.3">ยังไม่อัพโหลด</P>
         )
       }
     }, {
@@ -54,8 +51,10 @@ class TableCheck extends Component {
       render: (link) => {
         return (
           link != null ?
-          <Link onClick={() => this.getDocument(link)}>ตรวจเอกสาร</Link>:
-          <P>ยังไม่อัพโหลด</P>
+            <a onClick={() => this.getDocument(link)}>
+              <P color="#1aa1f4">ตรวจเอกสาร</P>
+            </a> :
+            <P opacity="0.3">ยังไม่อัพโหลด</P>
         )
       }
     }, , {
@@ -64,8 +63,10 @@ class TableCheck extends Component {
       render: (link) => {
         return (
           link != null ?
-          <Link onClick={() => this.getDocument(link)}>ตรวจเอกสาร</Link>:
-          <P>ยังไม่อัพโหลด</P>
+            <a onClick={() => this.getDocument(link)}>
+              <P color="#1aa1f4">ตรวจเอกสาร</P>
+            </a> :
+            <P opacity="0.3">ยังไม่อัพโหลด</P>
         )
       }
     }]
@@ -126,7 +127,7 @@ class TableCheck extends Component {
     this.setState({
       url: res.data
     })
-    window.open(this.state.url,'_blank')
+    window.open(this.state.url, '_blank')
   }
 
 
