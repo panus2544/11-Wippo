@@ -8,7 +8,8 @@ const evnconfig = {
   publicRuntimeConfig: {
     PATH_AUTH: process.env.PATH_AUTH,
     PATH_REGISTANCE: process.env.PATH_REGISTANCE,
-    PATH_QUESTIONS : process.env.PATH_QUESTIONS
+    PATH_QUESTIONS : process.env.PATH_QUESTIONS,
+    PATH_CAMPER : process.env.PATH_CAMPER,
   },
   serverRuntimeConfig: {
     JWT_SECRET: process.env.JWT_SECRET,
