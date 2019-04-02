@@ -10,32 +10,47 @@ class TableCheck extends Component {
     loading: false,
     registrants: [],
     note: '',
-    columns : [{
+    columns: [{
       title: 'ตรวจแล้ว',
       dataIndex: 'checked',
       render: (boolean, profile) => {
         return (
-          boolean == 1 ?
+          boolean == 'checked' ?
             <Checkbox defaultChecked={true} onChange={(e) => this.handleCheckStatus(profile.wip_id, e)} /> :
             <Checkbox defaultChecked={false} onChange={(e) => this.handleCheckStatus(profile.wip_id, e)} />
         )
       }
-    },{
+    }, {
       title: 'WIP ID',
       dataIndex: 'wip_id',
-      key : 'wip_id'
+      key: 'wip_id'
     }, {
       title: 'ชื่อ-สกุล',
       dataIndex: 'name',
-    },{
+    }, {
       title: 'Transcript',
-      dataIndex: 'nickname',
+      dataIndex: 'transcript',
+      render: (link) => {
+        return (
+          <a onClick={() => this.getDocument(link)}>{link}</a>
+        )
+      }
     }, {
       title: 'ใบขออนุญาต ผปค.',
-      dataIndex: 'tel',
-    },, {
+      dataIndex: 'confrim',
+      render: (link) => {
+        return (
+          <a onClick={() => this.getDocument(link)}>{link}</a>
+        )
+      }
+    }, , {
       title: 'Receipt',
       dataIndex: 'receipt',
+      render: (link) => {
+        return (
+          <a onClick={() => this.getDocument(link)}>{link}</a>
+        )
+      }
     }]
   }
 
@@ -55,23 +70,24 @@ class TableCheck extends Component {
 
   checkPermission = async () => {
     if (this.state.permission.find(permissionId => permissionId.permission_id == 10)) {
-      // let registrants = await Registrants.getAllRegistrant()
-      // this.getRegistrant(registrants.registrants)
+      let registrants = await CamperService.getCamper()
+      this.getCamper(registrants.data)
+      console.log(registrants.data)
       return true
     }
   }
 
-  getRegistrant = async registrants => {
+  getCamper = async camper => {
     let data = [];
-    for (let index = 0; index < registrants.length; index++) {
+    for (let index = 0; index < camper.length; index++) {
       data.push({
         key: index,
-        wip_id: registrants[index].wip_id,
-        is_call: registrants[index].is_call,
-        name: `${registrants[index].firstname_th} ${registrants[index].lastname_th}`,
-        nickname :  registrants[index].nickname,
-        tel: registrants[index].telno,
-        message: registrants[index].note,
+        wip_id: camper[index].wip_id,
+        checked: camper[index].reason,
+        name: `${camper[index].firstname_th} ${camper[index].lastname_th}`,
+        transcript: camper[index].transcript,
+        confrim: camper[index].confrim,
+        receipt: camper[index].receipt,
       })
     }
     this.setState({
@@ -80,17 +96,24 @@ class TableCheck extends Component {
   }
 
   handleCheckStatus = (wip_id, e) => {
-    Registrants.getDataForChangeStatus({ wipId: wip_id, is_call: e.target.checked })
+    if (e.target.checked) {
+      CamperService.updateCheckDoc({ wipId: wip_id, reason: 'checked' })
+    } else {
+      CamperService.updateCheckDoc({ wipId: wip_id, reason: null })
+    }
   }
 
-  handleUnfocus = (wip_id, e) => {
-    Registrants.getDataForUpdateNote({ wipId: wip_id, note: e.target.value })
+  getDocument = async (link) => {
+    let wipId = link.substring(5, 11)
+    console.log(wipId)
+    let res = await CamperService.getDocuments({ wipId: wipId })
+    console.log(res)
   }
 
   render() {
     return (
       <React.Fragment>
-          <Table columns={this.state.columns} dataSource={this.state.registrants} />
+        <Table columns={this.state.columns} dataSource={this.state.registrants} />
       </React.Fragment>
     );
   }
