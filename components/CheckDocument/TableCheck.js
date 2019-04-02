@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Table, Input, Checkbox } from 'antd';
 import CamperService from '../../service/CamperService'
 import AuthService from '../../service/PermissionService'
+import Router from 'next/router'
 
 class TableCheck extends Component {
   state = {
@@ -9,6 +10,7 @@ class TableCheck extends Component {
     selectedRowKeys: [],
     loading: false,
     registrants: [],
+    url: null,
     note: '',
     columns: [{
       title: 'ตรวจแล้ว',
@@ -105,14 +107,25 @@ class TableCheck extends Component {
 
   getDocument = async (link) => {
     let wipId = link.substring(5, 11)
-    console.log(wipId)
-    let res = await CamperService.getDocuments({ wipId: wipId })
-    console.log(res)
+    let typePath = link.substring(19)
+    let res = await CamperService.getDocuments({ wipId: wipId, type_path: typePath })
+    console.log(res.data)
+    this.setState({
+      url: res.data.path
+    })
+    window.open(this.state.url,'_blank')
+  }
+
+  chengeUrl = () => {
+    this.setState({
+      url: URL.createObjectURL('https://storage.freezer.in.th/profile/WIPID110014/110014_transcript?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=VizhBfmrCSvpJqGRKvEC%2F20190402%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20190402T191217Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Signature=d97220c0494433f4c463e6f7521f1c5346bbf3e97ee9172e216f63993cfe1af8')
+    })
   }
 
   render() {
     return (
       <React.Fragment>
+        {/* <button onClick={() => this.chengeUrl()} >Test</button> */}
         <Table columns={this.state.columns} dataSource={this.state.registrants} />
       </React.Fragment>
     );

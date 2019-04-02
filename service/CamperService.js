@@ -14,11 +14,9 @@ const PermissionService = {
     })
   },
   getDocuments: async (data) => {
-    await apiCamperService.put('campers/image', {
+    return await apiCamperService.put('campers/image', {
       'wip_id_itim': data.wipId,
-    }).then((response) => {
-      // console.log(response)
-      return response
+      'type_path' : data.type_path
     })
   }
 }
