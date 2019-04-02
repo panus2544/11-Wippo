@@ -2,8 +2,17 @@ import React, { Component } from 'react';
 import { Table, Input, Checkbox } from 'antd';
 import CamperService from '../../service/CamperService'
 import AuthService from '../../service/PermissionService'
-import Router from 'next/router'
+import styled from 'styled-components'
 
+const Link = styled.a`
+  a .TableCheck__Link-sc-1uoh4lk-0 .dbjGPO {
+    color: ${props => props.color};
+    text-decoration: none;
+}
+`
+const P = styled.p`
+  opacity: 0.7;
+`
 class TableCheck extends Component {
   state = {
     permission: [],
@@ -34,7 +43,9 @@ class TableCheck extends Component {
       dataIndex: 'transcript',
       render: (link) => {
         return (
-          <a onClick={() => this.getDocument(link)}>{link}</a>
+          link != null ?
+          <Link color="#1aa1f4" onClick={() => this.getDocument(link)}>ตรวจเอกสาร</Link>:
+          <P>ยังไม่อัพโหลด</P>
         )
       }
     }, {
@@ -42,7 +53,9 @@ class TableCheck extends Component {
       dataIndex: 'confrim',
       render: (link) => {
         return (
-          <a onClick={() => this.getDocument(link)}>{link}</a>
+          link != null ?
+          <Link onClick={() => this.getDocument(link)}>ตรวจเอกสาร</Link>:
+          <P>ยังไม่อัพโหลด</P>
         )
       }
     }, , {
@@ -50,7 +63,9 @@ class TableCheck extends Component {
       dataIndex: 'receipt',
       render: (link) => {
         return (
-          <a onClick={() => this.getDocument(link)}>{link}</a>
+          link != null ?
+          <Link onClick={() => this.getDocument(link)}>ตรวจเอกสาร</Link>:
+          <P>ยังไม่อัพโหลด</P>
         )
       }
     }]
