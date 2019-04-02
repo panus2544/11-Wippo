@@ -111,7 +111,7 @@ class TableCheck extends Component {
     let res = await CamperService.getDocuments({ wipId: wipId, type_path: typePath })
     console.log(res.data)
     this.setState({
-      url: res.data.path
+      url: res.data
     })
     window.open(this.state.url,'_blank')
   }
