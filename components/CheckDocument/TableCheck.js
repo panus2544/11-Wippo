@@ -90,6 +90,12 @@ class TableCheck extends Component {
               <P opacity="0.3">ยังไม่อัพโหลด</P>
           )
         }
+      },{
+        title: 'ไซต์เสื้อ',
+        dataIndex: 'size',
+      },{
+        title: 'สถานที่',
+        dataIndex: 'location',
       }],
 
   }
@@ -131,7 +137,9 @@ class TableCheck extends Component {
         transcript: camper[index].transcript,
         confrim: camper[index].confrim,
         receipt: camper[index].receipt,
-        status: camper[index].status
+        status: camper[index].status,
+        size : camper[index].size,
+        location : camper[index].pick_location
       })
       if (camper[index].status == 'success') {
         countSucces = countSucces + 1

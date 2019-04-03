@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Icon } from 'antd';
+import { Table, Icon, Checkbox } from 'antd';
 import CamperService from '../../service/CamperService'
 import AuthService from '../../service/PermissionService'
 import styled from 'styled-components'
@@ -22,6 +22,17 @@ class TableCheck extends Component {
       {
         title: 'ลำดับ',
         dataIndex: 'count',
+      }, {
+        title: 'ตรวจแล้ว',
+        dataIndex: 'checked',
+        align: 'center',
+        render: (boolean, profile) => {
+          return (
+            boolean == 'checked' ?
+              <Checkbox defaultChecked={true}  /> :
+              <Checkbox defaultChecked={false}  />
+          )
+        }
       },{
         title: 'สถานะยืนยันสิทธิ์',
         dataIndex: 'status',
@@ -79,6 +90,12 @@ class TableCheck extends Component {
               <P opacity="0.3">ยังไม่อัพโหลด</P>
           )
         }
+      },{
+        title: 'ไซต์เสื้อ',
+        dataIndex: 'size',
+      },{
+        title: 'สถานที่',
+        dataIndex: 'location',
       }],
   }
 
@@ -119,7 +136,9 @@ class TableCheck extends Component {
         transcript: camper[index].transcript,
         confrim: camper[index].confrim,
         receipt: camper[index].receipt,
-        status: camper[index].status
+        status: camper[index].status,
+        size : camper[index].size,
+        location : camper[index].pick_location
       })
       if (camper[index].status == 'success') {
         countSucces = countSucces + 1
@@ -134,13 +153,6 @@ class TableCheck extends Component {
     })
   }
 
-  handleCheckStatus = (wip_id, e) => {
-    if (e.target.checked) {
-      CamperService.updateCheckDoc({ wipId: wip_id, reason: 'checked' })
-    } else {
-      CamperService.updateCheckDoc({ wipId: wip_id, reason: null })
-    }
-  }
 
   getDocument = async (link) => {
     let wipId = link.substring(5, 11)
