@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Input, Checkbox,Icon  } from 'antd';
+import { Table, Icon } from 'antd';
 import CamperService from '../../service/CamperService'
 import AuthService from '../../service/PermissionService'
 import styled from 'styled-components'
@@ -16,23 +16,13 @@ class TableCheck extends Component {
     registrants: [],
     url: null,
     note: '',
-    countUnsucces: 0,
-    countSucces: 0,
+    countUnsucces : 0,
+    countSucces : 0,
     columns: [
       {
         title: 'ลำดับ',
         dataIndex: 'count',
-      }, {
-        title: 'ตรวจแล้ว',
-        dataIndex: 'checked',
-        render: (boolean, profile) => {
-          return (
-            boolean == 'checked' ?
-              <Checkbox defaultChecked={true} onChange={(e) => this.handleCheckStatus(profile.wip_id, e)} /> :
-              <Checkbox defaultChecked={false} onChange={(e) => this.handleCheckStatus(profile.wip_id, e)} />
-          )
-        }
-      }, {
+      },{
         title: 'สถานะยืนยันสิทธิ์',
         dataIndex: 'status',
         render : (status) =>{
@@ -46,7 +36,7 @@ class TableCheck extends Component {
         title: 'WIP ID',
         dataIndex: 'wip_id',
         key: 'wip_id'
-      },{
+      }, {
         title: 'ชื่อ-สกุล',
         dataIndex: 'name',
       }, {
@@ -89,7 +79,6 @@ class TableCheck extends Component {
           )
         }
       }],
-
   }
 
   componentDidMount = async () => {
@@ -107,7 +96,7 @@ class TableCheck extends Component {
   }
 
   checkPermission = async () => {
-    if (this.state.permission.find(permissionId => permissionId.permission_id == 10)) {
+    if (this.state.permission.find(permissionId => permissionId.permission_id == 11) || this.state.permission.find(permissionId => permissionId.permission_id == 10) ) {
       let registrants = await CamperService.getCamper()
       this.getCamper(registrants.data)
       return true
@@ -133,14 +122,14 @@ class TableCheck extends Component {
       })
       if (camper[index].status == 'success') {
         countSucces = countSucces + 1
-      } else {
+      }else {
         countUnsucces = countUnsucces + 1
       }
     }
     this.setState({
       registrants: data,
-      countSucces: countSucces,
-      countUnsucces: countUnsucces
+      countSucces : countSucces,
+      countUnsucces : countUnsucces
     })
   }
 
@@ -167,9 +156,9 @@ class TableCheck extends Component {
     return (
       <React.Fragment>
         <div className='d-flex justify-content-end'>
-          อัพโหลดแต่ยังไม่ยืนยันสิทธิ์ : {this.state.countUnsucces}  ยืนยันสิทธิ์แล้ว : {this.state.countSucces}
+          อัพโหลดแต่ยังไม่ยืนยันสิทธิ์ : {this.state.countUnsucces}  ยืนยันสิทธิ์แล้ว : {this.state.countSucces} 
         </div>
-        <Table columns={this.state.columns} dataSource={this.state.registrants} />
+          <Table columns={this.state.columns} dataSource={this.state.registrants} />
       </React.Fragment>
     );
   }
