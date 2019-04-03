@@ -155,6 +155,7 @@ class TableCheck extends Component {
   }
 
   handleCheckStatus = (wip_id, e) => {
+    console.log(wip_id)
     if (e.target.checked) {
       CamperService.updateCheckDoc({ wipId: wip_id, reason: 'checked' })
     } else {

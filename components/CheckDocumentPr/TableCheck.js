@@ -29,8 +29,8 @@ class TableCheck extends Component {
         render: (boolean, profile) => {
           return (
             boolean == 'checked' ?
-              <Checkbox defaultChecked={true}  /> :
-              <Checkbox defaultChecked={false}  />
+            <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" /> :
+            <Icon type="check-circle"/> 
           )
         }
       },{
