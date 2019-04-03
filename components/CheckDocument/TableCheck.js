@@ -25,6 +25,7 @@ class TableCheck extends Component {
       }, {
         title: 'ตรวจแล้ว',
         dataIndex: 'checked',
+        align: 'center',
         render: (boolean, profile) => {
           return (
             boolean == 'checked' ?
@@ -35,6 +36,7 @@ class TableCheck extends Component {
       }, {
         title: 'สถานะยืนยันสิทธิ์',
         dataIndex: 'status',
+        align: 'center',
         render : (status) =>{
           return (
             status == 'success' ?

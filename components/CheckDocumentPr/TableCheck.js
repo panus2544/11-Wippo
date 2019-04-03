@@ -25,6 +25,7 @@ class TableCheck extends Component {
       },{
         title: 'สถานะยืนยันสิทธิ์',
         dataIndex: 'status',
+        align: 'center',
         render : (status) =>{
           return (
             status == 'success' ?
