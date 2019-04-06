@@ -8,6 +8,8 @@ const P = styled.p`
   color: ${props => props.color};
   opacity: ${props => props.opacity || 1};
 `
+
+const { TextArea } = Input;
 class TableCheck extends Component {
   state = {
     permission: [],
@@ -28,7 +30,7 @@ class TableCheck extends Component {
         align: 'center',
         render: (boolean, profile) => {
           return (
-            <Input disabled={true} type="text" defaultValue={profile.checked}  />
+            <TextArea  disabled={true} type="text" defaultValue={profile.checked}  />
           )
         }
       },{
