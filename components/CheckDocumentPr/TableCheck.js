@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Icon, Checkbox } from 'antd';
+import { Table, Icon, Checkbox, Input } from 'antd';
 import CamperService from '../../service/CamperService'
 import AuthService from '../../service/PermissionService'
 import styled from 'styled-components'
@@ -28,9 +28,7 @@ class TableCheck extends Component {
         align: 'center',
         render: (boolean, profile) => {
           return (
-            boolean == 'checked' ?
-            <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" /> :
-            <Icon type="check-circle"/> 
+            <Input disabled={true} type="text" defaultValue={profile.checked}  />
           )
         }
       },{

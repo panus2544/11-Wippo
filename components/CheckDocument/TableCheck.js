@@ -28,9 +28,7 @@ class TableCheck extends Component {
         align: 'center',
         render: (boolean, profile) => {
           return (
-            boolean == 'checked' ?
-              <Checkbox defaultChecked={true} onChange={(e) => this.handleCheckStatus(profile.wip_id, e)} /> :
-              <Checkbox defaultChecked={false} onChange={(e) => this.handleCheckStatus(profile.wip_id, e)} />
+            <Input type="text" defaultValue={profile.checked} onChangeCapture={(e) => this.handleCheckStatus(profile.wip_id, e)} />
           )
         }
       }, {
@@ -156,8 +154,8 @@ class TableCheck extends Component {
 
   handleCheckStatus = (wip_id, e) => {
     console.log(wip_id)
-    if (e.target.checked) {
-      CamperService.updateCheckDoc({ wipId: wip_id, reason: 'checked' })
+    if (e.target.value) {
+      CamperService.updateCheckDoc({ wipId: wip_id, reason:  e.target.value})
     } else {
       CamperService.updateCheckDoc({ wipId: wip_id, reason: null })
     }

@@ -20,7 +20,7 @@ class index extends Component {
             <Menu/>
           </ZIndex>
           <div className="col-9 col-md-10 p-5" >
-            <h2>ตรวจเอกสารผู้ยืนยันสิทธิ์</h2>
+            <h2>ตรวจเอกสารผู้ยืนยันสิทธิ์ (PR)</h2>
             <Table/>
           </div>
         </div>
