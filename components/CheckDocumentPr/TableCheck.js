@@ -30,6 +30,8 @@ class TableCheck extends Component {
         align: 'center',
         render: (boolean, profile) => {
           return (
+            profile.checked == 'checked' ?
+            <TextArea  disabled={true} type="text" defaultValue={'ผ่าน'}  />:
             <TextArea  disabled={true} type="text" defaultValue={profile.checked}  />
           )
         }

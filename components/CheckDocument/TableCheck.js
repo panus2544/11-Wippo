@@ -8,6 +8,7 @@ const P = styled.p`
   color: ${props => props.color};
   opacity: ${props => props.opacity || 1};
 `
+const { TextArea } = Input;
 class TableCheck extends Component {
   state = {
     permission: [],
@@ -28,6 +29,8 @@ class TableCheck extends Component {
         align: 'center',
         render: (boolean, profile) => {
           return (
+            profile.checked == 'checked' ?
+            <Input type="text" defaultValue={'ผ่าน'} onChangeCapture={(e) => this.handleCheckStatus(profile.wip_id, e)} /> :
             <Input type="text" defaultValue={profile.checked} onChangeCapture={(e) => this.handleCheckStatus(profile.wip_id, e)} />
           )
         }
@@ -154,10 +157,10 @@ class TableCheck extends Component {
 
   handleCheckStatus = (wip_id, e) => {
     console.log(wip_id)
-    if (e.target.value) {
-      CamperService.updateCheckDoc({ wipId: wip_id, reason:  e.target.value})
+    if (e.target.value == 'ผ่าน') {
+      CamperService.updateCheckDoc({ wipId: wip_id, reason: 'checked' })
     } else {
-      CamperService.updateCheckDoc({ wipId: wip_id, reason: null })
+      CamperService.updateCheckDoc({ wipId: wip_id, reason:  e.target.value})
     }
   }
 
