@@ -1,16 +1,24 @@
 import React, { Component } from 'react';
-import { Table, Input, Checkbox, Button } from 'antd';
+import { Table, Input, message, Button as DefaultBtn, Modal } from 'antd';
 import Registrants from '../../service/RegistanceService'
 import Permission from '../../service/PermissionService'
 import Camper from '../../service/CamperService'
+import styled from 'styled-components'
 
 let registrants_id_2 = [];
 let registrants_id_12 = [];
+
+const ButtonModal = styled(DefaultBtn)`
+  visibility : ${props => props.show || ''};
+`
+
 
 class NameList extends Component {
   state = {
     registrants_id_2: [],
     registrants_id_12: [],
+    showModal: false,
+    cancel: false,
     columns: [{
       title: 'WIP ID',
       dataIndex: 'wipId',
@@ -23,12 +31,17 @@ class NameList extends Component {
       key: 'name',
       align: 'center'
     }],
-    permission : []
+    permission: [],
+    ModalText: '',
+    visible: false,
+    confirmLoading: false,
+    showBtn: ''
   }
 
   componentDidMount() {
     this.getPermission()
   }
+
 
   getPermission = async () => {
     let data = await Permission.getPermission()
@@ -45,6 +58,9 @@ class NameList extends Component {
       this.getRegistrants()
     } else {
       alert('คุณไม่สิทธิ์ในการเข้าถึง กรุณาติดต่อ admin')
+      this.setState({
+        showBtn: 'hidden',
+      })
     }
   }
 
@@ -75,19 +91,59 @@ class NameList extends Component {
     })
   }
 
-  createCamper = (camper) =>{
-    Camper.crateCamper({'camper':camper});
+  showModal = () => {
+    this.setState({
+      ModalText: 'กด OK ยืนยันรายชื่อผู้มีสิทธิ์เข้าค่าย',
+      visible: true,
+    });
+
   }
 
+  crateCamper = async () => {
+    this.setState({
+      ModalText: 'รอสักครู่ ...',
+      confirmLoading: true,
+    });
+    let res = await Camper.crateCamper({ 'camper': registrants_id_2 });
+    if (res.status == 200) {
+      this.setState({
+        ModalText: 'สำเร็จ !'
+      })
+      setTimeout(() => {
+        this.setState({
+          visible: false,
+          confirmLoading: false,
+        });
+      }, 1000);
+    }
+  }
+
+  handleCancel = () => {
+    this.setState({
+      visible: false,
+    });
+  }
   render() {
+    const { visible, confirmLoading, ModalText, showBtn } = this.state;
     return (
       <React.Fragment>
         <p>รายชื่อผู้ที่มีสิทธิ์เข้าค่าย (ตัวจริง)</p>
         <Table columns={this.state.columns} dataSource={this.state.registrants_id_2} camper={this.state.registrants_id_2} />
-        {/* <p>รายชื่อผู้ที่มีสิทธิ์เข้าค่าย (ตัวสำรอง)</p>
-        <Table columns={this.state.columns} dataSource={this.state.registrants_id_12} /> */}
-        <div className="d-flex justify-content-end mt-5">
-          <Button type="primary" onClick={() => this.createCamper(this.state.registrants_id_2)}>ยืนยันรายชื่อผู้มีสิทธิ์เข้าค่าย</Button>
+        <div className="d-flex justify-content-center mt-3" >
+          <ButtonModal type="primary"
+            onClick={() => this.showModal(this.state.registrants_id_2)}
+            show={showBtn}>
+            ยืนยันรายชื่อผู้มีสิทธิ์เข้าค่าย
+          </ButtonModal>
+          <Modal
+            title={false}
+            visible={visible}
+            onOk={this.crateCamper}
+            onCancel={this.handleCancel}
+            confirmLoading={confirmLoading}
+          >
+            <p>{ModalText}</p>
+          </Modal>
         </div>
       </React.Fragment>
     );

@@ -1,5 +1,6 @@
 import apiCamperService from "../utils/apiCamperService";
 import checkAuth from './CheckAuth'
+import { message } from 'antd';
 
 const PermissionService = {
   getCamper: async () => {
@@ -20,10 +21,14 @@ const PermissionService = {
     })
   },
   crateCamper: async (data) => {
-    console.log(data.camper)
-    await apiCamperService.post('campers/createcamper',{
-      'campers' : data.camper
-    })
+    try{
+      return await apiCamperService.post('campers/createcampers',{
+        'campers' : data.camper
+      })
+    }catch(e){
+      console.log(e)
+      message.error('สร้าง camper ไม่สำเร็จ');
+    }
   }
 }
 export default PermissionService
