@@ -18,6 +18,12 @@ const PermissionService = {
       'wip_id_itim': data.wipId,
       'type_path' : data.type_path
     })
+  },
+  crateCamper: async (data) => {
+    console.log(data.camper)
+    await apiCamperService.post('campers/createcamper',{
+      'campers' : data.camper
+    })
   }
 }
 export default PermissionService

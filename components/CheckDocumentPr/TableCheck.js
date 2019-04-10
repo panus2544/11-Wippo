@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Input, Checkbox,Icon  } from 'antd';
+import { Table, Icon, Checkbox, Input } from 'antd';
 import CamperService from '../../service/CamperService'
 import AuthService from '../../service/PermissionService'
 import styled from 'styled-components'
@@ -8,6 +8,7 @@ const P = styled.p`
   color: ${props => props.color};
   opacity: ${props => props.opacity || 1};
 `
+
 const { TextArea } = Input;
 class TableCheck extends Component {
   state = {
@@ -17,8 +18,8 @@ class TableCheck extends Component {
     registrants: [],
     url: null,
     note: '',
-    countUnsucces: 0,
-    countSucces: 0,
+    countUnsucces : 0,
+    countSucces : 0,
     columns: [
       {
         title: 'ลำดับ',
@@ -30,11 +31,11 @@ class TableCheck extends Component {
         render: (boolean, profile) => {
           return (
             profile.checked == 'checked' ?
-            <Input type="text" defaultValue={'ผ่าน'} onChangeCapture={(e) => this.handleCheckStatus(profile.wip_id, e)} /> :
-            <Input type="text" defaultValue={profile.checked} onChangeCapture={(e) => this.handleCheckStatus(profile.wip_id, e)} />
+            <TextArea  disabled={true} type="text" defaultValue={'ผ่าน'}  />:
+            <TextArea  disabled={true} type="text" defaultValue={profile.checked}  />
           )
         }
-      }, {
+      },{
         title: 'สถานะยืนยันสิทธิ์',
         dataIndex: 'status',
         align: 'center',
@@ -49,7 +50,7 @@ class TableCheck extends Component {
         title: 'WIP ID',
         dataIndex: 'wip_id',
         key: 'wip_id'
-      },{
+      }, {
         title: 'ชื่อ-สกุล',
         dataIndex: 'name',
       }, {
@@ -98,7 +99,6 @@ class TableCheck extends Component {
         title: 'สถานที่',
         dataIndex: 'location',
       }],
-
   }
 
   componentDidMount = async () => {
@@ -116,7 +116,7 @@ class TableCheck extends Component {
   }
 
   checkPermission = async () => {
-    if (this.state.permission.find(permissionId => permissionId.permission_id == 10)) {
+    if (this.state.permission.find(permissionId => permissionId.permission_id == 11) || this.state.permission.find(permissionId => permissionId.permission_id == 10) ) {
       let registrants = await CamperService.getCamper()
       this.getCamper(registrants.data)
       return true
@@ -144,25 +144,17 @@ class TableCheck extends Component {
       })
       if (camper[index].status == 'success') {
         countSucces = countSucces + 1
-      } else {
+      }else {
         countUnsucces = countUnsucces + 1
       }
     }
     this.setState({
       registrants: data,
-      countSucces: countSucces,
-      countUnsucces: countUnsucces
+      countSucces : countSucces,
+      countUnsucces : countUnsucces
     })
   }
 
-  handleCheckStatus = (wip_id, e) => {
-    console.log(wip_id)
-    if (e.target.value == 'ผ่าน') {
-      CamperService.updateCheckDoc({ wipId: wip_id, reason: 'checked' })
-    } else {
-      CamperService.updateCheckDoc({ wipId: wip_id, reason:  e.target.value})
-    }
-  }
 
   getDocument = async (link) => {
     let wipId = link.substring(5, 11)
@@ -179,9 +171,9 @@ class TableCheck extends Component {
     return (
       <React.Fragment>
         <div className='d-flex justify-content-end'>
-          อัพโหลดแต่ยังไม่ยืนยันสิทธิ์ : {this.state.countUnsucces}  ยืนยันสิทธิ์แล้ว : {this.state.countSucces}
+          อัพโหลดแต่ยังไม่ยืนยันสิทธิ์ : {this.state.countUnsucces}  ยืนยันสิทธิ์แล้ว : {this.state.countSucces} 
         </div>
-        <Table columns={this.state.columns} dataSource={this.state.registrants} />
+          <Table columns={this.state.columns} dataSource={this.state.registrants} />
       </React.Fragment>
     );
   }
