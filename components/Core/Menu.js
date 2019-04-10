@@ -12,11 +12,11 @@ const StyleMenu = styled(Menu)`
   height: 100vh;
 `
 
-const allPermission = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+const allPermission = [1, 2, 3, 4, 5, 6, 7, 8, 9,10,11]
 
-const path = ['dashboard', 'viewregistrants', 'questions', 'checkdisease', 'editsponsor', 'approved', 'confirm', 'confirmannounce','checkdocument']
+const path = ['dashboard', 'viewregistrants', 'questions', 'checkdisease', 'editsponsor', 'approved', 'confirm', 'confirmannounce','checkdocument','camper']
 
-const permission = ['ข้อมูลสรุป', 'จัดการรายชื่อสมาชิก', 'ตรวจคำตอบ', 'ตรวจโรค', 'แก้ไขสปอนเซอร์', 'จัดการผู้ขอสิทธิ์', 'จัดการผู้มีสิทธิ์เข้าค่าย','ประกาศรายชื่อผู้ติดค่าย','ตรวจเอกสารผู้ยืนยันสิทธิ์']
+const permission = ['ข้อมูลสรุป', 'จัดการรายชื่อสมาชิก', 'ตรวจคำตอบ', 'ตรวจโรค', 'แก้ไขสปอนเซอร์', 'จัดการผู้ขอสิทธิ์', 'จัดการผู้มีสิทธิ์เข้าค่าย','ประกาศรายชื่อผู้ติดค่าย','ตรวจเอกสารผู้ยืนยันสิทธิ์','จัดการน้องไอติม']
 class Menubar extends React.Component {
   state = {
     showComponent: false,
