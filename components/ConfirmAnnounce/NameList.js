@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Table, Input, Checkbox } from 'antd';
+import { Table, Input, Checkbox, Button } from 'antd';
 import Registrants from '../../service/RegistanceService'
 import Permission from '../../service/PermissionService'
+import Camper from '../../service/CamperService'
 
 let registrants_id_2 = [];
 let registrants_id_12 = [];
+
 class NameList extends Component {
   state = {
     registrants_id_2: [],
@@ -21,6 +23,7 @@ class NameList extends Component {
       key: 'name',
       align: 'center'
     }],
+    permission : []
   }
 
   componentDidMount() {
@@ -38,7 +41,7 @@ class NameList extends Component {
   }
 
   checkPermission = async () => {
-    if (this.state.permission.find(permissionId => permissionId.permission_id == 7) || this.state.permission.find(permissionId => permissionId.permission_id == 8)) {
+    if (this.state.permission.find(permissionId => permissionId.permission_id == 7)) {
       this.getRegistrants()
     } else {
       alert('คุณไม่สิทธิ์ในการเข้าถึง กรุณาติดต่อ admin')
@@ -68,18 +71,25 @@ class NameList extends Component {
     }
     this.setState({
       registrants_id_2: registrants_id_2,
-      registrants_id_12 : registrants_id_12
+      registrants_id_12: registrants_id_12
     })
+  }
+
+  createCamper = (camper) =>{
+    Camper.crateCamper({'camper':camper});
   }
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         <p>รายชื่อผู้ที่มีสิทธิ์เข้าค่าย (ตัวจริง)</p>
-        <Table columns={this.state.columns} dataSource={this.state.registrants_id_2} />
-        <p>รายชื่อผู้ที่มีสิทธิ์เข้าค่าย (ตัวสำรอง)</p>
-        <Table columns={this.state.columns} dataSource={this.state.registrants_id_12} />
-      </div>
+        <Table columns={this.state.columns} dataSource={this.state.registrants_id_2} camper={this.state.registrants_id_2} />
+        {/* <p>รายชื่อผู้ที่มีสิทธิ์เข้าค่าย (ตัวสำรอง)</p>
+        <Table columns={this.state.columns} dataSource={this.state.registrants_id_12} /> */}
+        <div className="d-flex justify-content-end mt-5">
+          <Button type="primary" onClick={() => this.createCamper(this.state.registrants_id_2)}>ยืนยันรายชื่อผู้มีสิทธิ์เข้าค่าย</Button>
+        </div>
+      </React.Fragment>
     );
   }
 }

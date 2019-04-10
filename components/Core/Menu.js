@@ -65,7 +65,6 @@ class Menubar extends React.Component {
         return permissionId
       }
     }
-    console.log(this.state.permission)
   }
 
   onCollapse = (collapsed) => {
@@ -85,7 +84,6 @@ class Menubar extends React.Component {
         <StyleMenu defaultSelectedKeys={[`${this.state.pathname}`]} mode="inline">
           {
             allPermission.map((data, i) => {
-              console.log
               return (
                 this.checkPermission(data) == data &&
                 <SubItem key={i}>
