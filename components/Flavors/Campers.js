@@ -10,54 +10,38 @@ let flavorName = '';
 
 
 class Campers extends Component {
-  state = {
-    flavors: [],
-    campers: [],
-    flavorName: '',
-    flavorId: null,
-    columns: [{
-      title: `เลือกรส`,
-      dataIndex: 'flavorId',
-      key: 'flavorId',
-      render: (flavorId, wipid) => {
-        const flavors_filter = flavors.filter((flavors) => {
-          return flavors.flavor_id == flavorId
-        })
-        
-        return (
-          <Select defaultValue={flavors_filter[0] != undefined ? flavors_filter[0].name : 'กรุณาเลือกรส'} onChange={(e) => this.handleChange(e,wipid)} >
-            {flavors.map((data,i) => {
-              return (
-                  <Option key={i} value={data.flavor_id} wipid={wipid} >{data.name}</Option>
-                )
-              })}
-          </Select>
-        )
-      }
-    }, {
-      title: `WIP ID`,
-      dataIndex: 'wipId',
-      key: 'wipId'
-    }, {
-      title: `ชื่อ-สกุล`,
-      dataIndex: 'name',
-      key: 'name'
-    }, {
-      title: `ห้องนอน`,
-      dataIndex: 'bedroom',
-      key: 'bedroom'
-    },]
+  // state = {
+  //   flavors: [],
+  //   campers: [],
+  //   flavorName: '',
+  //   flavorId: null,
+  //   countSelected: 0,
+  // }
+  constructor(props) {
+    super(props);
+    this.state = {
+      flavors: [],
+      campers: [],
+      flavorName: '',
+      flavorId: null,
+      countSelected: 0,
+    }
+    this.getCamper = this.getCamper.bind(this)  
   }
   
-  
-  componentWillMount = async () => {
+  componentDidMount = async () => {
     this.getFlavors()
   }
-  
-  handleChange = (flavorId,wipId) => {
-    console.log(flavorId,wipId)
-    CamperService.updateCamper({ 'wipId': wipId.wipId, 'flavor_id': flavorId, 'bedroom': wipId.bedroom })
-    
+
+  handleChange = (flavorId) => {
+    const flavors_filter = flavors.filter((flavors) => {
+      return flavors.flavor_id == flavorId
+    })
+    this.setState({
+      flavorId: flavorId,
+      flavorName: flavors_filter[0].name
+    })
+    this.getCamper()
   }
   
   getFlavors = async () => {
@@ -71,7 +55,6 @@ class Campers extends Component {
     this.setState({
       flavors: data.data
     })
-    this.getCamper()
   }
   
   getCamper = async () => {
@@ -88,21 +71,56 @@ class Campers extends Component {
     this.setState({
       campers: camper
     })
-    // console.log(camper)
+    // console.log(this.state.campers)
   }
 
-  handleCheckStatus = (wip_id, e) => {
-    // Registrants.getDataForChangeStatus({ wipId: wip_id, is_call: e.target.checked })
+  handleChecked = (data, e) => {
+    const { flavorId, countSelected } = this.state
+    this.setState({
+      countSelected: countSelected + 1
+    })
+    CamperService.updateCamper({ 'wipId': data.wipId, 'flavor_id': flavorId, 'bedroom': data.bedroom })
   }
 
-  handleUnfocus = (wip_id, e) => {
-    // Registrants.getDataForUpdateNote({ wipId: wip_id, note: e.target.value })
+  checkFlavors = (data) => {
+    if (data.flavorId == this.state.flavorId) {
+      return true
+    }
   }
+
 
   render() {
     return (
       <React.Fragment>
-        <Table columns={this.state.columns} dataSource={this.state.campers} />
+        <p>เลือกแล้ว : {this.state.countSelected} คน</p>
+        <Select defaultValue='กรุณาเลือกรส' onSelect={(e) => this.handleChange(e)} >
+          {flavors.map((flavor, i) => {
+            return (
+              <Option key={i} value={flavor.flavor_id} >{flavor.name}</Option>
+            )
+          })}
+        </Select>
+        <table>
+          <tbody>
+          <tr>
+            <th>เลือกรส</th>
+            <th>WIP ID</th>
+            <th>ชื่อ-สกุล</th>
+          </tr>
+          {this.state.campers.map((data,i) => {
+            return (
+              <tr key={i} >
+                <td>{this.checkFlavors(data) == true ?
+                  <Checkbox defaultChecked={true} onChange={(e) => this.handleChecked(data, e)} /> :
+                  <Checkbox defaultChecked={false} onChange={(e) => this.handleChecked(data, e)} />
+                }</td>
+                <td>{data.wipId}</td>
+                <td>{data.name}</td>
+              </tr>
+            )
+          })}
+          </tbody>
+        </table>
       </React.Fragment>
     );
   }
