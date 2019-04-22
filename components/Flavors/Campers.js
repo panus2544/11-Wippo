@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import { Select } from 'antd';
 import CamperService from '../../service/CamperService'
 import { Table, Input, Checkbox } from 'antd';
+import styled from 'styled-components'
+
+const InputValue = styled(Input)`
+  width : 30%;
+`
 
 const Option = Select.Option;
 
@@ -10,18 +15,18 @@ let flavorName = '';
 
 
 class Campers extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        flavors: [],
-        campers: [],
-        flavorName: '',
+  constructor(props) {
+    super(props);
+    this.state = {
+      flavors: [],
+      campers: [],
+      flavorName: '',
       flavorId: null,
-      countSelected: 0,
+      searchString: ''
     }
-    this.getCamper = this.getCamper.bind(this)  
+    this.getCamper = this.getCamper.bind(this)
   }
-  
+
   componentDidMount = async () => {
     this.getFlavors()
   }
@@ -34,11 +39,11 @@ class Campers extends Component {
     this.setState({
       flavorId: flavorId,
       flavorName: flavors_filter[0].name,
-      campers : []
+      campers: []
     })
     this.getCamper()
   }
-  
+
   getFlavors = async () => {
     let data = await CamperService.getFlavors();
     for (let index = 0; index < data.data.length; index++) {
@@ -51,7 +56,7 @@ class Campers extends Component {
       flavors: data.data
     })
   }
-  
+
   getCamper = async () => {
     let data = await CamperService.getCampers();
     const camper = [];
@@ -70,52 +75,87 @@ class Campers extends Component {
 
   handleChecked = (data, e) => {
     const { flavorId, countSelected } = this.state
-    this.setState({
-      countSelected: countSelected + 1
-    })
-    CamperService.updateCamper({ 'wipId': data.wipId, 'flavor_id': flavorId, 'bedroom': data.bedroom })
+    if (e.target.checked) {
+      CamperService.updateCamper({ 'wipId': data.wipId, 'flavor_id': flavorId, 'bedroom': data.bedroom })
+      this.setState({
+        countSelected: countSelected + 1
+      })
+    }else{
+        this.setState({
+          countSelected: countSelected - 1
+        })
+      CamperService.updateCamper({ 'wipId': data.wipId, 'flavor_id': null, 'bedroom': data.bedroom })
+    }
+  }
+
+  handleBedroom(data, e) {
+    CamperService.updateCamper({ 'wipId': data.wipId, 'flavor_id': this.state.flavorId, 'bedroom': e.target.value })
   }
 
   checkFlavors = (data) => {
     if (data.flavorId == this.state.flavorId) {
-      
       return true
     }
   }
 
+  handleChangeSearch(e) {
+    this.setState({
+      searchString: e.target.value
+    });
+  }
 
   render() {
+    let _users = this.state.campers;
+    let search = this.state.searchString.trim();
+    if (search.length > 0) {
+      _users = _users.filter((user) => {
+        return user.wipId.toString().match(search);
+      });
+    }
     return (
       <React.Fragment>
-        <p>เลือกแล้ว : {this.state.countSelected} คน</p>
-        <Select defaultValue='กรุณาเลือกรส' onChange={(e) => this.handleChange(e)} >
-          {flavors.map((flavor, i) => {
-            return (
-              <Option key={i} value={flavor.flavor_id} >{flavor.name}</Option>
-            )
-          })}
-        </Select>
-        <table>
-          <tbody>
-          <tr>
-            <th>เลือกรส</th>
-            <th>WIP ID</th>
-            <th>ชื่อ-สกุล</th>
-          </tr>
-          {this.state.campers.map((data,i) => {
-            return (
-              <tr key={i} >
-                <td>{this.checkFlavors(data) == true ?
-                  <Checkbox defaultChecked={true} onChange={(e) => this.handleChecked(data, e)} /> :
-                  <Checkbox defaultChecked={false} onChange={(e) => this.handleChecked(data, e)} />
-                }</td>
-                <td>{data.wipId}</td>
-                <td>{data.name}</td>
+        <div className="row">
+          <div className="col-4">
+            <h2>จัดรสและจัดห้อง</h2>
+          </div>
+          <div className="col-8 d-flex justify-content-end p-2">
+            <Select className='mr-2' defaultValue='กรุณาเลือกรส' onChange={(e) => this.handleChange(e)} >
+              {flavors.map((flavor, i) => {
+                return (
+                  <Option key={i} value={flavor.flavor_id} >{flavor.name}</Option>
+                )
+              })}
+            </Select>
+            <InputValue className='mr-2' placeholder="ค้นหาด้วย WIP ID" onChange={(e) => this.handleChangeSearch(e)} />
+          </div>
+          <table className="table mt-3">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">เลือกรส</th>
+                <th scope="col">WIP ID</th>
+                <th scope="col">ชื่อ-สกุล</th>
+                <th scope="col">ห้องนอน</th>
               </tr>
-            )
-          })}
-          </tbody>
-        </table>
+            </thead>
+            {_users.map((data, i) => {
+              return (
+                <tbody key={i}>
+                  <tr>
+                    <td>{i + 1}</td>
+                    <td>{this.checkFlavors(data) == true ?
+                      <Checkbox defaultChecked={true} onChange={(e) => this.handleChecked(data, e)} /> :
+                      <Checkbox defaultChecked={false} onChange={(e) => this.handleChecked(data, e)} />
+                    }</td>
+                    <td>{data.wipId}</td>
+                    <td>{data.name}</td>
+                    <td><Input defaultValue={data.bedroom} onChange={(e) => this.handleBedroom(data, e)} /></td>
+                  </tr>
+                </tbody>
+              )
+            })}
+          </table>
+        </div>
       </React.Fragment>
     );
   }
