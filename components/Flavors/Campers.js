@@ -10,19 +10,12 @@ let flavorName = '';
 
 
 class Campers extends Component {
-  // state = {
-  //   flavors: [],
-  //   campers: [],
-  //   flavorName: '',
-  //   flavorId: null,
-  //   countSelected: 0,
-  // }
-  constructor(props) {
-    super(props);
-    this.state = {
-      flavors: [],
-      campers: [],
-      flavorName: '',
+    constructor(props) {
+      super(props);
+      this.state = {
+        flavors: [],
+        campers: [],
+        flavorName: '',
       flavorId: null,
       countSelected: 0,
     }
@@ -33,13 +26,15 @@ class Campers extends Component {
     this.getFlavors()
   }
 
+
   handleChange = (flavorId) => {
     const flavors_filter = flavors.filter((flavors) => {
       return flavors.flavor_id == flavorId
     })
     this.setState({
       flavorId: flavorId,
-      flavorName: flavors_filter[0].name
+      flavorName: flavors_filter[0].name,
+      campers : []
     })
     this.getCamper()
   }
@@ -59,7 +54,7 @@ class Campers extends Component {
   
   getCamper = async () => {
     let data = await CamperService.getCampers();
-    let camper = [];
+    const camper = [];
     for (let index = 0; index < data.data.campers.length; index++) {
       camper.push({
         flavorId: data.data.campers[index].flavor_id,
@@ -71,7 +66,6 @@ class Campers extends Component {
     this.setState({
       campers: camper
     })
-    // console.log(this.state.campers)
   }
 
   handleChecked = (data, e) => {
@@ -84,6 +78,7 @@ class Campers extends Component {
 
   checkFlavors = (data) => {
     if (data.flavorId == this.state.flavorId) {
+      
       return true
     }
   }
@@ -93,7 +88,7 @@ class Campers extends Component {
     return (
       <React.Fragment>
         <p>เลือกแล้ว : {this.state.countSelected} คน</p>
-        <Select defaultValue='กรุณาเลือกรส' onSelect={(e) => this.handleChange(e)} >
+        <Select defaultValue='กรุณาเลือกรส' onChange={(e) => this.handleChange(e)} >
           {flavors.map((flavor, i) => {
             return (
               <Option key={i} value={flavor.flavor_id} >{flavor.name}</Option>
