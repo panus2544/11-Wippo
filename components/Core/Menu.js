@@ -14,9 +14,9 @@ const StyleMenu = styled(Menu)`
 
 const allPermission = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,11]
 
-const path = ['dashboard', 'viewregistrants', 'questions', 'checkdisease', 'editsponsor', 'approved', 'confirm', 'confirmannounce', 'checkdocument', 'checkdocpr','checkdocpr']
+const path = ['dashboard', 'viewregistrants', 'questions', 'checkdisease', 'flavors', 'approved', 'confirm', 'confirmannounce', 'checkdocument', 'checkdocpr','checkdocpr']
 
-const permission = ['ข้อมูลสรุป', 'จัดการรายชื่อสมาชิก', 'ตรวจคำตอบ', 'ตรวจโรค', 'แก้ไขสปอนเซอร์', 'จัดการผู้ขอสิทธิ์', 'จัดการผู้มีสิทธิ์เข้าค่าย', 'ประกาศรายชื่อผู้ติดค่าย', 'ตรวจเอกสารผู้ยืนยันสิทธิ์', 'ตรวจเอกสารผู้ยืนยันสิทธิ์ (pr)','ตรวจเอกสารผู้ยืนยันสิทธิ์ (pr)']
+const permission = ['ข้อมูลสรุป', 'จัดการรายชื่อสมาชิก', 'ตรวจคำตอบ', 'ตรวจโรค', 'จัดการรส', 'จัดการผู้ขอสิทธิ์', 'จัดการผู้มีสิทธิ์เข้าค่าย', 'ประกาศรายชื่อผู้ติดค่าย', 'ตรวจเอกสารผู้ยืนยันสิทธิ์', 'ตรวจเอกสารผู้ยืนยันสิทธิ์ (pr)','ตรวจเอกสารผู้ยืนยันสิทธิ์ (pr)']
 class Menubar extends React.Component {
   state = {
     showComponent: false,
@@ -40,7 +40,7 @@ class Menubar extends React.Component {
       case '/viewregistrants': await this.setState({ pathname: 1 })
       case '/questions': await this.setState({ pathname: 2 })
       case '/checkdisease': await this.setState({ pathname: 3 })
-      case '/editsponsor': await this.setState({ pathname: 4 })
+      case '/flavors': await this.setState({ pathname: 4 })
       case '/approved': await this.setState({ pathname: 5 })
       case '/confirm': await this.setState({ pathname: 6 })
       case '/confirmannounce': await this.setState({ pathname: 7 })
