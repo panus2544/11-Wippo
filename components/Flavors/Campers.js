@@ -132,10 +132,10 @@ class Campers extends Component {
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">เลือกรส</th>
+                <th scope="col" className="text-center">เลือกรส {this.state.flavorName}</th>
                 <th scope="col">WIP ID</th>
-                <th scope="col">ชื่อ-สกุล</th>
-                <th scope="col">ห้องนอน</th>
+                <th scope="col" className="text-center">ชื่อ-สกุล</th>
+                <th scope="col" className="text-center">ห้องนอน</th>
               </tr>
             </thead>
             {_users.map((data, i) => {
@@ -143,7 +143,7 @@ class Campers extends Component {
                 <tbody key={i}>
                   <tr>
                     <td>{i + 1}</td>
-                    <td>{this.checkFlavors(data) == true ?
+                    <td className="text-center">{this.checkFlavors(data) == true ?
                       <Checkbox defaultChecked={true} onChange={(e) => this.handleChecked(data, e)} /> :
                       <Checkbox defaultChecked={false} onChange={(e) => this.handleChecked(data, e)} />
                     }</td>
