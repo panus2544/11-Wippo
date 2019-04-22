@@ -116,7 +116,7 @@ class Campers extends Component {
       <React.Fragment>
         <div className="row">
           <div className="col-4">
-            <h2>จัดรสและจัดห้อง</h2>
+            <h2>จัดการรส / ห้อง</h2>
           </div>
           <div className="col-8 d-flex justify-content-end p-2">
             <Select className='mr-2' defaultValue='กรุณาเลือกรส' onChange={(e) => this.handleChange(e)} >
