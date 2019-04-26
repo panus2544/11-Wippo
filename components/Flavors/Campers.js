@@ -109,7 +109,7 @@ class Campers extends Component {
     let search = this.state.searchString.trim();
     if (search.length > 0) {
       _users = _users.filter((user) => {
-        return user.wipId.toString().match(search);
+        return user.name.toString().match(search);
       });
     }
     return (
@@ -126,7 +126,7 @@ class Campers extends Component {
                 )
               })}
             </Select>
-            <InputValue className='mr-2' placeholder="ค้นหาด้วย WIP ID" onChange={(e) => this.handleChangeSearch(e)} />
+            <InputValue className='mr-2' placeholder="ค้นหาด้วยชื่อ" onChange={(e) => this.handleChangeSearch(e)} />
           </div>
           <table className="table mt-3">
             <thead>
