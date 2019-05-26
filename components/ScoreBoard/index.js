@@ -87,6 +87,9 @@ class score extends Component {
     this.state.data[e.target.id-1].score = parseInt(e.target.value)
     console.log('test',this.state.data)
   }
+  handleSubmit = () =>{
+    //submit method
+  }
   render() {
     return (
       <div className="container-fulid overflow-hidden">
@@ -103,6 +106,7 @@ class score extends Component {
           </ZIndex>
           <div className="col-9 col-md-10 p-5">
             <Table dataSource={this.state.data} columns={this.state.columns} />
+            <Button onClick={()=> this.handleSubmit()} type="primary">Submit</Button>
           </div>
         </div>
       </div>
