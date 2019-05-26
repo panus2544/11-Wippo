@@ -41,6 +41,11 @@ const PermissionService = {
     })
     return data
   },
+  insertScoresFlavors: async (data) => {
+   await apiCamperService.post('/campers/score',{data}).catch(e =>{
+     console.log(e)
+   })
+  },
   updateCamper: async (data) => {
     await apiCamperService.put('/campers/updatecamper', {
       'wipId' : data.wipId,

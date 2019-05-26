@@ -3,6 +3,7 @@ import Nav from '../Core/Navbar'
 import styled from 'styled-components'
 import Menu from '../Core/Menu'
 import { Table, Input, Button } from 'antd'
+import service from './../../service/CamperService'
 
 const ZIndex = styled.div`
   z-index: 10;
@@ -89,6 +90,7 @@ class score extends Component {
   }
   handleSubmit = () =>{
     //submit method
+    service.insertScoresFlavors(this.state.data)
   }
   render() {
     return (
